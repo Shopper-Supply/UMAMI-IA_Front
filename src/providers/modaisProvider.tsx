@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useData } from "./dataProvider";
 
 interface IModalProvider {
   children: React.ReactNode;
@@ -12,6 +13,10 @@ interface IModalContext {
   showModal: () => void;
   reverseModal: () => void;
   setContent: React.Dispatch<React.SetStateAction<JSX.Element | undefined>>;
+
+  isAlertOpen: boolean;
+  openAlert: () => void;
+  closeAlert: () => void;
 }
 
 const ModalContext = createContext<IModalContext>({
@@ -21,17 +26,29 @@ const ModalContext = createContext<IModalContext>({
   showModal: () => {},
   reverseModal: () => {},
   setContent: () => {},
+
+  isAlertOpen: false,
+  openAlert: () => {},
+  closeAlert: () => {},
 });
 
 export const ModalProvider = ({ children }: IModalProvider) => {
+  const { setExcelFile } = useData();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [content, setContent] = useState<JSX.Element | undefined>(undefined);
   const [isReversed, setIsReversed] = useState<boolean>(false);
+
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 
   function hideModal() {
     // Esconder o Modal ja aberto, essa função deve ser chamada para fechar um modal.
     setIsOpen(false);
     setContent(undefined);
+
+    if (isReversed) {
+      reverseModal();
+    }
   }
   function showModal() {
     // Mostrar um modal oculto, essa função deve ser chamada no componente para abrir o modal.
@@ -40,6 +57,13 @@ export const ModalProvider = ({ children }: IModalProvider) => {
   function reverseModal() {
     // por padrão todos os modais são exibidos do lado esquerdo, caso queira alterar o lado que ele é exibido chame essa função.
     setIsReversed(!isReversed);
+  }
+
+  function openAlert() {
+    setIsAlertOpen(true);
+  }
+  function closeAlert() {
+    setIsAlertOpen(false);
   }
 
   return (
@@ -53,6 +77,10 @@ export const ModalProvider = ({ children }: IModalProvider) => {
         showModal,
         reverseModal,
         setContent,
+
+        isAlertOpen,
+        openAlert,
+        closeAlert,
       }}
     >
       {children}
