@@ -88,13 +88,13 @@ const Menu = () => {
             <input
               id="dropzone-file"
               type="file"
-              className="absolute text-[5rem] opacity-0"
+              className="absolute text-[5rem] opacity-0 cursor-pointer"
               onChange={handleFileUpload}
             />
           </label>
         </form>
         <ul className="flex flex-col gap-[2rem] ">
-          <li
+          {/* <li
             onClick={() => {
               setContent(<ModalComparaPlanilha />);
               showModal();
@@ -103,7 +103,7 @@ const Menu = () => {
           >
             <HiOutlineSaveAs color="#5F4B8B" size="2.5rem" />
             Comparação
-          </li>
+          </li> */}
           <li
             onClick={() => {
               setContent(<ModalPadraoDeSacola />);

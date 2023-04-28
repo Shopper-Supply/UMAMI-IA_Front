@@ -6,3 +6,10 @@ export interface IPlace {
   name?: string;
   is_active?: boolean;
 }
+
+export interface IPlaceRequest {
+  client: string;
+  mall: string;
+  abbr: string;
+  name: string;
+}

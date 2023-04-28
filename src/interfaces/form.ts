@@ -37,3 +37,13 @@ export interface IFormLogin {
   email?: string;
   password: string;
 }
+
+export interface IFormCompareSheets {
+  control_spreadsheet: Blob | null;
+  curator_spreadsheet: Blob | null;
+  curator: string;
+  client: string;
+  abbr: string;
+  mall: string;
+  place: string;
+}

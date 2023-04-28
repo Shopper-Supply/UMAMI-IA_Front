@@ -32,3 +32,10 @@ export interface ISheetRequest {
   bag_patterns: IFormBag;
   place: IPlace;
 }
+
+export interface ICompareSheets {
+  control_spreadsheet: Blob | null;
+  curator_spreadsheet: Blob | null;
+  curator_id: number;
+  place: string;
+}

@@ -81,7 +81,7 @@ const ModalEnvioPlanilha = () => {
       };
 
       const body = makeBody();
-      validateSheet(token, body)
+      validateSheet(token || "", body)
         .then((res: void | AxiosResponse<ISheet>) => {
           if (res) {
             setErrorsLog(res.data.errors);
