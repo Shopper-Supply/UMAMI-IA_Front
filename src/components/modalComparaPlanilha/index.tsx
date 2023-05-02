@@ -1,5 +1,6 @@
 import Image from "next/image";
 import iconRobo from "../../../public/Icon_Robo.svg";
+import { HiPlusCircle } from "react-icons/hi";
 
 import { IFormCompareSheets } from "@/interfaces/form";
 
@@ -11,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { findCurator, findPlace } from "@/utils/finds";
 import { useEffect, useState } from "react";
-import { createPlace } from "@/services/post";
+import { compareSheets, createPlace } from "@/services/post";
 import { useUser } from "@/providers/userProvider";
 import { IPlace } from "@/interfaces/place";
 import { AxiosResponse } from "axios";
@@ -28,6 +29,8 @@ const ModalComparaPlanilha = () => {
       .max(3, "A abreviação do projeto precisa ter 3 caracteres"),
     mall: yup.string().required("Campo Obrigatório"),
     place: yup.string().required("Campo Obrigatório"),
+    curator_spreadsheet: yup.mixed().required("campo obrigatorio"),
+    control_spreadsheet: yup.mixed().required("campo obrigatorio"),
   });
 
   const {
@@ -75,6 +78,7 @@ const ModalComparaPlanilha = () => {
 
   // SubmitHandler<IFormCompareSheets>
   const onSubmit = (data: IFormCompareSheets) => {
+    console.table(data.control_spreadsheet);
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
@@ -83,6 +87,22 @@ const ModalComparaPlanilha = () => {
         openAlert();
       } else {
         setData(data);
+
+        const formData = new FormData();
+
+        const placeData = {
+          client: data.client,
+          mall: data.mall,
+          abbr: data.abbr,
+          name: data.place,
+        };
+
+        formData.append("control_spreadsheet", data.control_spreadsheet[0]);
+        formData.append("curator_spreadsheet", data.curator_spreadsheet[0]);
+        formData.append("curator_id", idCurator);
+        formData.append("place", JSON.stringify(placeData));
+
+        compareSheets(token || " ", formData);
       }
     } else {
       error("EU NÃO CONHEÇO ESSE CURADOR");
@@ -97,13 +117,45 @@ const ModalComparaPlanilha = () => {
           setStatus={setstatusPlace}
         />
       )}
-      <div className="z-30">
-        <div>
+      <div className="z-30 bg-branco-primario w-[25%] min-w-[35rem] h-screen flex flex-col items-center">
+        <div className="flex flex-col justify-around items-center mt-[6.5rem]">
           <Image src={iconRobo} alt="icon robô de qualidade." />
-          <p>Compare se informações foram violadas.</p>
+          <p className="text-roxo-primario text-3xl text-center p-3">
+            Compare se informações foram violadas.
+          </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
+        <form
+          className="flex flex-col items-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex flex-col items-center p-10 justify-around h-[21rem]">
+            <label className="w-[100%]">
+              <input
+                {...register("curator")}
+                list="curatores"
+                placeholder={
+                  errors.curator
+                    ? "Insira o curador responsavel"
+                    : "Alex Lanção"
+                }
+                title="Curador"
+                className={`w-[100%] rounded-full ${
+                  errors.curator
+                    ? "border-red-600 focus:border-red-700"
+                    : "border-roxo-primario"
+                } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+              />
+              {errors.curator && (
+                <span className="text-red-600 pl-5">
+                  {errors.curator.message}
+                </span>
+              )}
+              <datalist id="curatores">
+                {curators.map((curator) => {
+                  return <option key={curator.id} value={curator.name} />;
+                })}
+              </datalist>
+            </label>
             <div className="flex w-[100%] gap-2">
               <label className="flex flex-col w-[70%]">
                 <input
@@ -139,7 +191,7 @@ const ModalComparaPlanilha = () => {
                     })}
                 </datalist>
               </label>
-              <label className="flex flex-col w-[50%]">
+              <label className="flex flex-col w-[30%]">
                 <input
                   {...register("abbr")}
                   list="abbr"
@@ -245,17 +297,55 @@ const ModalComparaPlanilha = () => {
               </label>
             </div>
           </div>
-          <div>
-            <label>
-              Planilha de Controle
-              <input type="file" />
+          <div className="flex justify-around">
+            <label
+              htmlFor="dropzone-file"
+              className="w-[45%] flex justify-around max-w-lg flex-col items-center text-center"
+            >
+              <h2 className="mt-4 text-[1.5rem] text-roxo-primario font-medium tracking-wide">
+                Planilha Controle
+              </h2>
+              <div className="relative px-[1rem] py-[1.2rem] cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario">
+                <p className="mt-[1rem] mb-[.9rem] text-[.9rem] text-roxo-primario opacity-80 tracking-wide">
+                  Clique ou arraste para esse campo o arquivo que deseja enviar
+                </p>
+                <HiPlusCircle color="#5F4B8B" size="3.5rem" />
+                <input
+                  {...register("control_spreadsheet")}
+                  id="dropzone-file"
+                  type="file"
+                  className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
+                />
+              </div>
             </label>
-            <label>
-              Planilha do Curador
-              <input type="file" />
+            <label
+              htmlFor="dropzone-file"
+              className="w-[45%] flex justify-around max-w-lg flex-col items-center text-center"
+            >
+              <h2 className="mt-4 text-[1.5rem] text-roxo-primario font-medium tracking-wide">
+                Planilha Curador
+              </h2>
+              <div className="relative px-[1rem] py-[1.2rem] cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario">
+                <p className="mt-[1rem] mb-[.9rem] text-roxo-primario opacity-80 tracking-wide">
+                  Clique ou arraste para esse campo o arquivo que deseja enviar
+                </p>
+                <HiPlusCircle color="#5F4B8B" size="3.5rem" />
+                <input
+                  {...register("curator_spreadsheet")}
+                  id="dropzone-file"
+                  type="file"
+                  className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
+                />
+              </div>
             </label>
           </div>
-          <button>Enviar</button>
+          <button
+            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Enviar"
+            type="submit"
+          >
+            Enviar
+          </button>
         </form>
       </div>
     </>

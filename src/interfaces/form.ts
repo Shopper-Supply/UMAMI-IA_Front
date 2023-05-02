@@ -39,8 +39,8 @@ export interface IFormLogin {
 }
 
 export interface IFormCompareSheets {
-  control_spreadsheet: Blob | null;
-  curator_spreadsheet: Blob | null;
+  control_spreadsheet: FileList;
+  curator_spreadsheet: FileList;
   curator: string;
   client: string;
   abbr: string;

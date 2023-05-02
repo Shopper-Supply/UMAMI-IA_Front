@@ -94,7 +94,7 @@ const Menu = () => {
           </label>
         </form>
         <ul className="flex flex-col gap-[2rem] ">
-          {/* <li
+          <li
             onClick={() => {
               setContent(<ModalComparaPlanilha />);
               showModal();
@@ -103,7 +103,7 @@ const Menu = () => {
           >
             <HiOutlineSaveAs color="#5F4B8B" size="2.5rem" />
             Comparação
-          </li> */}
+          </li>
           <li
             onClick={() => {
               setContent(<ModalPadraoDeSacola />);
