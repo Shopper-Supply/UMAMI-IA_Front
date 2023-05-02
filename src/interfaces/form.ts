@@ -1,3 +1,5 @@
+import { IErrosTypes } from "./errors";
+import { ICurator } from "./people";
 import { IPlace } from "./place";
 
 export interface IFormEnvioError {
@@ -41,9 +43,20 @@ export interface IFormLogin {
 export interface IFormCompareSheets {
   control_spreadsheet: FileList;
   curator_spreadsheet: FileList;
-  curator: string;
+  curator: ICurator;
   client: string;
   abbr: string;
   mall: string;
   place: string;
+}
+
+export interface IFormCompareSheetsResponse extends IFormCompareSheets {
+  error: {
+    sheet: [
+      {
+        row: number;
+        errorType: IErrosTypes;
+      }
+    ];
+  };
 }

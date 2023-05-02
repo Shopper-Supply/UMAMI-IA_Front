@@ -2,7 +2,10 @@ import Image from "next/image";
 import iconRobo from "../../../public/Icon_Robo.svg";
 import { HiPlusCircle } from "react-icons/hi";
 
-import { IFormCompareSheets } from "@/interfaces/form";
+import {
+  IFormCompareSheets,
+  IFormCompareSheetsResponse,
+} from "@/interfaces/form";
 
 import { useData } from "@/providers/dataProvider";
 import { useModal } from "@/providers/modaisProvider";
@@ -18,6 +21,7 @@ import { IPlace } from "@/interfaces/place";
 import { AxiosResponse } from "axios";
 import ConfirmAction from "../confirmAction";
 import { error } from "@/utils/toast";
+import { HiOutlineArrowUpTray } from "react-icons/hi2";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -60,9 +64,17 @@ const ModalComparaPlanilha = () => {
   useEffect(() => {
     if (statusPlace) {
       createPlace(token || "", data)
-        .then((res: void | AxiosResponse<IPlace>) => {
+        .then((res: void | AxiosResponse<IFormCompareSheetsResponse>) => {
           if (res) {
-            setCurrentPlace(res.data);
+            setCurrentPlace({
+              abbr: res.data.abbr,
+              client: res.data.client,
+              mall: res.data.mall,
+              name: res.data.place,
+            });
+            setCurrentCurator(res.data.curator);
+
+            // função que envia os erros para a lista de aprovação de erros.
           }
         })
         .catch((err) => {
@@ -340,11 +352,11 @@ const ModalComparaPlanilha = () => {
             </label>
           </div>
           <button
-            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+            className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
             title="Enviar"
             type="submit"
           >
-            Enviar
+            <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
           </button>
         </form>
       </div>
