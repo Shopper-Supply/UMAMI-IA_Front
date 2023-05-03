@@ -2,11 +2,6 @@ import Image from "next/image";
 import iconRobo from "../../../public/Icon_Robo.svg";
 import { HiPlusCircle } from "react-icons/hi";
 
-import {
-  IFormCompareSheets,
-  IFormCompareSheetsResponse,
-} from "@/interfaces/form";
-
 import { useData } from "@/providers/dataProvider";
 import { useModal } from "@/providers/modaisProvider";
 
@@ -22,6 +17,9 @@ import { AxiosResponse } from "axios";
 import ConfirmAction from "../confirmAction";
 import { error } from "@/utils/toast";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
+import { ICompareSheetsResponse } from "@/interfaces/sheet";
+import { IFormCompareSheets } from "@/interfaces/form";
+import { IErrorCompare, IErrorLog } from "@/interfaces/errors";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -45,6 +43,7 @@ const ModalComparaPlanilha = () => {
     currentCurator,
     currentPlace,
     addError,
+    setErrorsLog,
     setCurrentCurator,
     setCurrentPlace,
   } = useData();
@@ -61,20 +60,56 @@ const ModalComparaPlanilha = () => {
     resolver: yupResolver(schema),
   });
 
+  const processCompareSheets = (idCurator: any, placeData: IPlace) => {
+    // console.table(data);
+    const formData = new FormData();
+
+    formData.append("control_spreadsheet", data.control_spreadsheet[0]);
+    formData.append("curator_spreadsheet", data.curator_spreadsheet[0]);
+    formData.append("curator_id", idCurator);
+    formData.append("place", JSON.stringify(placeData));
+
+    compareSheets(token || " ", formData).then(
+      (res: ICompareSheetsResponse) => {
+        if (res) {
+          const errorLogList: IErrorLog[] = [];
+          const errors: { [key: string]: IErrorCompare[] } = res.errors;
+
+          for (const sheet in errors) {
+            const errorsList = errors[sheet];
+
+            for (let item of errorsList) {
+              errorLogList.push({
+                sheet: sheet.toUpperCase(),
+                error_type: item.errorType,
+                coor: `${item.row}`,
+              });
+            }
+          }
+
+          setCurrentCurator(res.curator);
+          setCurrentPlace(res.place_obj);
+          setErrorsLog([...errorsLog, ...errorLogList]);
+        }
+      }
+    );
+  };
+
   useEffect(() => {
     if (statusPlace) {
       createPlace(token || "", data)
-        .then((res: void | AxiosResponse<IFormCompareSheetsResponse>) => {
+        .then((res: void | AxiosResponse<IPlace>) => {
           if (res) {
-            setCurrentPlace({
+            const placeData = {
               abbr: res.data.abbr,
               client: res.data.client,
               mall: res.data.mall,
-              name: res.data.place,
-            });
-            setCurrentCurator(res.data.curator);
+              name: res.data.name,
+            };
 
-            // função que envia os erros para a lista de aprovação de erros.
+            const curatorId = findCurator(curators, data);
+
+            processCompareSheets(curatorId, placeData);
           }
         })
         .catch((err) => {
@@ -90,7 +125,9 @@ const ModalComparaPlanilha = () => {
 
   // SubmitHandler<IFormCompareSheets>
   const onSubmit = (data: IFormCompareSheets) => {
-    console.table(data.control_spreadsheet);
+    // console.table(data.control_spreadsheet);
+
+    setData(data);
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
@@ -98,10 +135,6 @@ const ModalComparaPlanilha = () => {
       if (!place) {
         openAlert();
       } else {
-        setData(data);
-
-        const formData = new FormData();
-
         const placeData = {
           client: data.client,
           mall: data.mall,
@@ -109,12 +142,7 @@ const ModalComparaPlanilha = () => {
           name: data.place,
         };
 
-        formData.append("control_spreadsheet", data.control_spreadsheet[0]);
-        formData.append("curator_spreadsheet", data.curator_spreadsheet[0]);
-        formData.append("curator_id", idCurator);
-        formData.append("place", JSON.stringify(placeData));
-
-        compareSheets(token || " ", formData);
+        processCompareSheets(idCurator, placeData);
       }
     } else {
       error("EU NÃO CONHEÇO ESSE CURADOR");

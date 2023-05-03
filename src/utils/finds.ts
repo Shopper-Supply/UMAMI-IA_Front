@@ -1,9 +1,17 @@
 import { useData } from "@/providers/dataProvider";
 
-export function findCurator(curatorsList: any[], data: any) {
+export function findCurator(
+  curatorsList: any[],
+  data: any,
+  getObj: boolean = false
+) {
   const curator = curatorsList.find(
     (curador) => curador.name?.toLowerCase() == data.curator.toLowerCase()
   );
+
+  if (getObj) {
+    return curator;
+  }
 
   return curator?.id;
 }

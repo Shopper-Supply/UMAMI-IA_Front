@@ -49,14 +49,3 @@ export interface IFormCompareSheets {
   mall: string;
   place: string;
 }
-
-export interface IFormCompareSheetsResponse extends IFormCompareSheets {
-  error: {
-    sheet: [
-      {
-        row: number;
-        errorType: IErrosTypes;
-      }
-    ];
-  };
-}
