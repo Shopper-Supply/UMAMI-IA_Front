@@ -141,16 +141,23 @@ const ModalAprovacaoErros = () => {
           >
             <HiCheck size="2rem" />
           </div>
-          <div
+          <button
             onClick={() => {
               triggerBase64Download(responseFile, excelFile!.name);
               info(`PANILHA ${excelFile?.name} PRONTA!`);
             }}
-            title="Baixar Planilha Verificada"
-            className="drop-shadow-md rounded-full bg-branco-primario text-roxo-primario p-4 cursor-pointer"
+            disabled={!responseFile}
+            title={
+              responseFile
+                ? "Baixar Planilha Verificada"
+                : "Nenhum Download Disponível"
+            }
+            className={`drop-shadow-md rounded-full bg-branco-primario text-roxo-primario p-4 ${
+              !responseFile ? "opacity-50" : "cursor-pointer"
+            }`}
           >
             <HiDownload size="2rem" />
-          </div>
+          </button>
         </div>
       </div>
     </div>

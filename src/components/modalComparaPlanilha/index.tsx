@@ -93,7 +93,8 @@ const ModalComparaPlanilha = () => {
   });
 
   const processCompareSheets = (idCurator: any, placeData: IPlace) => {
-    // console.table(data);
+    info("COMPARANDO PLANILHAS...");
+
     const formData = new FormData();
 
     formData.append("control_spreadsheet", data.control_spreadsheet[0]);
@@ -101,8 +102,8 @@ const ModalComparaPlanilha = () => {
     formData.append("curator_id", idCurator);
     formData.append("place", JSON.stringify(placeData));
 
-    compareSheets(token || " ", formData).then(
-      (res: ICompareSheetsResponse) => {
+    compareSheets(token || " ", formData)
+      .then((res: ICompareSheetsResponse) => {
         if (res) {
           const errorLogList: IErrorLog[] = [];
           const errors: { [key: string]: IErrorCompare[] } = res.errors;
@@ -123,8 +124,14 @@ const ModalComparaPlanilha = () => {
           setCurrentPlace(res.place_obj);
           setErrorsLog([...errorsLog, ...errorLogList]);
         }
-      }
-    );
+      })
+      .catch((err) => {
+        error("OPS! ALGO DEU ERRADO NA COMPARAÇÃO DE PLANILHAS");
+      })
+      .finally(() => {
+        setstatusPlace(false);
+        hideModal();
+      });
   };
 
   useEffect(() => {
@@ -151,12 +158,7 @@ const ModalComparaPlanilha = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
-          error("OPS! ALGO DEU ERRADO");
-        })
-        .finally(() => {
-          setstatusPlace(false);
-          hideModal();
+          error("OPS! ALGO DEU ERRADO NA CRIAÇÂO DO CANAL DE VENDAS");
         });
     }
   }, [data, token, statusPlace]);
@@ -219,12 +221,18 @@ const ModalComparaPlanilha = () => {
               <input
                 {...register("curator")}
                 list="curatores"
+                value={errorsLog ? currentCurator.name : undefined}
+                style={{
+                  pointerEvents: errorsLog.length > 0 ? "none" : "auto",
+                }}
                 placeholder={
                   errors.curator
                     ? "Insira o curador responsavel"
                     : "Alex Lanção"
                 }
                 title="Curador"
+                // value dele precisa ser o do provider quando tiver erros no provider da erroLog após envio da planilha (o valor setado deve ser o da resposta da req)
+                // ternario para desabilitar e definir o valor do input caso o erroLog.length > 0.
                 className={`w-[100%] rounded-full ${
                   errors.curator
                     ? "border-red-600 focus:border-red-700"

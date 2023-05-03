@@ -88,7 +88,7 @@ const Menu = () => {
             <input
               id="dropzone-file"
               type="file"
-              className="absolute text-[5rem] opacity-0 cursor-pointer"
+              className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
               onChange={handleFileUpload}
             />
           </label>
