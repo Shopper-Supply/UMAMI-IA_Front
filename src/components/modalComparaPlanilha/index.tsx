@@ -15,7 +15,7 @@ import { useUser } from "@/providers/userProvider";
 import { IPlace } from "@/interfaces/place";
 import { AxiosResponse } from "axios";
 import ConfirmAction from "../confirmAction";
-import { error } from "@/utils/toast";
+import { error, info } from "@/utils/toast";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
 import { ICompareSheetsResponse } from "@/interfaces/sheet";
 import { IFormCompareSheets } from "@/interfaces/form";
@@ -31,8 +31,40 @@ const ModalComparaPlanilha = () => {
       .max(3, "A abreviação do projeto precisa ter 3 caracteres"),
     mall: yup.string().required("Campo Obrigatório"),
     place: yup.string().required("Campo Obrigatório"),
-    curator_spreadsheet: yup.mixed().required("campo obrigatorio"),
-    control_spreadsheet: yup.mixed().required("campo obrigatorio"),
+    curator_spreadsheet: yup
+      .mixed()
+      .test(
+        "Obrigatório",
+        "Por favor, selecione um arquivo",
+        (file: any) => file?.length > 0
+      )
+      .test(
+        "Arquivo inválido",
+        "Arquivo deve ser um Excel",
+        (file: any) =>
+          file[0] &&
+          [
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(file[0].type)
+      ),
+    control_spreadsheet: yup
+      .mixed()
+      .test(
+        "Obrigatório",
+        "Por favor, selecione um arquivo",
+        (file: any) => file?.length > 0
+      )
+      .test(
+        "Arquivo Inválido",
+        "Arquivo deve ser um Excel",
+        (file: any) =>
+          file[0] &&
+          [
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(file[0].type)
+      ),
   });
 
   const {
@@ -97,14 +129,20 @@ const ModalComparaPlanilha = () => {
 
   useEffect(() => {
     if (statusPlace) {
-      createPlace(token || "", data)
-        .then((res: void | AxiosResponse<IPlace>) => {
+      let placeData = {
+        abbr: data.abbr,
+        client: data.client,
+        mall: data.mall,
+        name: data.place,
+      };
+      createPlace(token || "", placeData)
+        .then((res: IPlace) => {
           if (res) {
-            const placeData = {
-              abbr: res.data.abbr,
-              client: res.data.client,
-              mall: res.data.mall,
-              name: res.data.name,
+            placeData = {
+              abbr: res.abbr,
+              client: res.client,
+              mall: res.mall,
+              name: res.name,
             };
 
             const curatorId = findCurator(curators, data);
@@ -127,11 +165,19 @@ const ModalComparaPlanilha = () => {
   const onSubmit = (data: IFormCompareSheets) => {
     // console.table(data.control_spreadsheet);
 
+    if (!data.control_spreadsheet) {
+      info("INSIRA UMA PLANILHA DE CONTROLE");
+    }
+    if (!data.curator_spreadsheet) {
+      info("INSIRA UMA PLANILHA DE CURADOR");
+    }
+
     setData(data);
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
       const place = findPlace(places, data);
+      console.log(place);
       if (!place) {
         openAlert();
       } else {
@@ -357,6 +403,11 @@ const ModalComparaPlanilha = () => {
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
+              {errors?.control_spreadsheet && (
+                <span className="text-red-600">
+                  {errors.control_spreadsheet.message}
+                </span>
+              )}
             </label>
             <label
               htmlFor="dropzone-file"
@@ -377,6 +428,11 @@ const ModalComparaPlanilha = () => {
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
+              {errors?.curator_spreadsheet && (
+                <span className="text-red-600 ">
+                  {errors.curator_spreadsheet.message}
+                </span>
+              )}
             </label>
           </div>
           <button
