@@ -106,7 +106,7 @@ const Login: NextPage = () => {
                 {...register("password")}
                 type={show ? "password" : "text"}
                 placeholder="senha"
-                className="h-[98%] border-none outline-none focus:outline-none ml-[1rem]"
+                className="h-[98%] border-none outline-none focus:outline-none bg-none"
               />
               {show ? (
                 <HiEye
