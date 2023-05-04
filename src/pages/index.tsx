@@ -10,12 +10,10 @@ import { useUser } from "@/providers/userProvider";
 import { login } from "@/services/post";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import { redirect } from "next/dist/server/api-utils";
 
 const Login: NextPage = () => {
-  
-  const { user, setUser, setToken, token, auth} = useUser();
-  const router = useRouter()
+  const { user, setUser, setToken, token, auth } = useUser();
+  const router = useRouter();
   const schema = yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required(),
@@ -35,7 +33,7 @@ const Login: NextPage = () => {
     const isEmail = emailRegex.test(
       data.username ? data.username : "undefined"
     );
-      let newData; 
+    let newData;
     if (isEmail) {
       newData = {
         email: data.username,
@@ -51,9 +49,7 @@ const Login: NextPage = () => {
     }
 
     toast("LOGANDO...", {
-      icon: (
-        <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />
-      ),
+      icon: <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />,
       style: {
         borderRadius: "50px",
         background: "#F4F3F7",
@@ -66,8 +62,9 @@ const Login: NextPage = () => {
     await login(newData)
       .then((res) => {
         setToken(res.token);
-        sessionStorage.setItem("UMAMI@TOKEN", res.token)
-      }).catch(err => {
+        sessionStorage.setItem("UMAMI@TOKEN", res.token);
+      })
+      .catch((err) => {
         toast("OPPS, ALGO DE ERRADO", {
           icon: (
             <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />
@@ -79,13 +76,12 @@ const Login: NextPage = () => {
             fontSize: "1.3rem",
             fontWeight: "bolder",
           },
-        }
-        );
-      })
+        });
+      });
   };
 
-  if(auth){
-    router.push("/dashboard")
+  if (auth) {
+    router.push("/dashboard");
   }
 
   return (
