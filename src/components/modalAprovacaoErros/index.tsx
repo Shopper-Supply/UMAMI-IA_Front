@@ -10,6 +10,7 @@ import { useUser } from "@/providers/userProvider";
 import { IErroLogBody } from "@/interfaces/errors";
 import { info } from "@/utils/toast";
 import { triggerBase64Download } from "@/utils/downloadBlob";
+import { VerifyToken } from "@/utils/finds";
 
 const ModalAprovacaoErros = () => {
   const {

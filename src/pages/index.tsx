@@ -14,7 +14,7 @@ import { error, info } from "@/utils/toast";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 const Login: NextPage = () => {
-  const { user, setUser, setToken, token, auth } = useUser();
+  const { user, setUser, setToken, token, auth, setAuth } = useUser();
   const router = useRouter();
   const [show, setShow] = useState(true);
   const schema = yup.object().shape({
@@ -56,6 +56,7 @@ const Login: NextPage = () => {
     await login(newData)
       .then((res) => {
         setToken(res.token);
+        setAuth(true);
         sessionStorage.setItem("UMAMI@TOKEN", res.token);
       })
       .catch((err) => {
@@ -101,7 +102,7 @@ const Login: NextPage = () => {
               placeholder="exemplo@mail.com or Lancao"
               className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
             />
-            <div className=" flex justify-center items-center w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none">
+            <div className=" flex justify-between items-center w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none">
               <input
                 {...register("password")}
                 type={show ? "password" : "text"}

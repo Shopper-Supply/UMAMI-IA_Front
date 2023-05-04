@@ -13,8 +13,9 @@ import { useUser } from "@/providers/userProvider";
 import { validateSheet } from "@/services/post";
 import { error, info } from "@/utils/toast";
 import { ISheet, ISheetRequest } from "@/interfaces/sheet";
-import { findCurator, findPlace } from "@/utils/finds";
+import { verifyToken, findCurator, findPlace } from "@/utils/finds";
 import { AxiosResponse } from "axios";
+import { useRouter } from "next/router";
 
 const ModalEnvioPlanilha = () => {
   const {
@@ -33,10 +34,11 @@ const ModalEnvioPlanilha = () => {
     setResponseFile,
   } = useData();
   const { hideModal, openAlert, isAlertOpen } = useModal();
-  const { token } = useUser();
+  const { token, setAuth } = useUser();
   const [checked, setChecked] = useState<boolean>(false); //false = Manual e true = Sistêmico
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
+  const router = useRouter();
 
   const schema = yup.object().shape({
     curator: yup.string().required("Campo Obrigatório"),
@@ -59,8 +61,6 @@ const ModalEnvioPlanilha = () => {
 
   useEffect(() => {
     if (statusPlace) {
-      info("ESTOU TRABALHANDO NA SUA PLANILHA");
-
       const makeBody = () => {
         const formData = new FormData();
 
@@ -81,23 +81,26 @@ const ModalEnvioPlanilha = () => {
       };
 
       const body = makeBody();
-      validateSheet(token || "", body)
-        .then((res: void | AxiosResponse<ISheet>) => {
-          if (res) {
-            setErrorsLog(res.data.errors);
-            setCurrentCurator(res.data.curator);
-            setCurrentPlace(res.data.place_obj);
-            setResponseFile(res.data.workbook);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          error("OPS! ALGO DEU ERRADO");
-        })
-        .finally(() => {
-          setStatusPlace(false);
-          hideModal();
-        });
+      if (verifyToken(setAuth, hideModal, router)) {
+        info("ESTOU TRABALHANDO NA SUA PLANILHA");
+        validateSheet(token || "", body)
+          .then((res: void | AxiosResponse<ISheet>) => {
+            if (res) {
+              setErrorsLog(res.data.errors);
+              setCurrentCurator(res.data.curator);
+              setCurrentPlace(res.data.place_obj);
+              setResponseFile(res.data.workbook);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            error("OPS! ALGO DEU ERRADO");
+          })
+          .finally(() => {
+            setStatusPlace(false);
+            hideModal();
+          });
+      }
     }
   }, [statusPlace, token]);
 

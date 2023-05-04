@@ -1,4 +1,8 @@
 import { useData } from "@/providers/dataProvider";
+import { error } from "./toast";
+import { useRouter } from "next/router";
+import { useUser } from "@/providers/userProvider";
+import { useModal } from "@/providers/modaisProvider";
 
 export function findCurator(
   curatorsList: any[],
@@ -24,4 +28,18 @@ export function findPlace(placesList: any[], data: any) {
   );
 
   return place;
+}
+
+export function verifyToken(setAuth: any, hideModal: any, router: any) {
+  const token = sessionStorage.getItem("UMAMI@TOKEN");
+  if (!token) {
+    error("SUAS CREDENCIAIS DE ACESSO EXPIRARAM");
+    setAuth(false);
+    // sessionStorage.clear();
+    hideModal();
+    router.push("/");
+    return false;
+  } else {
+    return true;
+  }
 }
