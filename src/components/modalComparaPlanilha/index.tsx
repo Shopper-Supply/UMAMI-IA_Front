@@ -92,7 +92,11 @@ const ModalComparaPlanilha = () => {
     resolver: yupResolver(schema),
   });
 
-  const processCompareSheets = (idCurator: any, placeData: IPlace) => {
+  const processCompareSheets = (
+    idCurator: any,
+    placeData: IPlace,
+    data: any
+  ) => {
     info("COMPARANDO PLANILHAS...");
 
     const formData = new FormData();
@@ -154,7 +158,7 @@ const ModalComparaPlanilha = () => {
 
             const curatorId = findCurator(curators, data);
 
-            processCompareSheets(curatorId, placeData);
+            processCompareSheets(curatorId, placeData, data);
           }
         })
         .catch((err) => {
@@ -166,15 +170,8 @@ const ModalComparaPlanilha = () => {
   // SubmitHandler<IFormCompareSheets>
   const onSubmit = (data: IFormCompareSheets) => {
     // console.table(data.control_spreadsheet);
-
-    if (!data.control_spreadsheet) {
-      info("INSIRA UMA PLANILHA DE CONTROLE");
-    }
-    if (!data.curator_spreadsheet) {
-      info("INSIRA UMA PLANILHA DE CURADOR");
-    }
-
     setData(data);
+
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
@@ -190,7 +187,7 @@ const ModalComparaPlanilha = () => {
           name: data.place,
         };
 
-        processCompareSheets(idCurator, placeData);
+        processCompareSheets(idCurator, placeData, data);
       }
     } else {
       error("EU NÃO CONHEÇO ESSE CURADOR");
