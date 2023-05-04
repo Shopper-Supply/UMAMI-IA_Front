@@ -103,7 +103,9 @@ const ModalEnvioPlanilha = () => {
   }, [statusPlace, token]);
 
   const onSubmit: SubmitHandler<IFormPlanilha> = (data) => {
-    if (verifyToken(setAuth, hideModal, router)) {
+    // verificação de token de usuario.
+    const verifyTokenResult = verifyToken(setAuth, hideModal, router);
+    if (verifyTokenResult !== true) {
       return;
     }
 

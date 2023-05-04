@@ -36,7 +36,9 @@ const ModalPadraoDeSacola = () => {
   });
 
   const onSubmit: SubmitHandler<IFormBag> = (data) => {
-    if (verifyToken(setAuth, hideModal, router)) {
+    // verificação de token de usuario.
+    const verifyTokenResult = verifyToken(setAuth, hideModal, router);
+    if (verifyTokenResult !== true) {
       return;
     }
 
