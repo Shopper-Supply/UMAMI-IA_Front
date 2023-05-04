@@ -8,7 +8,7 @@ import { useModal } from "@/providers/modaisProvider";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { findCurator, findPlace } from "@/utils/finds";
+import { findCurator, findPlace, verifyToken } from "@/utils/finds";
 import { useEffect, useState } from "react";
 import { compareSheets, createPlace } from "@/services/post";
 import { useUser } from "@/providers/userProvider";
@@ -20,6 +20,7 @@ import { HiOutlineArrowUpTray } from "react-icons/hi2";
 import { ICompareSheetsResponse } from "@/interfaces/sheet";
 import { IFormCompareSheets } from "@/interfaces/form";
 import { IErrorCompare, IErrorLog } from "@/interfaces/errors";
+import { useRouter } from "next/router";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -80,9 +81,10 @@ const ModalComparaPlanilha = () => {
     setCurrentPlace,
   } = useData();
   const { hideModal, openAlert, isAlertOpen } = useModal();
-  const { token } = useUser();
+  const { token, setAuth } = useUser();
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
+  const router = useRouter();
 
   const {
     register,
@@ -146,6 +148,7 @@ const ModalComparaPlanilha = () => {
         mall: data.mall,
         name: data.place,
       };
+
       createPlace(token || "", placeData)
         .then((res: IPlace) => {
           if (res) {
@@ -167,16 +170,16 @@ const ModalComparaPlanilha = () => {
     }
   }, [data, token, statusPlace]);
 
-  // SubmitHandler<IFormCompareSheets>
   const onSubmit = (data: IFormCompareSheets) => {
-    // console.table(data.control_spreadsheet);
+    if (verifyToken(setAuth, hideModal, router)) {
+      return;
+    }
     setData(data);
 
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
       const place = findPlace(places, data);
-      console.log(place);
       if (!place) {
         openAlert();
       } else {

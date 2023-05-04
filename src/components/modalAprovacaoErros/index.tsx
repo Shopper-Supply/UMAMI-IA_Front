@@ -10,7 +10,8 @@ import { useUser } from "@/providers/userProvider";
 import { IErroLogBody } from "@/interfaces/errors";
 import { info } from "@/utils/toast";
 import { triggerBase64Download } from "@/utils/downloadBlob";
-import { VerifyToken } from "@/utils/finds";
+import { verifyToken } from "@/utils/finds";
+import { useRouter } from "next/router";
 
 const ModalAprovacaoErros = () => {
   const {
@@ -23,9 +24,11 @@ const ModalAprovacaoErros = () => {
     currentCurator,
     currentPlace,
   } = useData();
-  const { token } = useUser();
-  const { showModal, setContent, isAlertOpen, openAlert } = useModal();
+  const { token, setAuth } = useUser();
+  const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
+    useModal();
   const [statusErrorsLog, setStatusErrorsLog] = useState<boolean>(false);
+  const router = useRouter();
 
   const getColor = (severity: number | undefined) => {
     switch (severity) {
@@ -49,6 +52,10 @@ const ModalAprovacaoErros = () => {
   }, [statusErrorsLog, setErrorsLog]);
 
   const submitErrorsList = () => {
+    if (verifyToken(setAuth, hideModal, router)) {
+      return;
+    }
+
     errorsLog.forEach((element) => {
       const skuError = {
         place: currentPlace,

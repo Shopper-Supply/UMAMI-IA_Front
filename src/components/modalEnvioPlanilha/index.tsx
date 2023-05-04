@@ -81,32 +81,31 @@ const ModalEnvioPlanilha = () => {
       };
 
       const body = makeBody();
-      if (verifyToken(setAuth, hideModal, router)) {
-        info("ESTOU TRABALHANDO NA SUA PLANILHA");
-        validateSheet(token || "", body)
-          .then((res: void | AxiosResponse<ISheet>) => {
-            if (res) {
-              setErrorsLog(res.data.errors);
-              setCurrentCurator(res.data.curator);
-              setCurrentPlace(res.data.place_obj);
-              setResponseFile(res.data.workbook);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            error("OPS! ALGO DEU ERRADO");
-          })
-          .finally(() => {
-            setStatusPlace(false);
-            hideModal();
-          });
-      }
+      info("ESTOU TRABALHANDO NA SUA PLANILHA");
+      validateSheet(token || "", body)
+        .then((res: void | AxiosResponse<ISheet>) => {
+          if (res) {
+            setErrorsLog(res.data.errors);
+            setCurrentCurator(res.data.curator);
+            setCurrentPlace(res.data.place_obj);
+            setResponseFile(res.data.workbook);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          error("OPS! ALGO DEU ERRADO");
+        })
+        .finally(() => {
+          setStatusPlace(false);
+          hideModal();
+        });
     }
   }, [statusPlace, token]);
 
   const onSubmit: SubmitHandler<IFormPlanilha> = (data) => {
-    // DEIXAR FIXO OS CURADOR E O LUGAR CASO ALGUMA PLANILHA JA TENHA SIDO ENVIADA (Haja erros).
-    // info("ENVIANDO...");
+    if (verifyToken(setAuth, hideModal, router)) {
+      return;
+    }
 
     setData(data);
 

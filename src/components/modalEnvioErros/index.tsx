@@ -9,12 +9,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { error, info } from "@/utils/toast";
-import { findCurator, findPlace } from "@/utils/finds";
+import { findCurator, findPlace, verifyToken } from "@/utils/finds";
 import { useState, useEffect } from "react";
 import { createPlace } from "@/services/post";
 import { useUser } from "@/providers/userProvider";
 import { IPlaceRequest } from "@/interfaces/place";
 import ConfirmAction from "../confirmAction";
+import { useRouter } from "next/router";
 
 const ModalEnvioErros = () => {
   const {
@@ -28,10 +29,11 @@ const ModalEnvioErros = () => {
     setCurrentCurator,
     setCurrentPlace,
   } = useData();
-  const { token } = useUser();
+  const { token, setAuth } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
+  const router = useRouter();
 
   const schema = yup.object().shape({
     curator: yup.string().required("Campo Obrigatório"),
@@ -86,6 +88,10 @@ const ModalEnvioErros = () => {
 
   const onSubmit: SubmitHandler<IFormEnvioError> = (data) => {
     setData(data);
+
+    if (verifyToken(setAuth, hideModal, router)) {
+      return;
+    }
 
     const errorType = errorsTypes.find((error) =>
       data.error_type.toLowerCase().includes(error.title.toLowerCase())
