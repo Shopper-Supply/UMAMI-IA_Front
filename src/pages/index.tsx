@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useState } from "react";
 import Image from "next/image";
 import Seo from "@/components/seo";
 import icon_Robo from "../../public/Icon_Robo.svg";
@@ -8,13 +9,14 @@ import * as yup from "yup";
 import { IFormLogin } from "@/interfaces/form";
 import { useUser } from "@/providers/userProvider";
 import { login } from "@/services/post";
-import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { error, info } from "@/utils/toast";
+import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth } = useUser();
   const router = useRouter();
+  const [show, setShow] = useState(true);
   const schema = yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required(),
@@ -99,12 +101,25 @@ const Login: NextPage = () => {
               placeholder="exemplo@mail.com or Lancao"
               className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
             />
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="senha"
-              className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
-            />
+            <div className=" flex justify-center items-center w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none">
+              <input
+                {...register("password")}
+                type={show ? "password" : "text"}
+                placeholder="senha"
+                className="h-[98%] border-none outline-none focus:outline-none ml-[1rem]"
+              />
+              {show ? (
+                <HiEye
+                  onClick={() => setShow(false)}
+                  className="cursor-pointer"
+                />
+              ) : (
+                <HiEyeSlash
+                  onClick={() => setShow(true)}
+                  className="cursor-pointer"
+                />
+              )}
+            </div>
             <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
               Entrar
             </button>
