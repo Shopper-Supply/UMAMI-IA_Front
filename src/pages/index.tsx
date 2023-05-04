@@ -10,6 +10,7 @@ import { useUser } from "@/providers/userProvider";
 import { login } from "@/services/post";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
+import { error, info } from "@/utils/toast";
 
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth } = useUser();
@@ -48,16 +49,7 @@ const Login: NextPage = () => {
       setUser(newData);
     }
 
-    toast("LOGANDO...", {
-      icon: <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />,
-      style: {
-        borderRadius: "50px",
-        background: "#F4F3F7",
-        color: "#3C2F58",
-        fontSize: "1.3rem",
-        fontWeight: "bolder",
-      },
-    });
+    info("LOGANDO...");
 
     await login(newData)
       .then((res) => {
@@ -65,18 +57,7 @@ const Login: NextPage = () => {
         sessionStorage.setItem("UMAMI@TOKEN", res.token);
       })
       .catch((err) => {
-        toast("OPPS, ALGO DE ERRADO", {
-          icon: (
-            <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />
-          ),
-          style: {
-            borderRadius: "50px",
-            background: "#ff2828",
-            color: "#ffffff",
-            fontSize: "1.3rem",
-            fontWeight: "bolder",
-          },
-        });
+        error("CREDENCIAIS INVÁLIDAS");
       });
   };
 
