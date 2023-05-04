@@ -76,7 +76,7 @@ const Menu = () => {
         <form>
           <label
             htmlFor="dropzone-file"
-            className="mx-[2.2rem] px-[1rem] py-[.6rem] cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario text-center"
+            className="mx-[2.2rem] px-[1rem] py-[.6rem] relative cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario text-center"
           >
             <h2 className="mt-4 text-[1.5rem] text-roxo-primario font-medium tracking-wide">
               Revisar planilha
