@@ -236,7 +236,7 @@ const ModalComparaPlanilha = () => {
               <input
                 {...register("curator")}
                 list="curatores"
-                value={errorsLog ? currentCurator.name : undefined}
+                value={errorsLog.length > 0 ? currentCurator.name : undefined}
                 style={{
                   pointerEvents: errorsLog.length > 0 ? "none" : "auto",
                 }}

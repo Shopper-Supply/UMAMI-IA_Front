@@ -23,6 +23,7 @@ const ModalAprovacaoErros = () => {
     excelFile,
     currentCurator,
     currentPlace,
+    setCurrentCurator,
   } = useData();
   const { token, setAuth } = useUser();
   const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
