@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useState } from "react";
 import Image from "next/image";
 import Seo from "@/components/seo";
 import icon_Robo from "../../public/Icon_Robo.svg";
@@ -8,14 +9,14 @@ import * as yup from "yup";
 import { IFormLogin } from "@/interfaces/form";
 import { useUser } from "@/providers/userProvider";
 import { login } from "@/services/post";
-import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import { redirect } from "next/dist/server/api-utils";
+import { error, info } from "@/utils/toast";
+import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 const Login: NextPage = () => {
-  
-  const { user, setUser, setToken, token, auth} = useUser();
-  const router = useRouter()
+  const { user, setUser, setToken, token, auth, setAuth } = useUser();
+  const router = useRouter();
+  const [show, setShow] = useState(true);
   const schema = yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required(),
@@ -35,7 +36,7 @@ const Login: NextPage = () => {
     const isEmail = emailRegex.test(
       data.username ? data.username : "undefined"
     );
-      let newData; 
+    let newData;
     if (isEmail) {
       newData = {
         email: data.username,
@@ -50,42 +51,21 @@ const Login: NextPage = () => {
       setUser(newData);
     }
 
-    toast("LOGANDO...", {
-      icon: (
-        <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />
-      ),
-      style: {
-        borderRadius: "50px",
-        background: "#F4F3F7",
-        color: "#3C2F58",
-        fontSize: "1.3rem",
-        fontWeight: "bolder",
-      },
-    });
+    info("LOGANDO...");
 
     await login(newData)
       .then((res) => {
         setToken(res.token);
-        sessionStorage.setItem("UMAMI@TOKEN", res.token)
-      }).catch(err => {
-        toast("OPPS, ALGO DE ERRADO", {
-          icon: (
-            <Image src={icon_Robo} alt="Supp" className="h-[3rem] w-[3rem]" />
-          ),
-          style: {
-            borderRadius: "50px",
-            background: "#ff2828",
-            color: "#ffffff",
-            fontSize: "1.3rem",
-            fontWeight: "bolder",
-          },
-        }
-        );
+        setAuth(true);
+        sessionStorage.setItem("UMAMI@TOKEN", res.token);
       })
+      .catch((err) => {
+        error("CREDENCIAIS INVÁLIDAS");
+      });
   };
 
-  if(auth){
-    router.push("/dashboard")
+  if (auth) {
+    router.push("/dashboard");
   }
 
   return (
@@ -122,12 +102,25 @@ const Login: NextPage = () => {
               placeholder="exemplo@mail.com or Lancao"
               className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
             />
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="senha"
-              className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
-            />
+            <div className=" flex justify-between items-center w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none">
+              <input
+                {...register("password")}
+                type={show ? "password" : "text"}
+                placeholder="senha"
+                className="h-[98%] border-none outline-none focus:outline-none bg-none"
+              />
+              {show ? (
+                <HiEye
+                  onClick={() => setShow(false)}
+                  className="cursor-pointer"
+                />
+              ) : (
+                <HiEyeSlash
+                  onClick={() => setShow(true)}
+                  className="cursor-pointer"
+                />
+              )}
+            </div>
             <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
               Entrar
             </button>

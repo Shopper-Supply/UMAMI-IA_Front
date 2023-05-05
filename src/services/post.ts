@@ -40,14 +40,16 @@ export function submitErrorLog(
   return response;
 }
 
-export function compareSheets(token: string, body: ICompareSheets) {
+export function compareSheets(token: string, body: FormData) {
   const response = api
     .post("/planilha/comparar/", body, {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: "Token " + token,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
 
   return response;
 }
