@@ -9,10 +9,15 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-hot-toast";
+import { verifyToken } from "@/utils/finds";
+import { useUser } from "@/providers/userProvider";
+import { useRouter } from "next/router";
 
 const ModalPadraoDeSacola = () => {
   const { currentBagPattern, setCurrentBagPattern } = useData();
   const { hideModal } = useModal();
+  const { setAuth } = useUser();
+  const router = useRouter();
 
   const schema = yup.object().shape({
     iva: yup.number().required("Campo Obrigatorio"),
@@ -31,6 +36,12 @@ const ModalPadraoDeSacola = () => {
   });
 
   const onSubmit: SubmitHandler<IFormBag> = (data) => {
+    // verificação de token de usuario.
+    const verifyTokenResult = verifyToken(setAuth, hideModal, router);
+    if (verifyTokenResult !== true) {
+      return;
+    }
+
     setCurrentBagPattern(data);
     toast("PADRÃO DE SACOLA REDEFINIDO", {
       icon: <Image src={iconRobo} alt="Supp" className="h-[3rem] w-[3rem]" />,

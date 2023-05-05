@@ -1,9 +1,12 @@
 import { useModal } from "@/providers/modaisProvider";
 import { useUser } from "@/providers/userProvider";
+import { useRouter } from "next/router";
 import { HiPencilAlt, HiLogout } from "react-icons/hi";
 
 const ModalUsuario = () => {
-  const { userData, setToken } = useUser();
+  const { userData, setToken, setAuth } = useUser();
+  const router = useRouter();
+  const { hideModal } = useModal();
 
   return (
     <div className="flex flex-col text-center items-center gap-[3rem] w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md absolute z-50 py-20">
@@ -35,10 +38,13 @@ const ModalUsuario = () => {
           <HiPencilAlt size={"2rem"} color="#FFFFFF" />
         </button> */}
         <button
-          // onClick={() => {
-          //   setToken(" ");
-          //   sessionStorage.clear();
-          // }}
+          onClick={() => {
+            setToken("");
+            setAuth(false);
+            sessionStorage.clear();
+            hideModal();
+            router.push("/");
+          }}
           className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
           title="Sair"
         >

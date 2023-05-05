@@ -1,3 +1,5 @@
+import { IErrosTypes } from "./errors";
+import { ICurator } from "./people";
 import { IPlace } from "./place";
 
 export interface IFormEnvioError {
@@ -39,9 +41,9 @@ export interface IFormLogin {
 }
 
 export interface IFormCompareSheets {
-  control_spreadsheet: Blob | null;
-  curator_spreadsheet: Blob | null;
-  curator: string;
+  control_spreadsheet: FileList | null;
+  curator_spreadsheet: FileList | null;
+  curator: ICurator;
   client: string;
   abbr: string;
   mall: string;

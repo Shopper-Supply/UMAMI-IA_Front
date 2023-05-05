@@ -1,7 +1,7 @@
 import { IFormBag } from "./form";
 import { IPlace } from "./place";
 import { ICurator } from "./people";
-import { IErrorLog } from "./errors";
+import { IErrorCompare, IErrorLog } from "./errors";
 
 export interface ISheet {
   curator: ICurator;
@@ -38,4 +38,15 @@ export interface ICompareSheets {
   curator_spreadsheet: Blob | null;
   curator_id: number;
   place: string;
+}
+
+export interface ICompareSheetsResponse {
+  place_obj: IPlace;
+  curator: ICurator;
+
+  errors: {
+    sku: IErrorCompare[];
+    prod: IErrorCompare[];
+    espt: IErrorCompare[];
+  };
 }

@@ -10,6 +10,8 @@ import { useUser } from "@/providers/userProvider";
 import { IErroLogBody } from "@/interfaces/errors";
 import { info } from "@/utils/toast";
 import { triggerBase64Download } from "@/utils/downloadBlob";
+import { verifyToken } from "@/utils/finds";
+import { useRouter } from "next/router";
 
 const ModalAprovacaoErros = () => {
   const {
@@ -21,10 +23,13 @@ const ModalAprovacaoErros = () => {
     excelFile,
     currentCurator,
     currentPlace,
+    setCurrentCurator,
   } = useData();
-  const { token } = useUser();
-  const { showModal, setContent, isAlertOpen, openAlert } = useModal();
+  const { token, setAuth } = useUser();
+  const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
+    useModal();
   const [statusErrorsLog, setStatusErrorsLog] = useState<boolean>(false);
+  const router = useRouter();
 
   const getColor = (severity: number | undefined) => {
     switch (severity) {
@@ -48,6 +53,12 @@ const ModalAprovacaoErros = () => {
   }, [statusErrorsLog, setErrorsLog]);
 
   const submitErrorsList = () => {
+    // verificação de token de usuario.
+    const verifyTokenResult = verifyToken(setAuth, hideModal, router);
+    if (verifyTokenResult !== true) {
+      return;
+    }
+
     errorsLog.forEach((element) => {
       const skuError = {
         place: currentPlace,
@@ -141,16 +152,23 @@ const ModalAprovacaoErros = () => {
           >
             <HiCheck size="2rem" />
           </div>
-          <div
+          <button
             onClick={() => {
               triggerBase64Download(responseFile, excelFile!.name);
               info(`PANILHA ${excelFile?.name} PRONTA!`);
             }}
-            title="Baixar Planilha Verificada"
-            className="drop-shadow-md rounded-full bg-branco-primario text-roxo-primario p-4 cursor-pointer"
+            disabled={!responseFile}
+            title={
+              responseFile
+                ? "Baixar Planilha Verificada"
+                : "Nenhum Download Disponível"
+            }
+            className={`drop-shadow-md rounded-full bg-branco-primario text-roxo-primario p-4 ${
+              !responseFile ? "opacity-50" : "cursor-pointer"
+            }`}
           >
             <HiDownload size="2rem" />
-          </div>
+          </button>
         </div>
       </div>
     </div>

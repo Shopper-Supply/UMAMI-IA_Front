@@ -29,3 +29,8 @@ export interface IErroLogResponse {
   sku_error: string;
   created_at: string;
 }
+
+export interface IErrorCompare {
+  row: number;
+  errorType: IErrosTypes;
+}
