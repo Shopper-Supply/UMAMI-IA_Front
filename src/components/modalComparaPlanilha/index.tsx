@@ -85,6 +85,8 @@ const ModalComparaPlanilha = () => {
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const router = useRouter();
+  const [controlFileName, setControlFileName] = useState("");
+  const [curatorFileName, setCuratorFileName] = useState("");
 
   const {
     register,
@@ -199,6 +201,16 @@ const ModalComparaPlanilha = () => {
       error("EU NÃO CONHEÇO ESSE CURADOR");
     }
   };
+
+  const handleControlFileChange = (event: any) => {
+    const file = event.target.files[0];
+    setControlFileName(file.name);
+  };
+
+  function handleCuratorFileChange(event: any) {
+    const file = event.target.files[0];
+    setCuratorFileName(file.name);
+  }
 
   return (
     <>
@@ -404,13 +416,16 @@ const ModalComparaPlanilha = () => {
               </h2>
               <div className="relative px-[1rem] py-[1.2rem] cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario">
                 <p className="mt-[1rem] mb-[.9rem] text-[.9rem] text-roxo-primario opacity-80 tracking-wide">
-                  Clique ou arraste para esse campo o arquivo que deseja enviar
+                  {controlFileName
+                    ? controlFileName
+                    : "Clique ou arraste para esse campo o arquivo que deseja enviar"}
                 </p>
                 <HiPlusCircle color="#5F4B8B" size="3.5rem" />
                 <input
                   {...register("control_spreadsheet")}
                   id="dropzone-file"
                   type="file"
+                  onChange={handleControlFileChange}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
@@ -429,13 +444,16 @@ const ModalComparaPlanilha = () => {
               </h2>
               <div className="relative px-[1rem] py-[1.2rem] cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario">
                 <p className="mt-[1rem] mb-[.9rem] text-roxo-primario opacity-80 tracking-wide">
-                  Clique ou arraste para esse campo o arquivo que deseja enviar
+                  {curatorFileName
+                    ? curatorFileName
+                    : "Clique ou arraste para esse campo o arquivo que deseja enviar"}
                 </p>
                 <HiPlusCircle color="#5F4B8B" size="3.5rem" />
                 <input
                   {...register("curator_spreadsheet")}
                   id="dropzone-file"
                   type="file"
+                  onChange={handleCuratorFileChange}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
