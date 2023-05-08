@@ -1,19 +1,22 @@
 import { NextPage } from "next";
+// import { useState } from "react";
 import Seo from "@/components/seo";
 import Menu from "@/components/menu";
 import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
+// import WellcomeModal from "@/components/wellcomeModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const {auth} = useUser()
-  const router = useRouter()
+  const { auth } = useUser();
+  const router = useRouter();
+  // const [isFirstVisit, setFirstVitit] = useState(true);
 
   if (!auth) {
-     if (typeof window !== "undefined") {
-       router.push("/");
-     }
+    if (typeof window !== "undefined") {
+      router.push("/");
+    }
   }
 
   return (
@@ -26,6 +29,7 @@ const Home: NextPage = () => {
         <Menu />
         <Modal />
         <ModalAprovacaoErros />
+        {/* {isFirstVisit && <WellcomeModal />} */}
       </main>
     </>
   );
