@@ -35,7 +35,8 @@ const ModalEnvioPlanilha = () => {
   } = useData();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const { token, setAuth } = useUser();
-  const [checked, setChecked] = useState<boolean>(false); //false = Manual e true = Sistêmico
+  const [modality, setModality] = useState<boolean>(false); //false = Manual e true = Sistêmico
+  const [submitType, setSubmitType] = useState<boolean>(false); //false = Validação e true = Correção
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const router = useRouter();
@@ -66,7 +67,8 @@ const ModalEnvioPlanilha = () => {
 
         formData.append("bag_patterns", JSON.stringify(currentBagPattern));
         formData.append("curator_id", findCurator(curators, data));
-        formData.append("modality", checked ? "Sistemico" : "Manual");
+        formData.append("modality", modality ? "Sistemico" : "Manual");
+        formData.append("is_correcting", JSON.stringify(submitType));
         formData.append(
           "place",
           JSON.stringify({
@@ -108,15 +110,18 @@ const ModalEnvioPlanilha = () => {
     if (verifyTokenResult !== true) {
       return;
     }
-
     setData(data);
 
     const idCurator = findCurator(curators, data);
 
     if (idCurator) {
       const place = findPlace(places, data);
-      if (!place) {
+      if (!place && !submitType) {
         openAlert();
+      } else if (!place && submitType) {
+        error(
+          "FORNEÇA UM CANAL DE VENDAS EXISTENTE PARA CORREÇÃO DE PLANILHA!"
+        );
       } else {
         setStatusPlace(true);
       }
@@ -336,17 +341,17 @@ const ModalEnvioPlanilha = () => {
           </div>
         </div>
         <div
-          onClick={() => setChecked(!checked)}
+          onClick={() => setModality(!modality)}
           className="flex items-center space-x-2 mt-2 drop-shadow-md rounded-full w-[80%] cursor-pointer  bg-branco-primario box-border"
         >
           <div
             className={` w-[50rem] py-[1rem] ${
-              !checked ? "bg-roxo-primario" : "bg-branco-primario"
+              !modality ? "bg-roxo-primario" : "bg-branco-primario"
             } rounded-full text-3xl text-center p-[1.5rem] box-border`}
           >
             <p
               className={`text-3xl ${
-                checked ? "text-roxo-primario " : "text-branco-primario"
+                modality ? "text-roxo-primario " : "text-branco-primario"
               }`}
             >
               Manual
@@ -354,22 +359,49 @@ const ModalEnvioPlanilha = () => {
           </div>
           <div
             className={`w-[50rem] py-[1rem] ${
-              !checked ? "bg-branco-primario" : "bg-roxo-primario"
+              !modality ? "bg-branco-primario" : "bg-roxo-primario"
             } rounded-full text-center p-[1.5rem] box-border`}
           >
             <p
               className={`text-3xl ${
-                checked ? "text-branco-primario" : "text-roxo-primario"
+                modality ? "text-branco-primario" : "text-roxo-primario"
               } `}
             >
               Sistêmico
             </p>
           </div>
+        </div>
 
-          {/* <input
-            type="checkbox"
-            className="cursor-pointer appearance-none w-[7rem] h-[4rem] focus:outline-none checked:bg-branco-primario bg-roxo-primario  rounded-full before:inline-block before:rounded-full before:bg-branco-primario before:h-[3.6rem] before:w-[3.6rem] checked:before:bg-roxo-primario checked:before:translate-x-[3rem] drop-shadow-md transition-all duration-500 before:ml-[.2rem] before:mt-[.2rem]"
-          /> */}
+        <div
+          onClick={() => setSubmitType(!submitType)}
+          className="flex items-center space-x-2 mt-2 drop-shadow-md rounded-full w-[80%] cursor-pointer  bg-branco-primario box-border"
+        >
+          <div
+            className={` w-[50rem] py-[1rem] ${
+              !submitType ? "bg-roxo-primario" : "bg-branco-primario"
+            } rounded-full text-3xl text-center p-[1.5rem] box-border`}
+          >
+            <p
+              className={`text-3xl ${
+                submitType ? "text-roxo-primario " : "text-branco-primario"
+              }`}
+            >
+              Validação
+            </p>
+          </div>
+          <div
+            className={`w-[50rem] py-[1rem] ${
+              !submitType ? "bg-branco-primario" : "bg-roxo-primario"
+            } rounded-full text-center p-[1.5rem] box-border`}
+          >
+            <p
+              className={`text-3xl ${
+                submitType ? "text-branco-primario" : "text-roxo-primario"
+              } `}
+            >
+              Correção
+            </p>
+          </div>
         </div>
         <button
           className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"

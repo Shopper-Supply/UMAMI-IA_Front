@@ -24,6 +24,7 @@ const ModalAprovacaoErros = () => {
     currentCurator,
     currentPlace,
     setCurrentCurator,
+    setCurrentPlace,
   } = useData();
   const { token, setAuth } = useUser();
   const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
@@ -49,6 +50,8 @@ const ModalAprovacaoErros = () => {
   useEffect(() => {
     if (statusErrorsLog) {
       setErrorsLog([]), setStatusErrorsLog(false);
+      setCurrentCurator({});
+      setCurrentPlace({});
     }
   }, [statusErrorsLog, setErrorsLog]);
 
