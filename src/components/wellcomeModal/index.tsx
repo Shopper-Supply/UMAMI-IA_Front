@@ -1,3 +1,6 @@
+import IlustrationRobot_01 from "../../../public/person_&_robot.png";
+import Image from "next/image";
+
 const WellcomeModal = ({ setFirstVitit }: any) => {
   return (
     <div className="absolute z-50 top-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50">
@@ -9,8 +12,12 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
             className="w-[1.5rem] h-[1.5rem] bg-severity-5 rounded-full cursor-pointer animate-bounce"
           ></div>
         </div>
-        <div className="w-[80%] p-5 bg-cinza-primario  rounded-lg">
-          {/* pode inserir imagens aqui */}
+        <div className="w-[80%] p-5 bg-roxo-primario bg-opacity-30  rounded-lg relative">
+          <Image
+            src={IlustrationRobot_01}
+            alt="Ilustração robo de qualidade 01 "
+            className=" absolute h-[13rem] w-[30rem] top-[-1.5rem] left-[-3rem]"
+          />
           <div className="flex flex-col items-center">
             <h1 className="text-[4rem] text-roxo-secundario font-bold ">
               BEM-VINDO
@@ -22,8 +29,8 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
         </div>
         <h4 className=" mt-10 text-[2rem] font-medium">NOTAS DE ATUALIZAÇÂO</h4>
 
-        <div className="overflow-y-scroll">
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+        <div className="overflow-y-scroll mb-7">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
               - Comparação de planilhas
             </p>
@@ -33,7 +40,7 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               na lista de aprovação.
             </span>
           </div>
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
               - Visualizar senha
             </p>
@@ -43,16 +50,16 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               credenciamento.
             </span>
           </div>
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
-              - Botão de sair corriguido
+              - Botão de sair corrigido
             </p>
             <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
               Agora é possivel deslogar facilmente atraves de um botão de sing
               out no modal de usuario.
             </span>
           </div>
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
               - Verificação de token de acesso (segurança)
             </p>
@@ -62,7 +69,7 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               expirou a plataforma te leva de volta para a tela de login.
             </span>
           </div>
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
               - Comunicação
             </p>
@@ -71,7 +78,7 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               conclusão.
             </span>
           </div>
-          <div className="mx-40 p-4 hover:bg-roxo-primario hover:bg-opacity-25 rounded-md">
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
             <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
               - Corrreção de bugs
             </p>
