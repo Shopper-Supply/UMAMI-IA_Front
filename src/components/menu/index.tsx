@@ -130,7 +130,7 @@ const Menu = () => {
             <HiOutlineQuestionMarkCircle color="#5F4B8B" size="2.5rem" />
             Help
           </li>
-          <div className="flex justify-around items-center mb-[2rem] ">
+          <div className="flex justify-around items-center ">
             <input
               type="checkbox"
               className=" hidden cursor-pointer appearance-none w-[7rem] h-[4rem] focus:outline-none checked:bg-branco-primario bg-roxo-primario  rounded-full before:inline-block before:rounded-full before:bg-branco-primario before:h-[3.6rem] before:w-[3.6rem] checked:before:bg-roxo-primario checked:before:translate-x-[3rem] drop-shadow-md transition-all duration-500 before:ml-[.2rem] before:mt-[.2rem]"
@@ -147,6 +147,9 @@ const Menu = () => {
               <HiOutlineUser size="2.5rem" />
             </button>
           </div>
+          <span className="text-[1rem] w-[100%] text-center mb-3">
+            Versão: alfa 1.1.0
+          </span>
         </ul>
       </div>
     </div>
