@@ -1,3 +1,6 @@
+import { useModal } from "@/providers/modaisProvider";
+import ModalRelatoriErrors from "../relatoriErrorsModal";
+
 interface IDonutDash {
   porcent?: number;
   title?: string;
@@ -5,6 +8,8 @@ interface IDonutDash {
 }
 
 const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
+  const { showModal, setContent, reverseModal } = useModal();
+
   const calcPorcent = (porcent: number) => {
     porcent = 100 - porcent;
     porcent = 100 / porcent;
@@ -13,7 +18,14 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
   };
   return (
     <li>
-      <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4">
+      <div
+        onClick={() => {
+          setContent(ModalRelatoriErrors);
+          reverseModal();
+          showModal();
+        }}
+        className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
+      >
         <h4
           className={`${
             ranking <= 1 ? "text-severity-5" : "text-roxo-secundario"
@@ -60,7 +72,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
             <h3>{porcent ? porcent : "??"}%</h3>
           </div>
         </div>
-        <div className="flex justify-center w-[100%] gap-6 mt-5">
+        <div className="flex justify-center w-[100%] gap-3 mt-5">
           <div className=" flex gap-2 items-center">
             <div className="w-5 h-5 bg-cinza-primario rounded-full"></div>
             <span>skus</span>
