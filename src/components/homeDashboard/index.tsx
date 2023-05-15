@@ -6,7 +6,7 @@ const HomeDashboard = () => {
   return (
     <section
       id="DashBoard"
-      className=" top-0 absolute ml-[21.5rem] w-[86%] h-screen pl-14 pt-14 overflow-y-scroll overflow-x-hidden"
+      className="-z-0 top-0 absolute ml-[21.5rem] w-[86%] h-screen pl-14 pt-14 overflow-y-scroll overflow-x-hidden"
     >
       <div className="w-[70%] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
         <Image

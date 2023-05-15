@@ -32,6 +32,8 @@ interface IDataContext {
 
   responseFile: string;
   setResponseFile: React.Dispatch<React.SetStateAction<string>>;
+
+  loadData: () => void;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -69,6 +71,8 @@ const DataContext = createContext<IDataContext>({
 
   responseFile: "",
   setResponseFile: () => {},
+
+  loadData: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -102,10 +106,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
   useEffect(() => {
     if (auth) {
-      getCurators(token || "", setCurators);
-      getErrorTypes(token || "", setErrors);
-
-      getPlaces(token || "", setPlace);
+      loadData();
     }
   }, [auth, token]);
 
@@ -117,6 +118,13 @@ export const DataProvider = ({ children }: IDataProvider) => {
     const errorList = [...errorsLog];
     errorList.splice(errorId, 1);
     setErrorsLog(errorList);
+  };
+
+  const loadData = () => {
+    getCurators(token || "", setCurators);
+    getErrorTypes(token || "", setErrors);
+
+    getPlaces(token || "", setPlace);
   };
 
   return (
@@ -144,6 +152,8 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
         responseFile,
         setResponseFile,
+
+        loadData,
       }}
     >
       {children}

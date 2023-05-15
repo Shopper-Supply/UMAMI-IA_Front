@@ -220,7 +220,7 @@ const ModalComparaPlanilha = () => {
           setStatus={setstatusPlace}
         />
       )}
-      <div className="z-30 bg-branco-primario w-[25%] min-w-[35rem] h-screen flex flex-col items-center">
+      <div className="z-10 bg-branco-primario w-[25%] min-w-[35rem] h-screen flex flex-col items-center drop-shadow-md">
         <div className="flex flex-col justify-around items-center mt-[6.5rem]">
           <Image src={iconRobo} alt="icon robô de qualidade." />
           <p className="text-roxo-primario text-3xl text-center p-3">

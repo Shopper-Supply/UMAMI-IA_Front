@@ -32,6 +32,7 @@ const ModalEnvioPlanilha = () => {
     addError,
     setErrorsLog,
     setResponseFile,
+    loadData,
   } = useData();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const { token, setAuth } = useUser();
@@ -99,6 +100,7 @@ const ModalEnvioPlanilha = () => {
         })
         .finally(() => {
           setStatusPlace(false);
+          loadData();
           hideModal();
         });
     }
