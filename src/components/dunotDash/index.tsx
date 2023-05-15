@@ -28,7 +28,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
       >
         <h4
           className={`${
-            ranking <= 1 ? "text-severity-5" : "text-roxo-secundario"
+            ranking <= 0.0 ? "text-severity-5" : "text-roxo-secundario"
           } text-[2rem] text-center font-bold`}
         >
           {title ? (
@@ -53,7 +53,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
                 cx="120"
                 cy="78"
                 r="55"
-                stroke={ranking <= 1 ? "#F83636" : "#8d3ae5"}
+                stroke={ranking <= 0.0 ? "#F83636" : "#8d3ae5"}
                 strokeWidth="23px"
                 fill="none"
                 strokeDasharray={345}
@@ -64,12 +64,15 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
           </svg>
           <div
             className={`text-[2.9rem] ${
-              ranking <= 1 ? "text-[#F83636]" : "text-[#8d3ae5]"
+              ranking <= 0.0 ? "text-[#F83636]" : "text-[#8d3ae5]"
             } font-bold absolute top-[40%] ${
               porcent != 100 ? "left-[40%]" : "left-[36%]"
-            } ${!porcent && "animate-pulse"}`}
+            } ${!title && "animate-pulse"}`}
+
+            // TA QUASE DANDO SUCESSO
+            //  ULTIMO TESTE
           >
-            <h3>{porcent ? porcent : "??"}%</h3>
+            <h3>{title ? porcent : "??"}%</h3>
           </div>
         </div>
         <div className="flex justify-center w-[100%] gap-3 mt-5">
@@ -80,7 +83,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
           <div className=" flex gap-2 items-center">
             <div
               className={`w-5 h-5 ${
-                ranking > 1 ? "bg-[#8d3ae5]" : "bg-severity-5"
+                ranking > 0 ? "bg-[#8d3ae5]" : "bg-severity-5"
               } rounded-full`}
             ></div>
             <span>Erros</span>
