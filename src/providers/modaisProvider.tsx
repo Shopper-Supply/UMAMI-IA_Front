@@ -17,6 +17,9 @@ interface IModalContext {
   isAlertOpen: boolean;
   openAlert: () => void;
   closeAlert: () => void;
+
+  dashPage: number;
+  setDashPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ModalContext = createContext<IModalContext>({
@@ -30,6 +33,9 @@ const ModalContext = createContext<IModalContext>({
   isAlertOpen: false,
   openAlert: () => {},
   closeAlert: () => {},
+
+  dashPage: 0,
+  setDashPage: () => {},
 });
 
 export const ModalProvider = ({ children }: IModalProvider) => {
@@ -40,6 +46,8 @@ export const ModalProvider = ({ children }: IModalProvider) => {
   const [isReversed, setIsReversed] = useState<boolean>(false);
 
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+
+  const [dashPage, setDashPage] = useState<number>(1);
 
   function hideModal() {
     // Esconder o Modal ja aberto, essa função deve ser chamada para fechar um modal.
@@ -81,6 +89,9 @@ export const ModalProvider = ({ children }: IModalProvider) => {
         isAlertOpen,
         openAlert,
         closeAlert,
+
+        dashPage,
+        setDashPage,
       }}
     >
       {children}

@@ -32,6 +32,7 @@ const ModalEnvioErros = () => {
   const { token, setAuth } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
+  const [erroData, setErroData] = useState({});
   const [data, setData] = useState<any>({});
   const router = useRouter();
 
@@ -74,14 +75,17 @@ const ModalEnvioErros = () => {
       };
 
       createPlace(token || "", body)
-        .then((res) => setCurrentPlace(res.data))
+        .then((res) => {
+          setCurrentPlace(res.data);
+          addError(erroData);
+          info("ERRO ADICIONADO A LISTA DE APROVAÇÂO");
+        })
         .catch((err) => {
           console.log(err);
-          error("OPS! ALGO DEU ERRADO");
+          error("OPS! ALGO DEU ERRADO AO CRIAR UM NOVO CANAL DE VENDAS");
         })
         .finally(() => {
           setStatusPlace(false);
-          // hideModal();
         });
     }
   }, [statusPlace, token]);
@@ -116,8 +120,7 @@ const ModalEnvioErros = () => {
           sheet: data.sheet,
         };
 
-        addError(body);
-        info("ERRO ADICIONADO COM SUCESSO");
+        setErroData(body);
       } else {
         error("EU NÃO CONHEÇO ESSE CURADOR");
       }

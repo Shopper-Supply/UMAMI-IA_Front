@@ -29,7 +29,10 @@ const ConfirmAction = ({ message, setStatus }: IConfirmAction) => {
             Sim
           </button>
           <button
-            onClick={closeAlert}
+            onClick={() => {
+              closeAlert();
+              setStatus(false);
+            }}
             className="bg-severity-5 py-1 px-7 text-[1.5rem] font-semibold rounded-full text-branco-secundario shadow-inner drop-shadow-sm focus:outline-roxo-primario"
           >
             Não
