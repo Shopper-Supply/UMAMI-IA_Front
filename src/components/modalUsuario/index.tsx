@@ -2,6 +2,7 @@ import { useModal } from "@/providers/modaisProvider";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { HiPencilAlt, HiLogout } from "react-icons/hi";
+import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
 
 const ModalUsuario = () => {
   const { userData, setToken, setAuth } = useUser();
@@ -50,6 +51,13 @@ const ModalUsuario = () => {
         >
           <HiLogout size={"2rem"} color="#FFFFFF" />
         </button>
+        <button
+              onClick={hideModal}
+              className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+              title="Fechar"
+            >
+              <HiOutlineXMark color="#FFFFFF" size="2rem" />
+            </button>
       </div>
     </div>
   );
