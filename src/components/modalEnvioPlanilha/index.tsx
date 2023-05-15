@@ -111,11 +111,11 @@ const ModalEnvioPlanilha = () => {
     data = {
       ...data,
 
-      curator: "Alex Lanção",
-      client: "ALSO",
-      place: "Ri Happy",
-      mall: "Tijuca",
-      abbr: "SDB",
+      // curator: "Alex Lanção",
+      // client: "ALSO",
+      // place: "Ri Happy",
+      // mall: "Tijuca",
+      // abbr: "SDB",
     };
     const verifyTokenResult = verifyToken(setAuth, hideModal, router);
     if (verifyTokenResult !== true) {

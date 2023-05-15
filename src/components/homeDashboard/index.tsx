@@ -6,9 +6,9 @@ const HomeDashboard = () => {
   return (
     <section
       id="DashBoard"
-      className="-z-0 top-0 absolute ml-[21.5rem] w-[86%] h-screen pl-14 pt-14 overflow-y-scroll overflow-x-hidden"
+      className="-z-0 top-0 absolute ml-[21.5rem] w-[86%] h-screen pl-14 pt-14 pr-40 overflow-y-scroll overflow-x-hidden"
     >
-      <div className="w-[70%] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
+      <div className="w-[75.7%] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
         <Image
           src={IlustrationRobot_02}
           alt="Ilustração robo de qualidade"
@@ -27,8 +27,8 @@ const HomeDashboard = () => {
       </div>
 
       <ul className="pt-8 flex w-[92%] h-[75%] flex-wrap gap-4">
-        <DunotDash porcent={23} title="Código" ranking={1} />
-        <DunotDash ranking={2} title="Preenchimento" porcent={17} />
+        <DunotDash ranking={1} />
+        <DunotDash ranking={2} />
         <DunotDash ranking={3} />
         <DunotDash ranking={4} />
         <DunotDash ranking={5} />

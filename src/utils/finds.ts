@@ -24,7 +24,9 @@ export function findPlace(placesList: any[], data: any) {
   const place = placesList.find(
     (place) =>
       place.name?.toLowerCase() == data.place.toLowerCase() &&
-      place.mall?.toUpperCase() == data.mall.toUpperCase()
+      place.mall?.toUpperCase() == data.mall.toUpperCase() &&
+      place.client?.toUpperCase() == data.client.toUpperCase() &&
+      place.abbr?.toUpperCase() == data.abbr.toUpperCase()
   );
 
   return place;
