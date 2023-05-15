@@ -23,7 +23,7 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               BEM-VINDO
             </h1>
             <h2 className="text-[2rem] text-roxo-secundario font-semibold">
-              Versão: Alfa 1.2.0
+              Versão: Alfa 1.2.1
             </h2>
           </div>
         </div>
