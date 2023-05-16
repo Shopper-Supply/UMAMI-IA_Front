@@ -52,12 +52,12 @@ const ModalUsuario = () => {
           <HiLogout size={"2rem"} color="#FFFFFF" />
         </button>
         <button
-              onClick={hideModal}
-              className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Fechar"
-            >
-              <HiOutlineXMark color="#FFFFFF" size="2rem" />
-            </button>
+            onClick={hideModal}
+            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Fechar"
+          >
+            <HiOutlineXMark color="#FFFFFF" size="2rem" />
+        </button>
       </div>
     </div>
   );
