@@ -32,7 +32,7 @@ const Home: NextPage = () => {
       <main className="bg-branco-secundario">
         <Menu />
         <Modal />
-        <div className="flex justify-end">
+        <div>
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
           {componentsPageDash[0]}
