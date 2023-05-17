@@ -130,13 +130,13 @@ const ModalComparaPlanilha = () => {
           setCurrentCurator(res.curator);
           setCurrentPlace(res.place_obj);
           setErrorsLog([...errorsLog, ...errorLogList]);
+
           if (res.errors.espt.length > 0 && res.errors.prod.length > 0 && res.errors.sku.length > 0) {
-            return info("NENHUM ERRO ENCONTRADO!")
+            return info("NENHUM ERRO ENCONTRADO")
           } 
         }
       })
       .catch((err) => {
-        console.log(err)
         error("OPS! ALGO DEU ERRADO NA COMPARAÇÃO DE PLANILHAS");
       })
       .finally(() => {

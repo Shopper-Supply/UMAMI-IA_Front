@@ -93,10 +93,13 @@ const ModalEnvioPlanilha = () => {
             setCurrentPlace(res.data.place_obj);
             setResponseFile(res.data.workbook);
             info("SUA PLANILHA FOI VALIDADA COM SUCESSO");
+
+            // if (res.data.errors.length > 0) {
+            //   return info("NENHUM ERRO ENCONTRADO!")
+            // }
           }
         })
         .catch((err) => {
-          console.log(err);
           error("OPS! ALGO DEU ERRADO");
         })
         .finally(() => {
@@ -108,6 +111,7 @@ const ModalEnvioPlanilha = () => {
   }, [statusPlace, token]);
 
   const onSubmit = (data: any) => {
+    
     // verificação de token de usuario.
     data = {
       ...data,
