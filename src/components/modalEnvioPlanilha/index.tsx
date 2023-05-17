@@ -94,9 +94,9 @@ const ModalEnvioPlanilha = () => {
             setResponseFile(res.data.workbook);
             info("SUA PLANILHA FOI VALIDADA COM SUCESSO");
 
-            // if (res.data.errors.length > 0) {
-            //   return info("NENHUM ERRO ENCONTRADO!")
-            // }
+            if (res.data.errors.length == 0) {
+              return info("NENHUM ERRO ENCONTRADO")
+            }
           }
         })
         .catch((err) => {
