@@ -3,8 +3,14 @@ import { IErrosTypes, IErroLogBody, IErrorLog } from "../interfaces/errors";
 import { ICurator } from "../interfaces/people";
 import { IPlace } from "../interfaces/place";
 import { IBag } from "@/interfaces/bagpattern";
-import { getCurators, getErrorTypes, getPlaces } from "@/services/get";
+import {
+  getCurators,
+  getErrorTypes,
+  getHomeDashboardInfos,
+  getPlaces,
+} from "@/services/get";
 import { useUser } from "./userProvider";
+import { IhomeDashboard } from "@/interfaces/dashboard";
 
 interface IDataProvider {
   children: React.ReactNode;
@@ -34,6 +40,10 @@ interface IDataContext {
   setResponseFile: React.Dispatch<React.SetStateAction<string>>;
 
   loadData: () => void;
+
+  // dashboard datas
+  dashboardHome: IhomeDashboard;
+  setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -73,6 +83,15 @@ const DataContext = createContext<IDataContext>({
   setResponseFile: () => {},
 
   loadData: () => {},
+
+  // dashboard datas
+
+  dashboardHome: {
+    groups: [],
+    total_errors: 0,
+    total_skus: 0,
+  },
+  setDashboardHome: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -102,6 +121,14 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const [excelFile, setExcelFile] = useState<Blob | null>(null);
   const [responseFile, setResponseFile] = useState<string>("");
 
+  // Dashboard datas
+
+  const [dashboardHome, setDashboardHome] = useState<IhomeDashboard>({
+    groups: [],
+    total_errors: 0,
+    total_skus: 0,
+  });
+
   const { token, auth } = useUser();
 
   useEffect(() => {
@@ -125,6 +152,8 @@ export const DataProvider = ({ children }: IDataProvider) => {
     getErrorTypes(token || "", setErrors);
 
     getPlaces(token || "", setPlace);
+
+    getHomeDashboardInfos(token || "", setDashboardHome);
   };
 
   return (
@@ -154,6 +183,10 @@ export const DataProvider = ({ children }: IDataProvider) => {
         setResponseFile,
 
         loadData,
+
+        // dashboard datas
+        dashboardHome,
+        setDashboardHome,
       }}
     >
       {children}

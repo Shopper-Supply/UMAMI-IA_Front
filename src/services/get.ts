@@ -2,6 +2,7 @@ import { ICurator, IUserDetail } from "@/interfaces/people";
 import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
 import { IPlace } from "@/interfaces/place";
+import { IhomeDashboard } from "@/interfaces/dashboard";
 
 export function getCurators(
   token: string,
@@ -52,4 +53,17 @@ export function getProfile(token: string): Promise<IUserDetail> {
       },
     })
     .then((res) => res.data);
+}
+
+export function getHomeDashboardInfos(
+  token: string,
+  setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>
+): Promise<IhomeDashboard | void> {
+  return api
+    .get("dashboard/grupos/", {
+      headers: {
+        Authorization: "Token " + token,
+      },
+    })
+    .then((res) => setDashboardHome(res.data));
 }
