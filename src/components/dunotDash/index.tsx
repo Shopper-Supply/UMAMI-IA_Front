@@ -19,11 +19,11 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
   return (
     <li>
       <div
-        onClick={() => {
-          setContent(ModalRelatoriErrors);
-          reverseModal();
-          showModal();
-        }}
+        // onClick={() => {
+        //   setContent(ModalRelatoriErrors);
+        //   reverseModal();
+        //   showModal();
+        // }}
         className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
       >
         <h4
