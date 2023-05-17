@@ -92,6 +92,7 @@ const ModalEnvioPlanilha = () => {
             setCurrentCurator(res.data.curator);
             setCurrentPlace(res.data.place_obj);
             setResponseFile(res.data.workbook);
+            info("SUA PLANILHA FOI VALIDADA COM SUCESSO");
           }
         })
         .catch((err) => {
