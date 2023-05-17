@@ -23,7 +23,7 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               BEM-VINDO
             </h1>
             <h2 className="text-[2rem] text-roxo-secundario font-semibold">
-              Versão: Alfa 1.2.1
+              Versão: Alfa 1.2.3
             </h2>
           </div>
         </div>
@@ -76,6 +76,15 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
             <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
               Agora ao fim de cada tarefa irá aparecer um popup informando a sua
               conclusão.
+            </span>
+          </div>
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
+            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
+              - Relatorios
+            </p>
+            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
+              Na pagina inicial é possivel visualizar a porcentagem baseado na
+              quantidade de cada erro.
             </span>
           </div>
           <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">

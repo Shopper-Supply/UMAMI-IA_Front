@@ -21,6 +21,7 @@ import { ICompareSheetsResponse } from "@/interfaces/sheet";
 import { IFormCompareSheets } from "@/interfaces/form";
 import { IErrorCompare, IErrorLog } from "@/interfaces/errors";
 import { useRouter } from "next/router";
+import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -224,7 +225,7 @@ const ModalComparaPlanilha = () => {
         <div className="flex flex-col justify-around items-center mt-[6.5rem]">
           <Image src={iconRobo} alt="icon robô de qualidade." />
           <p className="text-roxo-primario text-3xl text-center p-3">
-            Compare se informações foram violadas.
+            Compare se as informações foram violadas.
           </p>
         </div>
         <form
@@ -464,13 +465,22 @@ const ModalComparaPlanilha = () => {
               )}
             </label>
           </div>
-          <button
-            className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
-            title="Enviar"
-            type="submit"
-          >
-            <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
-          </button>
+          <div className="mt-[5%] flex gap-3">
+            <button
+              className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
+              title="Enviar"
+              type="submit"
+            >
+              <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
+            </button>
+            <button
+              onClick={hideModal}
+              className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
+              title="Fechar"
+            >
+              <HiOutlineXMark color="#FFFFFF" size="2.7rem" />
+            </button>
+          </div>
         </form>
       </div>
     </>

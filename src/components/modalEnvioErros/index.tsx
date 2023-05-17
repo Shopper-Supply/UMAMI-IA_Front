@@ -402,7 +402,7 @@ const ModalEnvioErros = () => {
             <button
               onClick={hideModal}
               className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Enviar"
+              title="Fechar"
             >
               <HiOutlineXMark color="#FFFFFF" size="2rem" />
             </button>

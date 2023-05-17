@@ -1,8 +1,13 @@
 import Image from "next/image";
 import DunotDash from "@/components/dunotDash";
 import IlustrationRobot_02 from "../../../public/robot_02.png";
+import { useData } from "@/providers/dataProvider";
 
 const HomeDashboard = () => {
+  const { dashboardHome } = useData();
+  const sortedDashboardhome = dashboardHome.groups.sort(
+    (a, b) => b.percentage - a.percentage
+  );
   return (
     <section
       id="DashBoard"
@@ -27,14 +32,14 @@ const HomeDashboard = () => {
       </div>
 
       <ul className="pt-8 flex w-[92%] h-[75%] flex-wrap gap-4">
-        <DunotDash ranking={1} />
-        <DunotDash ranking={2} />
-        <DunotDash ranking={3} />
-        <DunotDash ranking={4} />
-        <DunotDash ranking={5} />
-        <DunotDash ranking={6} />
-        <DunotDash ranking={7} />
-        <DunotDash ranking={8} />
+        {sortedDashboardhome.map((group, index) => (
+          <DunotDash
+            ranking={index}
+            key={index}
+            porcent={Math.round(group.percentage)}
+            title={group.name}
+          />
+        ))}
       </ul>
     </section>
   );
