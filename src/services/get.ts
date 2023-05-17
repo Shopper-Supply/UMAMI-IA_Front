@@ -60,7 +60,7 @@ export function getHomeDashboardInfos(
   setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>
 ): Promise<IhomeDashboard | void> {
   return api
-    .get("erros/log/dashboard/", {
+    .get("dashboard/grupos/", {
       headers: {
         Authorization: "Token " + token,
       },
