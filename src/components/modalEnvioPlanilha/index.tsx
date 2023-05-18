@@ -95,7 +95,7 @@ const ModalEnvioPlanilha = () => {
             if (res.data.errors.length == 0) {
               return info("SUA PLANILHA FOI VALIDADA E NENHUM ERRO FOI ENCONTRADO")
             }else {
-              info("SUA PLANILHA FOI VALIDADA COM SUCESSO");
+              info("SUA PLANILHA FOI VALIDADA COM SUCESSO!");
             }
           }
         })
