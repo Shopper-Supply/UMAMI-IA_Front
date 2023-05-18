@@ -14,6 +14,9 @@ interface IModalContext {
   reverseModal: () => void;
   setContent: React.Dispatch<React.SetStateAction<JSX.Element | undefined>>;
 
+  loadingScreen: boolean;
+  setLoadingScreen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isAlertOpen: boolean;
   openAlert: () => void;
   closeAlert: () => void;
@@ -30,6 +33,9 @@ const ModalContext = createContext<IModalContext>({
   reverseModal: () => {},
   setContent: () => {},
 
+  loadingScreen: false,
+  setLoadingScreen: () => {},
+
   isAlertOpen: false,
   openAlert: () => {},
   closeAlert: () => {},
@@ -44,6 +50,8 @@ export const ModalProvider = ({ children }: IModalProvider) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [content, setContent] = useState<JSX.Element | undefined>(undefined);
   const [isReversed, setIsReversed] = useState<boolean>(false);
+  
+  const [loadingScreen, setLoadingScreen] = useState<boolean>(false);
 
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 
@@ -85,6 +93,9 @@ export const ModalProvider = ({ children }: IModalProvider) => {
         showModal,
         reverseModal,
         setContent,
+
+        loadingScreen,
+        setLoadingScreen,
 
         isAlertOpen,
         openAlert,

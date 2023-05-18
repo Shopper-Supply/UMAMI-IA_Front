@@ -34,7 +34,7 @@ const ModalEnvioPlanilha = () => {
     setResponseFile,
     loadData,
   } = useData();
-  const { hideModal, openAlert, isAlertOpen } = useModal();
+  const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
   const { token, setAuth } = useUser();
   const [modality, setModality] = useState<boolean>(false); //false = Manual e true = Sistêmico
   const [submitType, setSubmitType] = useState<boolean>(false); //false = Validação e true = Correção
@@ -84,6 +84,7 @@ const ModalEnvioPlanilha = () => {
       };
 
       const body = makeBody();
+      setLoadingScreen(true);
       info("ESTOU TRABALHANDO NA SUA PLANILHA");
       validateSheet(token || "", body)
         .then((res: void | AxiosResponse<ISheet>) => {
@@ -106,6 +107,7 @@ const ModalEnvioPlanilha = () => {
           setStatusPlace(false);
           loadData();
           hideModal();
+          setLoadingScreen(false);
         });
     }
   }, [statusPlace, token]);
