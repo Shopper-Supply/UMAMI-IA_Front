@@ -222,7 +222,7 @@ const ModalComparaPlanilha = () => {
         />
       )}
       <div className="z-10 bg-branco-primario w-[25%] min-w-[35rem] h-screen flex flex-col items-center drop-shadow-md">
-        <div className="flex flex-col justify-around items-center mt-[6.5rem]">
+        <div className="flex flex-col justify-around items-center mt-[1rem]">
           <Image src={iconRobo} alt="icon robô de qualidade." />
           <p className="text-roxo-primario text-3xl text-center p-3">
             Compare se as informações foram violadas.
@@ -465,23 +465,23 @@ const ModalComparaPlanilha = () => {
               )}
             </label>
           </div>
-          <div className="mt-[5%] flex gap-3">
+        </form>
+          <div className="mt-[2%] flex gap-3">
             <button
               className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
               title="Enviar"
               type="submit"
             >
-              <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
+              <HiOutlineArrowUpTray color="#FFFFFF" size="2rem" />
             </button>
             <button
               onClick={hideModal}
               className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
               title="Fechar"
             >
-              <HiOutlineXMark color="#FFFFFF" size="2.7rem" />
+              <HiOutlineXMark color="#FFFFFF" size="2rem" />
             </button>
           </div>
-        </form>
       </div>
     </>
   );
