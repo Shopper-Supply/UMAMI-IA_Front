@@ -6,7 +6,7 @@ import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
 import HomeDashboard from "@/components/homeDashboard";
-import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
+
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 
