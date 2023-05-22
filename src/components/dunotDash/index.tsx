@@ -24,7 +24,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
         //   reverseModal();
         //   showModal();
         // }}
-        className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
+        className="bg-branco-primario w-[25rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
       >
         <h4
           className={`${

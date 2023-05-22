@@ -11,27 +11,26 @@ const HomeDashboard = () => {
   return (
     <section
       id="DashBoard"
-      className="-z-0 top-0 absolute w-[70%] h-screen pt-14 overflow-y-scroll overflow-x-hidden"
+      className="-z-0 top-0 absolute ml-[21.5rem] h-screen pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
     >
-      <div className="w-[85%] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
+      <div className="max-xl:w-[60%] max-w-[77rem] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
         <Image
           src={IlustrationRobot_02}
           alt="Ilustração robo de qualidade"
-          className="w-[33rem] h-[21rem] absolute left-0 top-[-0.6rem]"
+          className="max-xl:hidden xl:w-[33rem] h-[21rem] absolute left-0 top-[-0.6rem]"
         />
-        <div className="ml-[30rem] flex flex-col gap-6 text-roxo-secundario">
-          <p className=" text-[1.6rem] ml-[1.2rem]">
+        <div className="w-[85%] xl:ml-[32rem] flex flex-col gap-6 text-roxo-secundario">
+          <p className="text-[1.6rem]">
             O Robô de qualidade Shopper está constantemente se aprimorando e se
             tornando mais eficiente. Se você notar qualquer problema ou erro,
             por favor, relate-o imediatamente para a nossa equipe de TI
           </p>
-          <span className="text-[1.2rem] ml-[1.2rem] font-medium">
+          <span className="text-[1.2rem] font-medium">
             tecnologia@shoppersupply.com.br
           </span>
         </div>
       </div>
-
-      <ul className="pt-8 flex w-[92%] h-[75%] flex-wrap gap-4">
+      <ul className="pt-8 flex w-[75%] h-[75%] flex-wrap gap-4">
         {sortedDashboardhome.map((group, index) => (
           <DunotDash
             ranking={index}
@@ -41,6 +40,8 @@ const HomeDashboard = () => {
           />
         ))}
       </ul>
+
+
     </section>
   );
 };

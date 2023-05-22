@@ -52,22 +52,22 @@ const Menu = () => {
             title="Função Indisponivel no momento"
             className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
           >
-            <HiOutlineUserGroup color="#5F4B8B" size="2.5rem" />
-            Curadores
+            <HiOutlineUserGroup color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Curadores</p>
           </li>
           <li
             title="Função Indisponivel no momento"
             className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
           >
-            <HiOutlineSparkles color="#5F4B8B" size="2.5rem" />
-            Qualidade
+            <HiOutlineSparkles color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Qualidade</p>
           </li>
           <li
             title="Função Indisponivel no momento"
             className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
           >
-            <HiOutlineKey color="#5F4B8B" size="2.5rem" />
-            Permissoes
+            <HiOutlineKey color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Permissoes</p>
           </li>
           <li
             onClick={() => {
@@ -76,8 +76,8 @@ const Menu = () => {
             }}
             className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
           >
-            <HiOutlineExclamationCircle color="#5F4B8B" size="2.5rem" />
-            Erros
+            <HiOutlineExclamationCircle color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Erros</p>
           </li>
         </ul>
       </div>
@@ -85,7 +85,7 @@ const Menu = () => {
         <form>
           <label
             htmlFor="dropzone-file"
-            className="mx-[2.2rem] px-[1rem] py-[.6rem] relative cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario text-center"
+            className="mx-[2.2rem] mt-4 px-[1rem] py-[.6rem] relative cursor-pointer flex justify-around max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-roxo-primario text-center"
           >
             <h2 className="mt-4 text-[1.5rem] text-roxo-primario font-medium tracking-wide">
               Revisar planilha
@@ -110,8 +110,8 @@ const Menu = () => {
             }}
             className="flex items-center gap-[1rem] ml-[2.2rem] cursor-pointer"
           >
-            <HiOutlineSaveAs color="#5F4B8B" size="2.5rem" />
-            Comparação
+            <HiOutlineSaveAs color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Comparação</p>
           </li>
           <li
             onClick={() => {
@@ -120,15 +120,15 @@ const Menu = () => {
             }}
             className=" flex items-center gap-[1rem] ml-[2.2rem] cursor-pointer"
           >
-            <HiOutlineShoppingBag color="#5F4B8B" size="2.5rem" />
-            Padrão de Sacola
+            <HiOutlineShoppingBag color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Padrão de Sacola</p>
           </li>
           <li
             title="Função Indisponivel no momento"
             className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
           >
-            <HiOutlineQuestionMarkCircle color="#5F4B8B" size="2.5rem" />
-            Help
+            <HiOutlineQuestionMarkCircle color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Help</p>
           </li>
           <div className="flex justify-around items-center ">
             <input
