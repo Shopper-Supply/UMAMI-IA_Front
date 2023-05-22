@@ -9,6 +9,7 @@ import {
   HiOutlineQuestionMarkCircle,
   HiOutlineUser,
 } from "react-icons/hi";
+import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { IoMdAddCircle } from "react-icons/io";
 import Logo_Shopper from "../../../public/Logo_Shopper.svg";
 import { useModal } from "@/providers/modaisProvider";
@@ -66,8 +67,8 @@ const Menu = () => {
             title="Função Indisponivel no momento"
             className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
           >
-            <HiOutlineKey color="#5F4B8B" size="2rem" />
-            <p className="text-2xl">Permissoes</p>
+            <HiOutlineBuildingStorefront color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Canais de vendas</p>
           </li>
           <li
             onClick={() => {
