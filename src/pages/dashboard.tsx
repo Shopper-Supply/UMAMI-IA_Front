@@ -6,11 +6,15 @@ import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
 import HomeDashboard from "@/components/homeDashboard";
+import LoadingScreen from "@/components/loadingScreen";
+import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
+import { useModal } from "@/providers/modaisProvider";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
+  const {loadingScreen} = useModal();
   const router = useRouter();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
@@ -31,9 +35,12 @@ const Home: NextPage = () => {
       <main className="bg-branco-secundario">
         <Menu />
         <Modal />
-        {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-        {componentsPageDash[0]}
-        <ModalAprovacaoErros />
+        {loadingScreen && <LoadingScreen/>}
+        <div className="flex justify-end">
+          <ModalAprovacaoErros />
+          {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+          {componentsPageDash[0]}
+        </div>
       </main>
     </>
   );

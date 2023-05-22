@@ -118,7 +118,7 @@ const Menu = () => {
               setContent(<ModalPadraoDeSacola />);
               showModal();
             }}
-            className="flex items-center gap-[1rem] ml-[2.2rem] cursor-pointer"
+            className=" flex items-center gap-[1rem] ml-[2.2rem] cursor-pointer"
           >
             <HiOutlineShoppingBag color="#5F4B8B" size="2rem" />
             <p className="text-2xl">Padrão de Sacola</p>

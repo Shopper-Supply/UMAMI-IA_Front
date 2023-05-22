@@ -81,7 +81,7 @@ const ModalComparaPlanilha = () => {
     setCurrentCurator,
     setCurrentPlace,
   } = useData();
-  const { hideModal, openAlert, isAlertOpen } = useModal();
+  const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
   const { token, setAuth } = useUser();
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
@@ -102,6 +102,7 @@ const ModalComparaPlanilha = () => {
     placeData: IPlace,
     data: any
   ) => {
+    setLoadingScreen(true);
     info("COMPARANDO PLANILHAS...");
 
     const formData = new FormData();
@@ -128,10 +129,13 @@ const ModalComparaPlanilha = () => {
               });
             }
           }
-
           setCurrentCurator(res.curator);
           setCurrentPlace(res.place_obj);
           setErrorsLog([...errorsLog, ...errorLogList]);
+
+          if (!(res.errors.espt.length == 0 && res.errors.prod.length == 0 && res.errors.sku.length == 0)) {
+            return info("NENHUM ERRO ENCONTRADO")
+          } 
         }
       })
       .catch((err) => {
@@ -140,6 +144,7 @@ const ModalComparaPlanilha = () => {
       .finally(() => {
         setstatusPlace(false);
         hideModal();
+        setLoadingScreen(false)
       });
   };
 

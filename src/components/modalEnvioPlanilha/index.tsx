@@ -34,7 +34,7 @@ const ModalEnvioPlanilha = () => {
     setResponseFile,
     loadData,
   } = useData();
-  const { hideModal, openAlert, isAlertOpen } = useModal();
+  const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
   const { token, setAuth } = useUser();
   const [modality, setModality] = useState<boolean>(false); //false = Manual e true = Sistêmico
   const [submitType, setSubmitType] = useState<boolean>(false); //false = Validação e true = Correção
@@ -84,6 +84,7 @@ const ModalEnvioPlanilha = () => {
       };
 
       const body = makeBody();
+      setLoadingScreen(true);
       info("ESTOU TRABALHANDO NA SUA PLANILHA");
       validateSheet(token || "", body)
         .then((res: void | AxiosResponse<ISheet>) => {
@@ -92,22 +93,27 @@ const ModalEnvioPlanilha = () => {
             setCurrentCurator(res.data.curator);
             setCurrentPlace(res.data.place_obj);
             setResponseFile(res.data.workbook);
-            info("SUA PLANILHA FOI VALIDADA COM SUCESSO");
+            if (res.data.errors.length == 0) {
+              return info("SUA PLANILHA FOI VALIDADA E NENHUM ERRO FOI ENCONTRADO")
+            }else {
+              info("SUA PLANILHA FOI VALIDADA COM SUCESSO!");
+            }
           }
         })
         .catch((err) => {
-          console.log(err);
           error("OPS! ALGO DEU ERRADO");
         })
         .finally(() => {
           setStatusPlace(false);
           loadData();
           hideModal();
+          setLoadingScreen(false);
         });
     }
   }, [statusPlace, token]);
 
   const onSubmit = (data: any) => {
+    
     // verificação de token de usuario.
     data = {
       ...data,
