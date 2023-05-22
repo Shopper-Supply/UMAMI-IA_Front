@@ -205,12 +205,34 @@ const ModalComparaPlanilha = () => {
 
   const handleControlFileChange = (event: any) => {
     const file = event.target.files[0];
-    setControlFileName(file.name);
+    const fileName = file?.name.includes(".xlsx" || ".xls")
+
+    let validExt = new Array(".XLSX", ".XLS");
+
+    if (fileName == false) {
+      error("OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" +
+               validExt.toString() + ".");
+      return false;
+    } else {
+      setControlFileName(file.name);
+    }
   };
 
   function handleCuratorFileChange(event: any) {
     const file = event.target.files[0];
-    setCuratorFileName(file.name);
+    const fileName = file?.name.includes(".xlsx" || ".xls")
+
+    let validExt = new Array(".XLSX", ".XLS");
+
+    if (fileName == false) {
+      error("OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" +
+               validExt.toString() + ".");
+      return false;
+    } else {
+      setCuratorFileName(file.name);
+    }
+
+    
   }
 
   return (
@@ -230,6 +252,7 @@ const ModalComparaPlanilha = () => {
         </div>
         <form
           className="flex flex-col items-center"
+          id="formCompare"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col items-center p-10 justify-around h-[21rem]">
@@ -468,6 +491,8 @@ const ModalComparaPlanilha = () => {
         </form>
           <div className="mt-[2%] flex gap-3">
             <button
+              form="formCompare"
+              onClick={() => {onSubmit}}
               className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
               title="Enviar"
               type="submit"
