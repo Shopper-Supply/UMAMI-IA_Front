@@ -135,7 +135,10 @@ const Login: NextPage = () => {
                 />
               )}
             </div>
-            {loadingScreen ? <LoadingLogin/> : <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
+            {loadingScreen ? 
+            <button className="bg-roxo-primario text-branco-primario text-[1.5rem] py-3 rounded-full ">
+              <LoadingLogin/> 
+            </button> : <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
               Entrar
             </button>}
           </form>
