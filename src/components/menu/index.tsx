@@ -29,7 +29,15 @@ const Menu = () => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (errorsLog.length > 0) {
+    const fileName = file?.name.includes(".xlsx" || ".xls")
+
+    let validExt = new Array(".XLSX", ".XLS");
+
+    if (fileName == false) {
+      error("OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" +
+               validExt.toString() + ".");
+      return false;
+    } else  if (errorsLog.length > 0) {
       error("REVISE OS ERROS ANTES DE ENVIAR UMA NOVA PLANILHA");
       event.target.value = "";
     } else if (file) {
