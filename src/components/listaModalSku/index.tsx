@@ -7,14 +7,14 @@ const ListaModalSku = () => {
 
   return (
     <div
-      className={`flex justify-around items-center w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
-        SKUItem_isActive ? "min-h-[40rem]" : "min-h-[10vh]"
+      className={`flex justify-around w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
+        SKUItem_isActive ? "min-h-[40rem] pt-10" : "min-h-[10vh] items-center"
       }`}
     >
       <div>
         <div
           onClick={() => setWas_edited(!was_edited)}
-          className={`w-[2rem] h-[2rem] rounded-full cursor-pointer ${
+          className={`w-[2rem] h-[2rem] rounded-full cursor-pointer transition-all ${
             was_edited ? "bg-severity-2" : "bg-cinza-primario"
           }`}
         ></div>
@@ -34,34 +34,10 @@ const ListaModalSku = () => {
             voadores
           </p>
         )}
-        <div className=" flex justify-between  w-[100%]">
+        <div className=" flex justify-between  w-[100%] transition-all">
           <div className="flex justify-between w-[100%]">
-            {SKUItem_isActive && (
-              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
-                CODIGO SKU:{" "}
-                <input
-                  type="text"
-                  value={"ldsfgg74585265522"}
-                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
-                />
-              </label>
-            )}
-            {SKUItem_isActive && (
-              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
-                SELLER:{" "}
-                <input
-                  type="text"
-                  value={"World Free"}
-                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
-                />
-              </label>
-            )}
-          </div>
-        </div>
-        <div className=" flex justify-between  w-[100%]">
-          <div className="flex justify-between w-[100%]">
-            <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
-              CÓD. CATEGORIA:{" "}
+            <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+              CODIGO SKU:{" "}
               {SKUItem_isActive ? (
                 <input
                   type="text"
@@ -73,7 +49,7 @@ const ListaModalSku = () => {
               )}
             </label>
             <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
-              CURADOR:{" "}
+              SELLER:{" "}
               {SKUItem_isActive ? (
                 <input
                   type="text"
@@ -86,13 +62,37 @@ const ListaModalSku = () => {
             </label>
           </div>
         </div>
+        <div className=" flex justify-between  w-[100%] transition-all">
+          <div className="flex justify-between w-[100%]">
+            {SKUItem_isActive && (
+              <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                CÓD. CATEGORIA:{" "}
+                <input
+                  type="text"
+                  value={"ldsfgg74585265522"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+            {SKUItem_isActive && (
+              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                CURADOR:{" "}
+                <input
+                  type="text"
+                  value={"World Free"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+          </div>
+        </div>
       </div>
       <div>
         {SKUItem_isActive ? (
           <div
             onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
             title="Editar SKU"
-            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer"
+            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
           >
             <HiCheck size="2rem" />
           </div>
@@ -100,7 +100,7 @@ const ListaModalSku = () => {
           <div
             onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
             title="Editar SKU"
-            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer"
+            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
           >
             <HiPencil size="2rem" />
           </div>
