@@ -5,6 +5,7 @@ import Menu from "@/components/menu";
 import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
+import ModalSku from "@/components/modalSku";
 import HomeDashboard from "@/components/homeDashboard";
 import LoadingScreen from "@/components/loadingScreen";
 import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
         <Menu />
         <Modal />
         {loadingScreen && <LoadingScreen/>}
+        <ModalSku/>
         <div className="flex justify-end">
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
