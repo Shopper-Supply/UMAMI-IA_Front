@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IFormLogin } from "@/interfaces/form";
 import { useUser } from "@/providers/userProvider";
+import { useModal } from "@/providers/modaisProvider";
 import { login } from "@/services/post";
 import { useRouter } from "next/router";
 import { error, info } from "@/utils/toast";
@@ -16,6 +17,7 @@ import { HiEye, HiEyeSlash } from "react-icons/hi2";
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth, setAuth } = useUser();
   const router = useRouter();
+  const { setDashPage } = useModal();
   const [show, setShow] = useState(true);
   const schema = yup.object().shape({
     username: yup.string().required(),
@@ -57,6 +59,7 @@ const Login: NextPage = () => {
       .then((res) => {
         setToken(res.token);
         setAuth(true);
+        setDashPage(0);
         sessionStorage.setItem("UMAMI@TOKEN", res.token);
       })
       .catch((err) => {

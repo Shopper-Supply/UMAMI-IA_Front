@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useData } from "./dataProvider";
+import HomeDashboard from "@/components/homeDashboard";
+import QADashboard from "@/components/managerDashboard";
 
 interface IModalProvider {
   children: React.ReactNode;
@@ -23,6 +25,8 @@ interface IModalContext {
 
   dashPage: number;
   setDashPage: React.Dispatch<React.SetStateAction<number>>;
+
+  componentsPageDash: JSX.Element[];
 }
 
 const ModalContext = createContext<IModalContext>({
@@ -42,6 +46,8 @@ const ModalContext = createContext<IModalContext>({
 
   dashPage: 0,
   setDashPage: () => {},
+
+  componentsPageDash: [],
 });
 
 export const ModalProvider = ({ children }: IModalProvider) => {
@@ -50,12 +56,17 @@ export const ModalProvider = ({ children }: IModalProvider) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [content, setContent] = useState<JSX.Element | undefined>(undefined);
   const [isReversed, setIsReversed] = useState<boolean>(false);
-  
+
   const [loadingScreen, setLoadingScreen] = useState<boolean>(false);
 
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 
-  const [dashPage, setDashPage] = useState<number>(1);
+  const [dashPage, setDashPage] = useState<number>(0);
+
+  const componentsPageDash = [
+    <HomeDashboard key={0} />,
+    <QADashboard key={1} />,
+  ];
 
   function hideModal() {
     // Esconder o Modal ja aberto, essa função deve ser chamada para fechar um modal.
@@ -103,6 +114,8 @@ export const ModalProvider = ({ children }: IModalProvider) => {
 
         dashPage,
         setDashPage,
+
+        componentsPageDash,
       }}
     >
       {children}

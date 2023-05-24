@@ -1,0 +1,100 @@
+import { useUser } from "@/providers/userProvider";
+import Image from "next/image";
+import { getAllUsers } from "@/services/get";
+import { useData } from "@/providers/dataProvider";
+import { useEffect } from "react";
+import UserInFocus from "../userInFocus";
+import CuratorErrors from "../curatorErros";
+import { ICurator } from "@/interfaces/people";
+import DunotDash from "../dunotDash";
+
+const QADashboard = (): JSX.Element => {
+  const { userData, token } = useUser();
+  const { setAllUsers, allUsers, curators } = useData();
+  const sortedDashboardhome = allUsers.sort(
+    (a, b) => b.relatory!.percentage - a.relatory!.percentage
+  );
+  const sortedDashboardhomeCurators = curators.sort(
+    (a, b) => b.percentage - a.percentage
+  );
+
+  useEffect(() => {
+    getAllUsers(token, setAllUsers);
+  }, [userData]);
+
+  const userIn_focus = sortedDashboardhome[0];
+  const limitedArray = sortedDashboardhomeCurators.slice(0, 3);
+
+  if (userData?.role?.id == 2 || userData?.role?.id == 3) {
+    // pagina de Usuarios de Gestão (TI e Gestores)
+    return (
+      <section
+        id="DashBoard"
+        className="-z-0 top-0 absolute ml-[21.5rem] h-screen pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
+      >
+        <UserInFocus
+          percentage={userIn_focus?.relatory?.percentage}
+          name={userIn_focus?.name}
+          total_errors={userIn_focus?.relatory?.total_errors}
+          owned_errors={userIn_focus?.relatory?.owned_errors}
+          is_manager={true}
+        />
+        {/* Menu do Gestor */}
+        <div
+          id="ManagerMenu"
+          className="max-xl:w-[60%] w-[60%] h-[5rem] mt-3 bg-branco-primario drop-shadow-sm rounded-md flex justify-start items-center"
+        >
+          <ul className="flex justify-center items-center w-[100%] h-[100%] text-[1.5rem] text-roxo-secundario font-bold cursor-pointer ">
+            <li className="hover:bg-roxo-primario hover:bg-opacity-20 w-[100%] h-[100%] text-center flex items-center justify-center rounded-l-[0.3rem] drop-shadow-sm">
+              CADASTRAR QA
+            </li>
+            <li className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center drop-shadow-sm">
+              DESATIVAR QA
+            </li>
+            <li className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center rounded-r-[0.3rem] drop-shadow-sm">
+              ATIVAR QA
+            </li>
+          </ul>
+        </div>
+        {limitedArray.map((element) => (
+          <CuratorErrors
+            percentage={element.percentage}
+            curatorName={element.name}
+            errors={element.owned_errors}
+            key={element.id}
+          />
+        ))}
+        <div className="flex gap-5 mt-[3rem] list-none overflow-x-auto ">
+          {allUsers.map((user, index) => (
+            <DunotDash
+              title={user.name}
+              porcent={Math.round(
+                user.relatory?.percentage ? user.relatory?.percentage : 0
+              )}
+              key={user.id}
+              ranking={index + 1}
+            />
+          ))}
+        </div>
+        <ul className="pt-8 flex w-[75%] flex-wrap gap-4"></ul>
+      </section>
+    );
+  }
+  // Pagina de usuario Padrão (Proficionais de Qualidade )
+  return (
+    <section
+      id="DashBoard"
+      className="-z-0 top-0 absolute ml-[21.5rem] h-screen pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
+    >
+      <UserInFocus
+        percentage={userData?.relatory?.percentage}
+        name={userData?.name ? userData.name : "unknown"}
+        total_errors={userData?.relatory?.total_errors}
+        owned_errors={userData?.relatory?.owned_errors}
+        is_manager={false}
+      />
+      <ul className="pt-8 flex w-[75%] h-[75%] flex-wrap gap-4"></ul>
+    </section>
+  );
+};
+export default QADashboard;
