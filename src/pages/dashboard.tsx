@@ -15,7 +15,7 @@ import { useModal } from "@/providers/modaisProvider";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
-  const {loadingScreen} = useModal();
+  const { loadingScreen } = useModal();
   const router = useRouter();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
@@ -36,8 +36,8 @@ const Home: NextPage = () => {
       <main className="bg-branco-secundario">
         <Menu />
         <Modal />
-        {loadingScreen && <LoadingScreen/>}
-        <ModalSku/>
+        {loadingScreen && <LoadingScreen />}
+        <ModalSku />
         <div className="flex justify-end">
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}

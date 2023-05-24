@@ -1,50 +1,110 @@
-import { HiCheck, HiDownload, HiPlus } from "react-icons/hi";
-import { HiArrowUturnLeft } from "react-icons/hi2";
-
+import { useState } from "react";
+import { HiPencil, HiCheck } from "react-icons/hi";
 
 const ListaModalSku = () => {
+  const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
+  const [was_edited, setWas_edited] = useState<boolean>(false);
+
   return (
-    <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
-      <h2 id="accordion-color-heading-1" data-accordion-target="{accordion-color-heading-1}">
-        <button type="button" className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-1" aria-expanded="true" aria-controls="accordion-color-body-1">
-          <span>What is Flowbite?</span>
-          <svg data-accordion-icon className="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        </button>
-      </h2>
-      <div id="accordion-color-body-1" className="hidden" aria-labelledby="accordion-color-heading-1">
-        <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-          <p className="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p>
-          <p className="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" className="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p>
+    <div
+      className={`flex justify-around items-center w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
+        SKUItem_isActive ? "min-h-[40rem]" : "min-h-[10vh]"
+      }`}
+    >
+      <div>
+        <div
+          onClick={() => setWas_edited(!was_edited)}
+          className={`w-[2rem] h-[2rem] rounded-full cursor-pointer ${
+            was_edited ? "bg-severity-2" : "bg-cinza-primario"
+          }`}
+        ></div>
+      </div>
+      <div className="flex flex-col items-center w-[75%] gap-3">
+        {SKUItem_isActive ? (
+          <input
+            type="text"
+            value={
+              "Produto ABA da Com variação cor arcoiris colorido de unicornios voadores"
+            }
+            className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+          />
+        ) : (
+          <p className="text-[1.2rem] font-medium text-roxo-secundario">
+            Produto ABA da Com variação cor arcoiris colorido de unicornios
+            voadores
+          </p>
+        )}
+        <div className=" flex justify-between  w-[100%]">
+          <div className="flex justify-between w-[100%]">
+            {SKUItem_isActive && (
+              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                CODIGO SKU:{" "}
+                <input
+                  type="text"
+                  value={"ldsfgg74585265522"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+            {SKUItem_isActive && (
+              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                SELLER:{" "}
+                <input
+                  type="text"
+                  value={"World Free"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+          </div>
+        </div>
+        <div className=" flex justify-between  w-[100%]">
+          <div className="flex justify-between w-[100%]">
+            <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+              CÓD. CATEGORIA:{" "}
+              {SKUItem_isActive ? (
+                <input
+                  type="text"
+                  value={"ldsfgg74585265522"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              ) : (
+                <p className="text-[1.2rem] font-medium">{`3740d49451dg7gg4h4d`}</p>
+              )}
+            </label>
+            <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+              CURADOR:{" "}
+              {SKUItem_isActive ? (
+                <input
+                  type="text"
+                  value={"World Free"}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              ) : (
+                <p className="text-[1.2rem] font-medium">World Free</p>
+              )}
+            </label>
+          </div>
         </div>
       </div>
-      <h2 id="accordion-color-heading-2">
-        <button type="button" className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-2" aria-expanded="false" aria-controls="accordion-color-body-2">
-          <span>Is there a Figma file available?</span>
-          <svg data-accordion-icon className="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        </button>
-      </h2>
-      <div id="accordion-color-body-2" className="hidden" aria-labelledby="accordion-color-heading-2">
-        <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-          <p className="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
-          <p className="text-gray-500 dark:text-gray-400">Check out the <a href="https://flowbite.com/figma/" className="text-blue-600 dark:text-blue-500 hover:underline">Figma design system</a> based on the utility classNamees from Tailwind CSS and components from Flowbite.</p>
-        </div>
-      </div>
-      <h2 id="accordion-color-heading-3">
-        <button type="button" className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-3" aria-expanded="false" aria-controls="accordion-color-body-3">
-          <span>What are the differences between Flowbite and Tailwind UI?</span>
-          <svg data-accordion-icon className="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        </button>
-      </h2>
-      <div id="accordion-color-body-3" className="hidden" aria-labelledby="accordion-color-heading-3">
-        <div className="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-          <p className="mb-2 text-gray-500 dark:text-gray-400">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">Learn more about these technologies:</p>
-          <ul className="pl-5 text-gray-500 list-disc dark:text-gray-400">
-            <li><a href="https://flowbite.com/pro/" className="text-blue-600 dark:text-blue-500 hover:underline">Flowbite Pro</a></li>
-            <li><a href="https://tailwindui.com/" rel="nofollow" className="text-blue-600 dark:text-blue-500 hover:underline">Tailwind UI</a></li>
-          </ul>
-        </div>
+      <div>
+        {SKUItem_isActive ? (
+          <div
+            onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+            title="Editar SKU"
+            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer"
+          >
+            <HiCheck size="2rem" />
+          </div>
+        ) : (
+          <div
+            onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+            title="Editar SKU"
+            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer"
+          >
+            <HiPencil size="2rem" />
+          </div>
+        )}
       </div>
     </div>
   );
