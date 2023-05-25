@@ -11,6 +11,7 @@ import {
 } from "@/services/get";
 import { useUser } from "./userProvider";
 import { IhomeDashboard } from "@/interfaces/dashboard";
+import { IRepitedSku } from "@/interfaces/sheet";
 
 interface IDataProvider {
   children: React.ReactNode;
@@ -40,6 +41,11 @@ interface IDataContext {
   setResponseFile: React.Dispatch<React.SetStateAction<string>>;
 
   loadData: () => void;
+
+  repitedSku: Array<IRepitedSku[]> | undefined;
+  setRepitedSku: React.Dispatch<
+    React.SetStateAction<Array<IRepitedSku[]> | undefined>
+  >;
 
   // dashboard datas
   dashboardHome: IhomeDashboard;
@@ -84,6 +90,9 @@ const DataContext = createContext<IDataContext>({
 
   loadData: () => {},
 
+  repitedSku: undefined,
+  setRepitedSku: () => {},
+
   // dashboard datas
 
   dashboardHome: {
@@ -120,6 +129,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
   });
   const [excelFile, setExcelFile] = useState<Blob | null>(null);
   const [responseFile, setResponseFile] = useState<string>("");
+  const [repitedSku, setRepitedSku] = useState<
+    Array<IRepitedSku[]> | undefined
+  >();
 
   // Dashboard datas
 
@@ -183,6 +195,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
         setResponseFile,
 
         loadData,
+
+        repitedSku,
+        setRepitedSku,
 
         // dashboard datas
         dashboardHome,

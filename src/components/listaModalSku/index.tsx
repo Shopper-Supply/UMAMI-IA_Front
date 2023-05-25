@@ -1,14 +1,22 @@
+import { IRepitedSku } from "@/interfaces/sheet";
+import { useData } from "@/providers/dataProvider";
+import { extractDate } from "@/utils/formatData";
 import { useState } from "react";
 import { HiPencil, HiCheck } from "react-icons/hi";
 
-const ListaModalSku = () => {
+interface IListaModalSku {
+  data: IRepitedSku;
+}
+
+const ListaModalSku = ({ data }: IListaModalSku) => {
   const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
   const [was_edited, setWas_edited] = useState<boolean>(false);
+  const { currentCurator, currentPlace } = useData();
 
   return (
-    <div
+    <form
       className={`flex justify-around w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
-        SKUItem_isActive ? "min-h-[40rem] pt-10" : "min-h-[10vh] items-center"
+        SKUItem_isActive ? "min-h-[25rem] pt-10" : "min-h-[10vh] items-center"
       }`}
     >
       <div>
@@ -23,15 +31,12 @@ const ListaModalSku = () => {
         {SKUItem_isActive ? (
           <input
             type="text"
-            value={
-              "Produto ABA da Com variação cor arcoiris colorido de unicornios voadores"
-            }
+            defaultValue={data.product_name}
             className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
           />
         ) : (
           <p className="text-[1.2rem] font-medium text-roxo-secundario">
-            Produto ABA da Com variação cor arcoiris colorido de unicornios
-            voadores
+            {data.product_name}
           </p>
         )}
         <div className=" flex justify-between  w-[100%] transition-all">
@@ -41,23 +46,23 @@ const ListaModalSku = () => {
               {SKUItem_isActive ? (
                 <input
                   type="text"
-                  value={"ldsfgg74585265522"}
+                  defaultValue={data.sku_code}
                   className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               ) : (
-                <p className="text-[1.2rem] font-medium">{`3740d49451dg7gg4h4d`}</p>
+                <p className="text-[1.2rem] font-medium">{data.sku_code}</p>
               )}
             </label>
             <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
-              SELLER:{" "}
+              MARCA:{" "}
               {SKUItem_isActive ? (
                 <input
                   type="text"
-                  value={"World Free"}
+                  defaultValue={data.brand}
                   className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               ) : (
-                <p className="text-[1.2rem] font-medium">World Free</p>
+                <p className="text-[1.2rem] font-medium">{data.seller_name}</p>
               )}
             </label>
           </div>
@@ -69,7 +74,7 @@ const ListaModalSku = () => {
                 CÓD. CATEGORIA:{" "}
                 <input
                   type="text"
-                  value={"ldsfgg74585265522"}
+                  defaultValue={data.category_code}
                   className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
@@ -79,7 +84,104 @@ const ListaModalSku = () => {
                 CURADOR:{" "}
                 <input
                   type="text"
-                  value={"World Free"}
+                  value={currentCurator.name}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+          </div>
+        </div>
+        <div className=" flex justify-between  w-[100%] transition-all">
+          <div className="flex justify-between w-[100%]">
+            <div className="flex justify-between w-[60%]">
+              {SKUItem_isActive && (
+                <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                  CLIENTE:{" "}
+                  <input
+                    type="text"
+                    value={currentPlace.client}
+                    className="ml-2 bg-branco-secundario rounded-full w-[100%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+              {SKUItem_isActive && (
+                <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                  SHOPPING:{" "}
+                  <input
+                    type="text"
+                    value={currentPlace.mall}
+                    className="ml-2 bg-branco-secundario rounded-full w-[100%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+            </div>
+            {SKUItem_isActive && (
+              <label className="flex justify-end items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                ENVIO:{" "}
+                <input
+                  type="text"
+                  value={extractDate(data.created_at)}
+                  className="ml-2 bg-branco-secundario rounded-full w-[45%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+          </div>
+        </div>
+
+        <div className=" flex justify-between  w-[100%] transition-all">
+          <div className="flex justify-between w-[100%]">
+            <div className="flex justify-between w-[60%]">
+              {SKUItem_isActive && (
+                <label className="flex justify-start w-[30%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                  ABBR:{" "}
+                  <input
+                    type="text"
+                    value={currentPlace.abbr}
+                    className="ml-2 bg-branco-secundario rounded-full w-[100%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+              {SKUItem_isActive && (
+                <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                  LOJA:{" "}
+                  <input
+                    type="text"
+                    value={currentPlace.name}
+                    className="ml-2 bg-branco-secundario rounded-full w-[100%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+            </div>
+            {SKUItem_isActive && (
+              <label className="flex justify-end items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                EAN:{" "}
+                <input
+                  type="text"
+                  value={data.ean}
+                  className="ml-2 bg-branco-secundario rounded-full w-[100%] px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+          </div>
+        </div>
+        <div className=" flex justify-between  w-[100%] transition-all">
+          <div className="flex justify-between w-[100%]">
+            {SKUItem_isActive && (
+              <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                CÓD. PRODUTO:{" "}
+                <input
+                  type="text"
+                  defaultValue={data.product_code}
+                  className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                />
+              </label>
+            )}
+            {SKUItem_isActive && (
+              <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
+                ULTIMA ALTERAÇÃO:{" "}
+                <input
+                  type="text"
+                  value={data.updated_at}
                   className="ml-2 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[10rem] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
@@ -106,7 +208,7 @@ const ListaModalSku = () => {
           </div>
         )}
       </div>
-    </div>
+    </form>
   );
 };
 

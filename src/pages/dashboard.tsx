@@ -12,11 +12,13 @@ import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
+import { useData } from "@/providers/dataProvider";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
   const { loadingScreen } = useModal();
   const router = useRouter();
+  const { repitedSku } = useData();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
   if (!auth) {
@@ -24,6 +26,15 @@ const Home: NextPage = () => {
       router.push("/");
     }
   }
+
+  const getRepitedListlength = () => {
+    if (repitedSku == undefined) {
+      return 0;
+    } else {
+      return repitedSku!.length;
+    }
+  };
+  const repitedListlength = getRepitedListlength();
 
   const componentsPageDash: JSX.Element[] = [<HomeDashboard key={0} />];
 
@@ -37,7 +48,7 @@ const Home: NextPage = () => {
         <Menu />
         <Modal />
         {loadingScreen && <LoadingScreen />}
-        {/* <ModalSku /> */}
+        {repitedListlength > 0 && <ModalSku />}
         <div className="flex justify-end">
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
