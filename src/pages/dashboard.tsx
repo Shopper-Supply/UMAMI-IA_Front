@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         <Menu />
         <Modal />
         {loadingScreen && <LoadingScreen />}
-        <ModalSku />
+        {/* <ModalSku /> */}
         <div className="flex justify-end">
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
