@@ -25,7 +25,7 @@ const ModalSku = () => {
             </p>
           </div>
         </div>
-        <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-branco-primario">
+        <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
           <div
             className={`flex gap-3 mt-10 ${
               listalengt < 7 ? "justify-center" : "ml-5"
@@ -51,9 +51,17 @@ const ModalSku = () => {
               {" "}
               2X - SKU: <br /> 3275878122509
             </button>
+            <button className="bg-white border-2 h-[4rem] border-roxo-primario font-bold focus:bg-roxo-primario focus:text-white text-[1.2rem] text-roxo-primario rounded-full px-7 leading-5">
+              {" "}
+              2X - SKU: <br /> 3275878122509
+            </button>
+            <button className="bg-white border-2 h-[4rem] border-roxo-primario font-bold focus:bg-roxo-primario focus:text-white text-[1.2rem] text-roxo-primario rounded-full px-7 leading-5">
+              {" "}
+              2X - SKU: <br /> 3275878122509
+            </button>
           </div>
         </div>
-        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-branco-primario">
+        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
             <ListaModalSku />
             <ListaModalSku />
