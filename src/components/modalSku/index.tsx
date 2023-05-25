@@ -44,7 +44,7 @@ const ModalSku = () => {
             </p>
           </div>
         </div>
-        <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-branco-primario">
+        <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
           <div
             className={`flex gap-3 mt-10 ${
               repitedListlength < 7 ? "justify-center" : "ml-5"
@@ -64,7 +64,7 @@ const ModalSku = () => {
             })}
           </div>
         </div>
-        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-branco-primario">
+        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
             {currentRepitedOptions?.map((elementData, index) => {
               return <ListaModalSku data={elementData} key={index} />;
