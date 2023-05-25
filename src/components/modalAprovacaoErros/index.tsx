@@ -96,7 +96,7 @@ const ModalAprovacaoErros = () => {
         />
       )}
       <div className=" flex flex-col justify-between items-center w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md">
-        <div className="overflow-y-auto flex flex-col w-[100%] text-roxo-primario text-[1.2rem] font-semibold">
+        <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-branco-primario flex flex-col w-[100%] text-roxo-primario text-[1.2rem] font-semibold">
           {errorsLog?.map((error, i) => {
             return (
               <div
