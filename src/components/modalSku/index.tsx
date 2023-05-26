@@ -4,25 +4,34 @@ import ListaModalSku from "../listaModalSku";
 import { useData } from "@/providers/dataProvider";
 import { useState } from "react";
 import { IRepitedSku } from "@/interfaces/sheet";
+import { deleteSku } from "@/services/delete";
+import { useUser } from "@/providers/userProvider";
 
 const ModalSku = () => {
-  const { repitedSku } = useData();
-  const [currentRepitedOptions, setCurrentRepitedOptions] =
-    useState<IRepitedSku[]>();
+  const { repitedSku, setRepitedSku } = useData();
+
+  const [currentRepitedOptions, setCurrentRepitedOptions] = useState<
+    IRepitedSku[]
+  >([]);
+  const [idToDelete, setIdToDelete] = useState<string>("");
+  const [selectedRepitedOptions, setSelectedRepitedOptions] = useState<
+    number | undefined
+  >(undefined);
 
   const getRepitedListlength = () => {
+    // Essa função serve para auxiliar em como a lusta sera renderizada.
     if (repitedSku == undefined) {
       return 0;
     } else {
       return repitedSku!.length;
     }
   };
-  const repitedListlength = getRepitedListlength();
-  // {
-  //   repitedSku?.map((element) => {
-  //     console.log(element);
-  //   });
-  // }
+  getRepitedListlength();
+
+  const updateRepitedSku = () => {
+    return repitedSku.filter((e, i) => e[0].id != currentRepitedOptions[0].id);
+  };
+
   return (
     <div className="absolute z-50 top-0 w-screen h-screen flex justify-center items-center backdrop-blur-sm bg-black bg-opacity-20">
       <div className="bg-white w-[60%] h-[80%] rounded-md relative ml-10 ">
@@ -47,27 +56,48 @@ const ModalSku = () => {
         <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
           <div
             className={`flex gap-3 mt-10 ${
-              repitedListlength < 7 ? "justify-center" : "ml-5"
+              repitedSku?.length < 7 ? "justify-center" : "ml-5"
             }`}
           >
-            {repitedSku?.map((element) => {
-              return (
-                <button
-                  onClick={() => setCurrentRepitedOptions(element)}
-                  key={element[0].id}
-                  className="bg-white border-2 h-[4rem] border-roxo-primario font-bold focus:bg-roxo-primario focus:text-white text-[1.2rem] text-roxo-primario rounded-full px-7 leading-5"
-                >
-                  {" "}
-                  {element.length}X - SKU: <br /> {element[0].sku_code}
-                </button>
-              );
+            {repitedSku?.map((element, index) => {
+              if (element.length <= 1) {
+                return;
+              } else {
+                return (
+                  <button
+                    onClick={() => {
+                      // setRepitedSku(repitedSku.filter((element, index) => {}));
+                      setCurrentRepitedOptions(element);
+                      setSelectedRepitedOptions(index);
+                    }}
+                    key={index}
+                    className={`${
+                      selectedRepitedOptions == index
+                        ? "bg-roxo-primario text-branco-primario"
+                        : "text-roxo-primario bg-white"
+                    }  border-2 h-[4rem] border-roxo-primario font-bold text-[1.2rem] rounded-full px-7 leading-5`}
+                  >
+                    {" "}
+                    {element.length}X - SKU: <br /> {element[0].sku_code}
+                  </button>
+                );
+              }
             })}
           </div>
         </div>
-        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
+        <div className="flex justify-center py-5 overflow-y-scroll h-[60%] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
             {currentRepitedOptions?.map((elementData, index) => {
-              return <ListaModalSku data={elementData} key={index} />;
+              return (
+                <ListaModalSku
+                  currentRepitedOptions={currentRepitedOptions}
+                  data={elementData}
+                  key={index}
+                  setIdToDelete={setIdToDelete}
+                  setCurrentRepitedOptions={setCurrentRepitedOptions}
+                  updateRepitedSku={updateRepitedSku}
+                />
+              );
             })}
           </div>
         </div>
