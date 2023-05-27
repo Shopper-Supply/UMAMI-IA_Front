@@ -2,19 +2,34 @@ import iconRobo from "../../../public/Icon_Robo.svg";
 import Image from "next/image";
 import ListaModalSku from "../listaModalSku";
 import { useData } from "@/providers/dataProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IRepitedSku, ISheerAdjustment } from "@/interfaces/sheet";
-import { deleteSku } from "@/services/delete";
+import { useModal } from "@/providers/modaisProvider";
+import ConfirmAction from "../confirmAction";
+import { verifyToken } from "@/utils/finds";
 import { useUser } from "@/providers/userProvider";
+import { useRouter } from "next/router";
+import { deleteSku } from "@/services/delete";
 
 const ModalSku = () => {
-  const { repitedSku, setRepitedSku } = useData(); // LIsta pai
+  const { setErrorsLog, setCurrentCurator, setCurrentPlace, repitedSku } =
+    useData();
+  const { isAlertOpen, openAlert, hideModal } = useModal();
+  const [statusDuplicateSku, setStatusDuplicateSku] = useState<boolean>(false);
   const [allRepitedSku, setAllRepitedSku] =
     useState<Array<IRepitedSku[]>>(repitedSku);
   const [currentRepitedOptions, setCurrentRepitedOptions] = useState<
     IRepitedSku[]
   >(allRepitedSku[0]);
-  const [selectedRepited, setSelectedRepited] = useState<number>(0); // guarda o index da lista Pai
+  const [selectedRepited, setSelectedRepited] = useState<number>(0);
+  const { token, setAuth } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (statusDuplicateSku) {
+      setStatusDuplicateSku(false);
+    }
+  }, [statusDuplicateSku]);
 
   const showRepitedSkus = (index: number) => {
     setCurrentRepitedOptions(allRepitedSku[index]);
@@ -44,11 +59,23 @@ const ModalSku = () => {
   };
   const visibleSkulength = getVisibleSkulength();
 
+  const closeModal = () => {
+    openAlert();
+    hideModal();
+  };
+  // {
+  //   repitedSku?.map((element) => {
+  //     console.log(element);
+  //   });
+  // }
   return (
     <div className="absolute z-50 top-0 w-screen h-screen flex justify-center items-center backdrop-blur-sm bg-black bg-opacity-20">
       <div className="bg-white w-[60%] h-[80%] rounded-md relative ml-10 ">
         <div className="absolute w-[100%] h-[4rem] flex justify-end items-center px-4">
           <div
+            onClick={() => {
+              closeModal();
+            }}
             title="Fechar"
             className=" w-[1.5rem] h-[1.5rem] bg-severity-5 rounded-full cursor-pointer animate-bounce"
           ></div>
@@ -95,7 +122,15 @@ const ModalSku = () => {
             })}
           </div>
         </div>
-        <div className="flex justify-center py-5 overflow-y-scroll h-[60%] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
+        <div className="flex justify-center">
+          {isAlertOpen && (
+            <ConfirmAction
+              message="VOCÊ AINDA TEM VERIFICAÇÕES A FAZER. TEM CERTEZA QUE DESEJA SAIR?"
+              setStatus={setStatusDuplicateSku}
+            />
+          )}
+        </div>
+        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
             {visibleSkulength < 0 &&
               currentRepitedOptions?.map((elementData, index) => {
