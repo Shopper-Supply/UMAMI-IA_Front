@@ -33,7 +33,7 @@ const ModalSku = () => {
 
   const getVisibleSkulength = (): number => {
     let length = 0;
-    allRepitedSku.map((e) => {
+    repitedSku.map((e) => {
       if (e.length > 1) {
         length++;
         return;
@@ -113,16 +113,5 @@ const ModalSku = () => {
     </div>
   );
 };
-// const [idToDelete, setIdToDelete] = useState<string>("");
-
-// const getRepitedListlength = () => {
-//   // Essa função serve para auxiliar em como a lusta sera renderizada.
-//   if (repitedSku == undefined) {
-//     return 0;
-//   } else {
-//     return repitedSku!.length;
-//   }
-// };
-// getRepitedListlength();
 
 export default ModalSku;
