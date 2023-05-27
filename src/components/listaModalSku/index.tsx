@@ -3,42 +3,41 @@ import { useData } from "@/providers/dataProvider";
 import { useUser } from "@/providers/userProvider";
 import { deleteSku } from "@/services/delete";
 import { extractDate } from "@/utils/formatData";
-import { info } from "@/utils/toast";
+import { error, info } from "@/utils/toast";
 import { useState } from "react";
 import { HiPencil, HiCheck, HiOutlineTrash } from "react-icons/hi";
 
 interface IListaModalSku {
   data: IRepitedSku;
   key: number;
-  setIdToDelete: React.Dispatch<React.SetStateAction<string>>;
-  currentRepitedOptions: IRepitedSku[];
-  setCurrentRepitedOptions: React.Dispatch<React.SetStateAction<IRepitedSku[]>>;
-  updateRepitedSku: () => void;
+  currentIndex: number;
+  DeleteItemFromRepitedOptions: (
+    indexAll: number,
+    indexCurrent: number
+  ) => void;
+  selectedRepited: number;
+  currentRepitedOptions: number;
 }
 
 const ListaModalSku = ({
   data,
   key,
-  setIdToDelete,
+  currentIndex,
+  DeleteItemFromRepitedOptions,
+  selectedRepited,
   currentRepitedOptions,
-  setCurrentRepitedOptions,
-  updateRepitedSku,
 }: IListaModalSku) => {
-  const [was_edited, setWas_edited] = useState<boolean>(false);
-  const { currentCurator, currentPlace } = useData();
-  const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
   const { token } = useUser();
+  const { currentCurator, currentPlace } = useData();
+
+  const [was_edited, setWas_edited] = useState<boolean>(false);
+  const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
 
   const destroySku = (id: string, key: number) => {
     deleteSku(token, id)
       .then((res) => {
-        const optionsFilted = currentRepitedOptions?.filter(
-          (option) => option.id != id
-        );
-        console.log(optionsFilted);
-        info(`SKU ${data.sku_code} DELETADO COM SUCESSO`);
-        setCurrentRepitedOptions(optionsFilted);
-        updateRepitedSku();
+        info("SKU DELETADO COM SUCESSO");
+        return;
       })
       .catch((err) => console.error(err))
       .finally(() => {});
@@ -248,8 +247,12 @@ const ListaModalSku = ({
             </div>
             <div
               onClick={() => {
-                destroySku(data.id, key);
-                setIdToDelete(data.id);
+                if (currentRepitedOptions > 1) {
+                  destroySku(data.id, currentIndex);
+                  DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
+                } else {
+                  error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");
+                }
               }}
               title="Editar SKU"
               className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
@@ -268,8 +271,12 @@ const ListaModalSku = ({
             </div>{" "}
             <div
               onClick={() => {
-                destroySku(data.id, key);
-                setIdToDelete(data.id);
+                if (currentRepitedOptions > 1) {
+                  destroySku(data.id, currentIndex);
+                  DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
+                } else {
+                  error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");
+                }
               }}
               title="Editar SKU"
               className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"

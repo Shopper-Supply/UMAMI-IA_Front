@@ -3,34 +3,46 @@ import Image from "next/image";
 import ListaModalSku from "../listaModalSku";
 import { useData } from "@/providers/dataProvider";
 import { useState } from "react";
-import { IRepitedSku } from "@/interfaces/sheet";
+import { IRepitedSku, ISheerAdjustment } from "@/interfaces/sheet";
 import { deleteSku } from "@/services/delete";
 import { useUser } from "@/providers/userProvider";
 
 const ModalSku = () => {
-  const { repitedSku, setRepitedSku } = useData();
-
+  const { repitedSku, setRepitedSku } = useData(); // LIsta pai
+  const [allRepitedSku, setAllRepitedSku] =
+    useState<Array<IRepitedSku[]>>(repitedSku);
   const [currentRepitedOptions, setCurrentRepitedOptions] = useState<
     IRepitedSku[]
-  >([]);
-  const [idToDelete, setIdToDelete] = useState<string>("");
-  const [selectedRepitedOptions, setSelectedRepitedOptions] = useState<
-    number | undefined
-  >(undefined);
+  >(allRepitedSku[0]);
+  const [selectedRepited, setSelectedRepited] = useState<number>(0); // guarda o index da lista Pai
 
-  const getRepitedListlength = () => {
-    // Essa função serve para auxiliar em como a lusta sera renderizada.
-    if (repitedSku == undefined) {
-      return 0;
-    } else {
-      return repitedSku!.length;
-    }
+  const showRepitedSkus = (index: number) => {
+    setCurrentRepitedOptions(allRepitedSku[index]);
+    setSelectedRepited(index);
   };
-  getRepitedListlength();
 
-  const updateRepitedSku = () => {
-    return repitedSku.filter((e, i) => e[0].id != currentRepitedOptions[0].id);
+  const DeleteItemFromRepitedOptions = (
+    indexAll: number,
+    indexCurrent: number
+  ) => {
+    const newAllRepitedSku = [...allRepitedSku];
+    newAllRepitedSku[indexAll]?.splice(indexCurrent, 1);
+    setAllRepitedSku(newAllRepitedSku);
+    setCurrentRepitedOptions(newAllRepitedSku[indexAll]);
   };
+
+  const getVisibleSkulength = (): number => {
+    let length = 0;
+    allRepitedSku.map((e) => {
+      if (e.length > 1) {
+        length++;
+        return;
+      }
+      return;
+    });
+    return length;
+  };
+  const visibleSkulength = getVisibleSkulength();
 
   return (
     <div className="absolute z-50 top-0 w-screen h-screen flex justify-center items-center backdrop-blur-sm bg-black bg-opacity-20">
@@ -56,7 +68,7 @@ const ModalSku = () => {
         <div className="w-[100%] pb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
           <div
             className={`flex gap-3 mt-10 ${
-              repitedSku?.length < 7 ? "justify-center" : "ml-5"
+              visibleSkulength < 7 ? "justify-center" : "ml-5"
             }`}
           >
             {repitedSku?.map((element, index) => {
@@ -65,14 +77,10 @@ const ModalSku = () => {
               } else {
                 return (
                   <button
-                    onClick={() => {
-                      // setRepitedSku(repitedSku.filter((element, index) => {}));
-                      setCurrentRepitedOptions(element);
-                      setSelectedRepitedOptions(index);
-                    }}
+                    onClick={() => showRepitedSkus(index)}
                     key={index}
                     className={`${
-                      selectedRepitedOptions == index
+                      selectedRepited == index
                         ? "bg-roxo-primario text-branco-primario"
                         : "text-roxo-primario bg-white"
                     }  border-2 h-[4rem] border-roxo-primario font-bold text-[1.2rem] rounded-full px-7 leading-5`}
@@ -90,12 +98,12 @@ const ModalSku = () => {
             {currentRepitedOptions?.map((elementData, index) => {
               return (
                 <ListaModalSku
-                  currentRepitedOptions={currentRepitedOptions}
+                  DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
                   data={elementData}
                   key={index}
-                  setIdToDelete={setIdToDelete}
-                  setCurrentRepitedOptions={setCurrentRepitedOptions}
-                  updateRepitedSku={updateRepitedSku}
+                  currentIndex={index}
+                  selectedRepited={selectedRepited}
+                  currentRepitedOptions={currentRepitedOptions.length}
                 />
               );
             })}
@@ -105,4 +113,16 @@ const ModalSku = () => {
     </div>
   );
 };
+// const [idToDelete, setIdToDelete] = useState<string>("");
+
+// const getRepitedListlength = () => {
+//   // Essa função serve para auxiliar em como a lusta sera renderizada.
+//   if (repitedSku == undefined) {
+//     return 0;
+//   } else {
+//     return repitedSku!.length;
+//   }
+// };
+// getRepitedListlength();
+
 export default ModalSku;
