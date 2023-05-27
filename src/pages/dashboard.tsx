@@ -28,11 +28,15 @@ const Home: NextPage = () => {
   }
 
   const getRepitedListlength = () => {
-    if (repitedSku == undefined) {
-      return 0;
-    } else {
-      return repitedSku!.length;
-    }
+    let length = 0;
+    repitedSku.map((e) => {
+      if (e.length > 1) {
+        length++;
+        return;
+      }
+      return;
+    });
+    return length;
   };
   const repitedListlength = getRepitedListlength();
 

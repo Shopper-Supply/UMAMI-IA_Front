@@ -42,10 +42,8 @@ interface IDataContext {
 
   loadData: () => void;
 
-  repitedSku: Array<IRepitedSku[]> | undefined;
-  setRepitedSku: React.Dispatch<
-    React.SetStateAction<Array<IRepitedSku[]> | undefined>
-  >;
+  repitedSku: Array<IRepitedSku[]>;
+  setRepitedSku: React.Dispatch<React.SetStateAction<Array<IRepitedSku[]>>>;
 
   // dashboard datas
   dashboardHome: IhomeDashboard;
@@ -90,7 +88,7 @@ const DataContext = createContext<IDataContext>({
 
   loadData: () => {},
 
-  repitedSku: undefined,
+  repitedSku: [],
   setRepitedSku: () => {},
 
   // dashboard datas
@@ -129,9 +127,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
   });
   const [excelFile, setExcelFile] = useState<Blob | null>(null);
   const [responseFile, setResponseFile] = useState<string>("");
-  const [repitedSku, setRepitedSku] = useState<
-    Array<IRepitedSku[]> | undefined
-  >();
+  const [repitedSku, setRepitedSku] = useState<Array<IRepitedSku[]>>([]);
 
   // Dashboard datas
 

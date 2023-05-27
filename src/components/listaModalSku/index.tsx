@@ -1,17 +1,47 @@
 import { IRepitedSku } from "@/interfaces/sheet";
 import { useData } from "@/providers/dataProvider";
+import { useUser } from "@/providers/userProvider";
+import { deleteSku } from "@/services/delete";
 import { extractDate } from "@/utils/formatData";
+import { error, info } from "@/utils/toast";
 import { useState } from "react";
-import { HiPencil, HiCheck } from "react-icons/hi";
+import { HiPencil, HiCheck, HiOutlineTrash } from "react-icons/hi";
 
 interface IListaModalSku {
   data: IRepitedSku;
+  key: number;
+  currentIndex: number;
+  DeleteItemFromRepitedOptions: (
+    indexAll: number,
+    indexCurrent: number
+  ) => void;
+  selectedRepited: number;
+  currentRepitedOptions: number;
 }
 
-const ListaModalSku = ({ data }: IListaModalSku) => {
-  const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
-  const [was_edited, setWas_edited] = useState<boolean>(false);
+const ListaModalSku = ({
+  data,
+  key,
+  currentIndex,
+  DeleteItemFromRepitedOptions,
+  selectedRepited,
+  currentRepitedOptions,
+}: IListaModalSku) => {
+  const { token } = useUser();
   const { currentCurator, currentPlace } = useData();
+
+  const [was_edited, setWas_edited] = useState<boolean>(false);
+  const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
+
+  const destroySku = (id: string, key: number) => {
+    deleteSku(token, id)
+      .then((res) => {
+        info("SKU DELETADO COM SUCESSO");
+        return;
+      })
+      .catch((err) => console.error(err))
+      .finally(() => {});
+  };
 
   return (
     <form
@@ -27,7 +57,7 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
           }`}
         ></div>
       </div>
-      <div className="flex flex-col items-center w-[75%] gap-3">
+      <div className="flex flex-col justify-center w-[75%] gap-3">
         {SKUItem_isActive ? (
           <input
             type="text"
@@ -40,7 +70,7 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
           </p>
         )}
         <div className=" flex justify-between  w-[100%] transition-all">
-          <div className="flex justify-between w-[100%]">
+          <div className="flex justify-between w-[100%] ">
             <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
               CODIGO SKU:{" "}
               {SKUItem_isActive ? (
@@ -67,7 +97,11 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
             </label>
           </div>
         </div>
-        <div className=" flex justify-between  w-[100%] transition-all">
+        <div
+          className={`flex justify-between  w-[100%] transition-all ${
+            !SKUItem_isActive && "hidden"
+          }`}
+        >
           <div className="flex justify-between w-[100%]">
             {SKUItem_isActive && (
               <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
@@ -91,7 +125,11 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
             )}
           </div>
         </div>
-        <div className=" flex justify-between  w-[100%] transition-all">
+        <div
+          className={`flex justify-between  w-[100%] transition-all ${
+            !SKUItem_isActive && "hidden"
+          }`}
+        >
           <div className="flex justify-between w-[100%]">
             <div className="flex justify-between w-[60%]">
               {SKUItem_isActive && (
@@ -128,7 +166,11 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
           </div>
         </div>
 
-        <div className=" flex justify-between  w-[100%] transition-all">
+        <div
+          className={`flex justify-between  w-[100%] transition-all ${
+            !SKUItem_isActive && "hidden"
+          }`}
+        >
           <div className="flex justify-between w-[100%]">
             <div className="flex justify-between w-[60%]">
               {SKUItem_isActive && (
@@ -164,7 +206,11 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
             )}
           </div>
         </div>
-        <div className=" flex justify-between  w-[100%] transition-all">
+        <div
+          className={`flex justify-between  w-[100%] transition-all ${
+            !SKUItem_isActive && "hidden"
+          }`}
+        >
           <div className="flex justify-between w-[100%]">
             {SKUItem_isActive && (
               <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
@@ -191,20 +237,52 @@ const ListaModalSku = ({ data }: IListaModalSku) => {
       </div>
       <div>
         {SKUItem_isActive ? (
-          <div
-            onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
-            title="Editar SKU"
-            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
-          >
-            <HiCheck size="2rem" />
+          <div className="flex gap-3">
+            <div
+              onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+              title="Editar SKU"
+              className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
+            >
+              <HiCheck size="1.5rem" />
+            </div>
+            <div
+              onClick={() => {
+                if (currentRepitedOptions > 1) {
+                  destroySku(data.id, currentIndex);
+                  DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
+                } else {
+                  error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");
+                }
+              }}
+              title="Editar SKU"
+              className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
+            >
+              <HiOutlineTrash size="1.5rem" />
+            </div>
           </div>
         ) : (
-          <div
-            onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
-            title="Editar SKU"
-            className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
-          >
-            <HiPencil size="2rem" />
+          <div className="flex gap-3">
+            <div
+              onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+              title="Editar SKU"
+              className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
+            >
+              <HiPencil size="1.5rem" />
+            </div>{" "}
+            <div
+              onClick={() => {
+                if (currentRepitedOptions > 1) {
+                  destroySku(data.id, currentIndex);
+                  DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
+                } else {
+                  error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");
+                }
+              }}
+              title="Editar SKU"
+              className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
+            >
+              <HiOutlineTrash size="1.5rem" />
+            </div>
           </div>
         )}
       </div>
