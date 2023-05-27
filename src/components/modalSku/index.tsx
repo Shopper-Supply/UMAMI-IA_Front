@@ -61,7 +61,9 @@ const ModalSku = () => {
               alt="icon robô de qualidade."
             />
             <p className="text-roxo-primario text-3xl absolute left-32 text-center rounded-lg p-3 pl-10 bg-branco-secundario drop-shadow-sm">
-              Opa! Alguns SKUS repetidos foram encontrados. Revise-os abaixo
+              {visibleSkulength > 0
+                ? "Opa! Alguns SKUS repetidos foram encontrados. Revise-os abaixo"
+                : "Parece que você já revisou todos os SKUs Repetidos!"}
             </p>
           </div>
         </div>
@@ -95,18 +97,19 @@ const ModalSku = () => {
         </div>
         <div className="flex justify-center py-5 overflow-y-scroll h-[60%] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
-            {currentRepitedOptions?.map((elementData, index) => {
-              return (
-                <ListaModalSku
-                  DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
-                  data={elementData}
-                  key={index}
-                  currentIndex={index}
-                  selectedRepited={selectedRepited}
-                  currentRepitedOptions={currentRepitedOptions.length}
-                />
-              );
-            })}
+            {visibleSkulength < 0 &&
+              currentRepitedOptions?.map((elementData, index) => {
+                return (
+                  <ListaModalSku
+                    DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
+                    data={elementData}
+                    key={index}
+                    currentIndex={index}
+                    selectedRepited={selectedRepited}
+                    currentRepitedOptions={currentRepitedOptions.length}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
