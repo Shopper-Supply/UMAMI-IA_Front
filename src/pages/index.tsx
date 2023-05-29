@@ -13,10 +13,7 @@ import { login } from "@/services/post";
 import { useRouter } from "next/router";
 import { error, info } from "@/utils/toast";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
-import { useModal } from "@/providers/modaisProvider";
 import LoadingLogin from "@/loadingLogin";
-
-
 
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth, setAuth } = useUser();
@@ -40,7 +37,6 @@ const Login: NextPage = () => {
 
   const { setLoadingScreen } = useModal();
 
-
   const onSubmit: SubmitHandler<IFormLogin> = async (data) => {
     const isEmail = emailRegex.test(
       data.username ? data.username : "undefined"
@@ -61,9 +57,9 @@ const Login: NextPage = () => {
     }
 
     // info("LOGANDO...");
-    
-    setLoadingScreen(true)
-    
+
+    setLoadingScreen(true);
+
     await login(newData)
       .then((res) => {
         setToken(res.token);
@@ -73,9 +69,10 @@ const Login: NextPage = () => {
       })
       .catch((err) => {
         error("CREDENCIAIS INVÁLIDAS");
-      }).finally(() => {
-      setLoadingScreen(false);
-      }) 
+      })
+      .finally(() => {
+        setLoadingScreen(false);
+      });
   };
 
   if (auth) {
@@ -135,12 +132,15 @@ const Login: NextPage = () => {
                 />
               )}
             </div>
-            {loadingScreen ? 
-            <button className="bg-roxo-primario text-branco-primario text-[1.5rem] py-3 rounded-full ">
-              <LoadingLogin/> 
-            </button> : <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
-              Entrar
-            </button>}
+            {loadingScreen ? (
+              <button className="bg-roxo-primario text-branco-primario text-[1.5rem] py-3 rounded-full ">
+                <LoadingLogin />
+              </button>
+            ) : (
+              <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
+                Entrar
+              </button>
+            )}
           </form>
           <span className="mb-5">
             © 2023 Shopper Supply™ - Todos os direitos reservados.
