@@ -7,10 +7,15 @@ import UserInFocus from "../userInFocus";
 import CuratorErrors from "../curatorErros";
 import { ICurator } from "@/interfaces/people";
 import DunotDash from "../dunotDash";
+import { useModal } from "@/providers/modaisProvider";
+import ModalCrateUser from "../ModalCrateUser";
+import ModaDesableUser from "../modaDesableUser";
+import ModaActivateUser from "../modaActivateUser";
 
 const QADashboard = (): JSX.Element => {
   const { userData, token } = useUser();
   const { setAllUsers, allUsers, curators } = useData();
+  const { showModal, setContent, reverseModal } = useModal();
   const sortedDashboardhome = allUsers.sort(
     (a, b) => b.relatory!.percentage - a.relatory!.percentage
   );
@@ -30,7 +35,7 @@ const QADashboard = (): JSX.Element => {
     return (
       <section
         id="DashBoard"
-        className="-z-0 top-0 absolute ml-[21.5rem] h-screen pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
+        className="-z-0 top-0 absolute ml-[21.5rem] h-screen w-[84%] pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
       >
         <UserInFocus
           percentage={userIn_focus?.relatory?.percentage}
@@ -45,13 +50,34 @@ const QADashboard = (): JSX.Element => {
           className="max-xl:w-[60%] w-[60%] h-[5rem] mt-3 bg-branco-primario drop-shadow-sm rounded-md flex justify-start items-center"
         >
           <ul className="flex justify-center items-center w-[100%] h-[100%] text-[1.5rem] text-roxo-secundario font-bold cursor-pointer ">
-            <li className="hover:bg-roxo-primario hover:bg-opacity-20 w-[100%] h-[100%] text-center flex items-center justify-center rounded-l-[0.3rem] drop-shadow-sm">
+            <li
+              onClick={() => {
+                setContent(<ModalCrateUser />);
+                reverseModal();
+                showModal();
+              }}
+              className="hover:bg-roxo-primario hover:bg-opacity-20 w-[100%] h-[100%] text-center flex items-center justify-center rounded-l-[0.3rem] drop-shadow-sm"
+            >
               CADASTRAR QA
             </li>
-            <li className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center drop-shadow-sm">
+            <li
+              onClick={() => {
+                setContent(<ModaDesableUser />);
+                reverseModal();
+                showModal();
+              }}
+              className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center drop-shadow-sm"
+            >
               DESATIVAR QA
             </li>
-            <li className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center rounded-r-[0.3rem] drop-shadow-sm">
+            <li
+              onClick={() => {
+                setContent(<ModaActivateUser />);
+                reverseModal();
+                showModal();
+              }}
+              className="hover:bg-roxo-primario hover:bg-opacity-20  w-[100%] h-[100%] text-center flex items-center justify-center rounded-r-[0.3rem] drop-shadow-sm"
+            >
               ATIVAR QA
             </li>
           </ul>
@@ -64,17 +90,20 @@ const QADashboard = (): JSX.Element => {
             key={element.id}
           />
         ))}
-        <div className="flex gap-5 mt-[3rem] list-none overflow-x-auto ">
-          {allUsers.map((user, index) => (
-            <DunotDash
-              title={user.name}
-              porcent={Math.round(
-                user.relatory?.percentage ? user.relatory?.percentage : 0
-              )}
-              key={user.id}
-              ranking={index + 1}
-            />
-          ))}
+        <div className="flex flex-wrap gap-5 mt-[3rem] list-none w-[80%]">
+          {allUsers.map(
+            (user, index) =>
+              user.is_active === true && (
+                <DunotDash
+                  title={user.name}
+                  porcent={Math.round(
+                    user.relatory?.percentage ? user.relatory?.percentage : 0
+                  )}
+                  key={user.id}
+                  ranking={index + 1}
+                />
+              )
+          )}
         </div>
         <ul className="pt-8 flex w-[75%] flex-wrap gap-4"></ul>
       </section>
