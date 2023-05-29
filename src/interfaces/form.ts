@@ -49,3 +49,19 @@ export interface IFormCompareSheets {
   mall: string;
   place: string;
 }
+
+export interface IFormRepitedSku {
+  product_name: string;
+  sku_code: number;
+  brand: string;
+  category_code: number;
+  curator: string;
+  client: string;
+  mall: string;
+  created_at: number;
+  abbr: string;
+  place: string;
+  ean: number;
+  product_code: number;
+  updated_at: number;
+}

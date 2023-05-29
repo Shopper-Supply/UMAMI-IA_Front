@@ -37,6 +37,7 @@ const ModalSku = () => {
     setSelectedRepited(index);
     getVisibleSkulength();
   };
+  console.log(showRepitedSkus)
 
   const DeleteItemFromRepitedOptions = (
     indexAll: number,
