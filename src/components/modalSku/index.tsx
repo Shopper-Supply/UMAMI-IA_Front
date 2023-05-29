@@ -22,6 +22,7 @@ const ModalSku = () => {
     IRepitedSku[]
   >(allRepitedSku[0]);
   const [selectedRepited, setSelectedRepited] = useState<number>(0);
+  const [visibleSkulength, setVisibleSkulength] = useState<number>(0);
   const { token, setAuth } = useUser();
   const router = useRouter();
 
@@ -34,6 +35,7 @@ const ModalSku = () => {
   const showRepitedSkus = (index: number) => {
     setCurrentRepitedOptions(allRepitedSku[index]);
     setSelectedRepited(index);
+    getVisibleSkulength();
   };
 
   const DeleteItemFromRepitedOptions = (
@@ -46,7 +48,7 @@ const ModalSku = () => {
     setCurrentRepitedOptions(newAllRepitedSku[indexAll]);
   };
 
-  const getVisibleSkulength = (): number => {
+  const getVisibleSkulength = (): void => {
     let length = 0;
     repitedSku.map((e) => {
       if (e.length > 1) {
@@ -55,9 +57,8 @@ const ModalSku = () => {
       }
       return;
     });
-    return length;
+    setVisibleSkulength(length);
   };
-  const visibleSkulength = getVisibleSkulength();
 
   const closeModal = () => {
     openAlert();
@@ -132,19 +133,18 @@ const ModalSku = () => {
         </div>
         <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
-            {visibleSkulength < 0 &&
-              currentRepitedOptions?.map((elementData, index) => {
-                return (
-                  <ListaModalSku
-                    DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
-                    data={elementData}
-                    key={index}
-                    currentIndex={index}
-                    selectedRepited={selectedRepited}
-                    currentRepitedOptions={currentRepitedOptions.length}
-                  />
-                );
-              })}
+            {currentRepitedOptions?.map((elementData, index) => {
+              return (
+                <ListaModalSku
+                  DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
+                  data={elementData}
+                  key={index}
+                  currentIndex={index}
+                  selectedRepited={selectedRepited}
+                  currentRepitedOptions={currentRepitedOptions.length}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
