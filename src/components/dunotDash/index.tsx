@@ -28,7 +28,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
       >
         <h4
           className={`${
-            ranking <= 0.0 ? "text-severity-5" : "text-roxo-secundario"
+            ranking <= 0 ? "text-severity-5" : "text-[#8d3ae5]"
           } text-[2rem] text-center font-bold`}
         >
           {title ? (
@@ -68,9 +68,6 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
             } font-bold absolute top-[40%] ${
               porcent != 100 ? "left-[40%]" : "left-[36%]"
             } ${!title && "animate-pulse"}`}
-
-            // TA QUASE DANDO SUCESSO
-            //  ULTIMO TESTE
           >
             <h3>{title ? porcent : "??"}%</h3>
           </div>

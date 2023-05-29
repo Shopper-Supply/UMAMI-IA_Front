@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IErrosTypes, IErroLogBody, IErrorLog } from "../interfaces/errors";
-import { ICurator } from "../interfaces/people";
+import { ICurator, IUserRelatory } from "../interfaces/people";
 import { IPlace } from "../interfaces/place";
 import { IBag } from "@/interfaces/bagpattern";
 import {
@@ -44,6 +44,9 @@ interface IDataContext {
   // dashboard datas
   dashboardHome: IhomeDashboard;
   setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>;
+
+  allUsers: IUserRelatory[];
+  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -92,6 +95,9 @@ const DataContext = createContext<IDataContext>({
     total_skus: 0,
   },
   setDashboardHome: () => {},
+
+  allUsers: [],
+  setAllUsers: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -128,6 +134,8 @@ export const DataProvider = ({ children }: IDataProvider) => {
     total_errors: 0,
     total_skus: 0,
   });
+
+  const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
 
   const { token, auth } = useUser();
 
@@ -187,6 +195,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
         // dashboard datas
         dashboardHome,
         setDashboardHome,
+
+        allUsers,
+        setAllUsers,
       }}
     >
       {children}

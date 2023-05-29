@@ -1,8 +1,9 @@
-import { ICurator, IUserDetail } from "@/interfaces/people";
+import { ICurator, IUserDetail, IUserRelatory } from "@/interfaces/people";
 import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
 import { IPlace } from "@/interfaces/place";
 import { IhomeDashboard } from "@/interfaces/dashboard";
+import { useData } from "@/providers/dataProvider";
 
 export function getCurators(
   token: string,
@@ -66,4 +67,17 @@ export function getHomeDashboardInfos(
       },
     })
     .then((res) => setDashboardHome(res.data));
+}
+
+export function getAllUsers(
+  token: string | undefined,
+  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>
+): Promise<IUserRelatory | void> {
+  return api
+    .get("/usuarios", {
+      headers: {
+        Authorization: "Token " + token,
+      },
+    })
+    .then((res) => setAllUsers(res.data));
 }

@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IFormLogin } from "@/interfaces/form";
 import { useUser } from "@/providers/userProvider";
+import { useModal } from "@/providers/modaisProvider";
 import { login } from "@/services/post";
 import { useRouter } from "next/router";
 import { error, info } from "@/utils/toast";
@@ -20,7 +21,7 @@ import LoadingLogin from "@/loadingLogin";
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth, setAuth } = useUser();
   const router = useRouter();
-  const {loadingScreen} = useModal();
+  const { setDashPage, loadingScreen } = useModal();
   const [show, setShow] = useState(true);
   const schema = yup.object().shape({
     username: yup.string().required(),
@@ -64,18 +65,17 @@ const Login: NextPage = () => {
     setLoadingScreen(true)
     
     await login(newData)
-    .then((res) => {
-      setToken(res.token);
-      setAuth(true);
-      sessionStorage.setItem("UMAMI@TOKEN", res.token);
-    })
-    .catch((err) => {
-      error("CREDENCIAIS INVÁLIDAS");
-    }).finally(() => {
+      .then((res) => {
+        setToken(res.token);
+        setAuth(true);
+        setDashPage(0);
+        sessionStorage.setItem("UMAMI@TOKEN", res.token);
+      })
+      .catch((err) => {
+        error("CREDENCIAIS INVÁLIDAS");
+      }).finally(() => {
       setLoadingScreen(false);
-    });
-    
-
+      }) 
   };
 
   if (auth) {
