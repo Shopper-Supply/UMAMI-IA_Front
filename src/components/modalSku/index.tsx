@@ -76,6 +76,12 @@ const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedS
   // }
   return (
     <div className="absolute z-50 top-0 w-screen h-screen flex justify-center items-center backdrop-blur-sm bg-black bg-opacity-20">
+      {isAlertOpen && (
+        <ConfirmAction
+          message="VOCÊ AINDA TEM VERIFICAÇÕES A FAZER. TEM CERTEZA QUE DESEJA SAIR?"
+          setStatus={setDuplicatedSkuIsOpen}
+        />
+      )}
       <div className="bg-white w-[60%] h-[80%] rounded-md relative ml-10 ">
         <div className="absolute w-[100%] h-[4rem] flex justify-end items-center px-4">
           <div
@@ -127,14 +133,6 @@ const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedS
               }
             })}
           </div>
-        </div>
-        <div className="flex justify-center">
-          {isAlertOpen && (
-            <ConfirmAction
-              message="VOCÊ AINDA TEM VERIFICAÇÕES A FAZER. TEM CERTEZA QUE DESEJA SAIR?"
-              setStatus={setDuplicatedSkuIsOpen}
-            />
-          )}
         </div>
         <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
