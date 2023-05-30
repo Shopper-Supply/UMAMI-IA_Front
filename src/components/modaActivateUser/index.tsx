@@ -7,7 +7,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { useData } from "@/providers/dataProvider";
 import { activeUser, deleteUser } from "@/services/delete";
 import { useUser } from "@/providers/userProvider";
-import { info } from "@/utils/toast";
+import { error, info } from "@/utils/toast";
 
 const ModaActivateUser = (): JSX.Element => {
   const { hideModal } = useModal();
@@ -44,7 +44,10 @@ const ModaActivateUser = (): JSX.Element => {
                           users.filter((user) => user.is_active === true)
                         );
                       })
-                      .catch((err) => console.error(err));
+                      .catch((err) => {
+                        error("ALGO DEU ERRADO");
+                        console.error(err);
+                      });
                   }}
                   className="p-[1rem] bg-roxo-primario rounded-full drop-shadow-md"
                 >

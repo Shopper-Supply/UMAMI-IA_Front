@@ -24,7 +24,9 @@ const QADashboard = (): JSX.Element => {
   );
 
   useEffect(() => {
-    getAllUsers(token, setAllUsers);
+    if (userData?.role?.id !== 1) {
+      getAllUsers(token, setAllUsers);
+    }
   }, [userData]);
 
   const userIn_focus = sortedDashboardhome[0];
@@ -122,7 +124,14 @@ const QADashboard = (): JSX.Element => {
         owned_errors={userData?.relatory?.owned_errors}
         is_manager={false}
       />
-      <ul className="pt-8 flex w-[75%] h-[75%] flex-wrap gap-4"></ul>
+      {limitedArray.map((element) => (
+        <CuratorErrors
+          percentage={element.percentage}
+          curatorName={element.name}
+          errors={element.owned_errors}
+          key={element.id}
+        />
+      ))}
     </section>
   );
 };

@@ -10,7 +10,7 @@ import iconRobo from "../../../public/Icon_Robo.svg";
 import { IUser, IUserDetail } from "@/interfaces/people";
 import { createUser } from "@/services/post";
 import { useUser } from "@/providers/userProvider";
-import { info } from "@/utils/toast";
+import { info, error } from "@/utils/toast";
 
 const ModalCrateUser = (): JSX.Element => {
   const { hideModal } = useModal();
@@ -39,7 +39,10 @@ const ModalCrateUser = (): JSX.Element => {
         info("NOVO USUARIO CADASTRADO COM SUCESSO");
         hideModal();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        error("ALGO DEU ERRADO");
+        console.error(err);
+      });
     return;
   };
   return (
