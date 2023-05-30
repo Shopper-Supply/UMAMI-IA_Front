@@ -11,7 +11,12 @@ import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { deleteSku } from "@/services/delete";
 
-const ModalSku = () => {
+interface IsetDuplicatedSkuIsOpen {
+  duplicatedSkuIsOpen: boolean
+  setDuplicatedSkuIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedSkuIsOpen) => {
   const { setErrorsLog, setCurrentCurator, setCurrentPlace, repitedSku } =
     useData();
   const { isAlertOpen, openAlert, hideModal } = useModal();
@@ -25,6 +30,7 @@ const ModalSku = () => {
   const [visibleSkulength, setVisibleSkulength] = useState<number>(0);
   const { token, setAuth } = useUser();
   const router = useRouter();
+
 
   useEffect(() => {
     if (statusDuplicateSku) {
@@ -61,8 +67,7 @@ const ModalSku = () => {
   };
 
   const closeModal = () => {
-    openAlert();
-    hideModal();
+    duplicatedSkuIsOpen ? hideModal() : openAlert();
   };
   // {
   //   repitedSku?.map((element) => {
@@ -127,7 +132,7 @@ const ModalSku = () => {
           {isAlertOpen && (
             <ConfirmAction
               message="VOCÊ AINDA TEM VERIFICAÇÕES A FAZER. TEM CERTEZA QUE DESEJA SAIR?"
-              setStatus={setStatusDuplicateSku}
+              setStatus={setDuplicatedSkuIsOpen}
             />
           )}
         </div>
