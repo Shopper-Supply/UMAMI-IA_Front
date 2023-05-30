@@ -14,12 +14,15 @@ import ModaActivateUser from "../modaActivateUser";
 
 const QADashboard = (): JSX.Element => {
   const { userData, token } = useUser();
-  const { setAllUsers, allUsers, curators } = useData();
+  const { setAllUsers, allUsers, curators, shoppings } = useData();
   const { showModal, setContent, reverseModal } = useModal();
   const sortedDashboardhome = allUsers.sort(
     (a, b) => b.relatory!.percentage - a.relatory!.percentage
   );
   const sortedDashboardhomeCurators = curators.sort(
+    (a, b) => b.percentage - a.percentage
+  );
+  const sortedDashboardhomeShoppings = shoppings?.sort(
     (a, b) => b.percentage - a.percentage
   );
 
@@ -31,6 +34,7 @@ const QADashboard = (): JSX.Element => {
 
   const userIn_focus = sortedDashboardhome[0];
   const limitedArray = sortedDashboardhomeCurators.slice(0, 3);
+  const limitedShoppingArray = sortedDashboardhomeShoppings?.slice(0, 6);
 
   if (userData?.role?.id == 2 || userData?.role?.id == 3) {
     // pagina de Usuarios de Gestão (TI e Gestores)
@@ -132,6 +136,19 @@ const QADashboard = (): JSX.Element => {
           key={element.id}
         />
       ))}
+      <div className="flex flex-wrap gap-5 mt-[3rem] list-none w-[80%]">
+        {limitedShoppingArray?.map((shopping, index) => {
+          console.table(shopping);
+          return (
+            <DunotDash
+              title={shopping.mallName}
+              porcent={Number(shopping.percentage.toFixed(1))}
+              key={index}
+              ranking={index + 1}
+            />
+          );
+        })}
+      </div>
     </section>
   );
 };
