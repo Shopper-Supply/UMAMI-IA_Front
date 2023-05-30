@@ -1,4 +1,4 @@
-import { IRepitedSku } from "@/interfaces/sheet";
+import { IRepitedForm, IRepitedSku, ISheet } from "@/interfaces/sheet";
 import { useData } from "@/providers/dataProvider";
 import { useUser } from "@/providers/userProvider";
 import { deleteSku } from "@/services/delete";
@@ -13,9 +13,10 @@ import { IFormRepitedSku } from "@/interfaces/form";
 import { verifyToken } from "@/utils/finds";
 import { useModal } from "@/providers/modaisProvider";
 import { useRouter } from "next/router";
+import { InformationEvent } from "http";
 
 interface IListaModalSku {
-  data: IRepitedSku;
+  data: IRepitedForm;
   key: number;
   currentIndex: number;
   DeleteItemFromRepitedOptions: (
@@ -37,10 +38,40 @@ const ListaModalSku = ({
     currentCurator,
     currentPlace,
   } = useData();
+  const {
+    product_name,
+    sku_code,
+    brand,
+    category_code,
+    curator,
+    client,
+    mall,
+    created_at,
+    abbr,
+    place,
+    ean,
+    product_code,
+    updated_at,
+  } = data
+  const dataForm: IRepitedForm = {
+    product_name,
+    sku_code,
+    brand,
+    category_code,
+    curator,
+    client,
+    mall,
+    created_at,
+    abbr,
+    place,
+    ean,
+    product_code,
+    updated_at,
+  }
   const { token, setAuth } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const router = useRouter();
-  const [dataSku, setDataSku] = useState<any>({});
+  const [dataSku, setDataSku] = useState<IRepitedSku>(dataForm);
 
   const [was_edited, setWas_edited] = useState<boolean>(false);
   const [SKUItem_isActive, setSKUItem_isActive] = useState<boolean>(false);
@@ -57,7 +88,7 @@ const ListaModalSku = ({
   
   const schema = yup.object().shape({
     product_name: yup.string().required("Campo Obrigatório"),
-    sku_code: yup.number().required("Campo Obrigatorio"),
+    sku_code: yup.string().required("Campo Obrigatorio"),
     brand: yup.string().required("Campo Obrigatório"),
     category_code: yup.number().required("Campo Obrigatorio"),
     curator: yup.string().required("Campo Obrigatório"),
@@ -78,23 +109,26 @@ const ListaModalSku = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormRepitedSku>({
+  } = useForm<IRepitedForm>({
     resolver:yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormRepitedSku> = (dataSku) => {
-    setDataSku(dataSku);
-
+  const onSubmit: SubmitHandler<IRepitedForm> = async (data) => {
+    
     // verificação de token de usuario.
     const verifyTokenResult = verifyToken(setAuth, hideModal, router);
     if (verifyTokenResult !== true) {
       return;
     }
+    setDataSku(data);
+    console.log(data)
+    console.log(dataSku)  
+    console.log(errors)  
   };
   
-
   return (
     <form
+      id="skuForm"
       onSubmit={handleSubmit(onSubmit)}
       className={`flex justify-around w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
         SKUItem_isActive ? "min-h-[25rem] pt-10" : "min-h-[10vh] items-center"
@@ -113,9 +147,9 @@ const ListaModalSku = ({
           <input
             {...register("product_name")}
             type="text"
-            defaultValue={data.product_name}
+            defaultValue={dataSku.product_name}
             placeholder={
-              errors.product_name ? "Insira o nome do produto" : data.product_name
+              errors.product_name ? "Insira o nome do produto" : dataSku.product_name
             }
             className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
               errors.product_name
@@ -125,7 +159,7 @@ const ListaModalSku = ({
           />
         ) : (
           <p className="text-[1.2rem] font-medium text-roxo-secundario">
-            {data.product_name}
+            {dataSku.product_name}
           </p>
         )}
         <div className=" flex justify-between  w-[100%] transition-all">
@@ -393,17 +427,19 @@ const ListaModalSku = ({
       <div>
         {SKUItem_isActive ? (
           <div className="flex gap-3">
-            <div
-              onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+            <button
+              type="submit"
+              form="skuForm"
+              // onClick={handleSubmit(onSubmit)}
               title="Editar SKU"
               className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
             >
               <HiCheck size="1.5rem" />
-            </div>
+            </button>
             <div
               onClick={() => {
                 if (currentRepitedOptions > 1) {
-                  destroySku(data.id, currentIndex);
+                  data.id && destroySku(data.id, currentIndex);
                   DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
                 } else {
                   error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");
@@ -427,7 +463,7 @@ const ListaModalSku = ({
             <div
               onClick={() => {
                 if (currentRepitedOptions > 1) {
-                  destroySku(data.id, currentIndex);
+                  data.id && destroySku(data.id, currentIndex);
                   DeleteItemFromRepitedOptions(selectedRepited, currentIndex);
                 } else {
                   error("INFELIZMENTE VOCÊ NÃO PODE APAGAR O ULTIMO SKU");

@@ -52,7 +52,7 @@ export interface IFormCompareSheets {
 
 export interface IFormRepitedSku {
   product_name: string;
-  sku_code: number;
+  sku_code: string;
   brand: string;
   category_code: number;
   curator: string;
