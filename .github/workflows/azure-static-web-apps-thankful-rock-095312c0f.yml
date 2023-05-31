@@ -17,7 +17,7 @@ jobs:
     name: Build and Deploy Job
     steps:
       - name: Check Git Config
-        run: git config --global --get-regexp 'http\.https://github\.com/.extraheader' && git config --global --unset-all 'http.https://github.com/.extraheader' || echo 'Config not found'
+        run: sudo git config --global --get-regexp 'http\.https://github\.com/.extraheader' && git config --global --unset-all 'http.https://github.com/.extraheader' || echo 'Config not found'
       - uses: actions/checkout@v3
         with:
           submodules: true
