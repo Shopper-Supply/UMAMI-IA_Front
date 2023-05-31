@@ -35,38 +35,10 @@ const ModalComparaPlanilha = () => {
     place: yup.string().required("Campo Obrigatório"),
     curator_spreadsheet: yup
       .mixed()
-      .test(
-        "Obrigatório",
-        "Por favor, selecione um arquivo",
-        (file: any) => file?.length > 0
-      )
-      .test(
-        "Arquivo inválido",
-        "Arquivo deve ser um Excel",
-        (file: any) =>
-          file[0] &&
-          [
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(file[0].type)
-      ),
+      .required("Por favor, selecione um arquivo"),
     control_spreadsheet: yup
       .mixed()
-      .test(
-        "Obrigatório",
-        "Por favor, selecione um arquivo",
-        (file: any) => file?.length > 0
-      )
-      .test(
-        "Arquivo Inválido",
-        "Arquivo deve ser um Excel",
-        (file: any) =>
-          file[0] &&
-          [
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(file[0].type)
-      ),
+      .required("Por favor, selecione um arquivo"),
   });
 
   const {
@@ -81,13 +53,15 @@ const ModalComparaPlanilha = () => {
     setCurrentCurator,
     setCurrentPlace,
   } = useData();
-  const { hideModal, openAlert, isAlertOpen } = useModal();
+  const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
   const { token, setAuth } = useUser();
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const router = useRouter();
   const [controlFileName, setControlFileName] = useState("");
   const [curatorFileName, setCuratorFileName] = useState("");
+  const [controlFile, setControlFile] = useState("");
+  const [curatorFile, setCuratorFile] = useState("");
 
   const {
     register,
@@ -102,36 +76,28 @@ const ModalComparaPlanilha = () => {
     placeData: IPlace,
     data: any
   ) => {
+    setLoadingScreen(true);
     info("COMPARANDO PLANILHAS...");
 
     const formData = new FormData();
 
-    formData.append("control_spreadsheet", data.control_spreadsheet[0]);
-    formData.append("curator_spreadsheet", data.curator_spreadsheet[0]);
+    formData.append("control_spreadsheet", controlFile);
+    formData.append("curator_spreadsheet", curatorFile);
     formData.append("curator_id", idCurator);
     formData.append("place", JSON.stringify(placeData));
 
     compareSheets(token || " ", formData)
       .then((res: ICompareSheetsResponse) => {
         if (res) {
-          const errorLogList: IErrorLog[] = [];
-          const errors: { [key: string]: IErrorCompare[] } = res.errors;
-
-          for (const sheet in errors) {
-            const errorsList = errors[sheet];
-
-            for (let item of errorsList) {
-              errorLogList.push({
-                sheet: sheet.toUpperCase(),
-                error_type: item.errorType,
-                coor: `${item.row}`,
-              });
-            }
+          console.log(res.errors.sku.length);
+          if (
+            res.errors.espt.length <= 0 &&
+            res.errors.prod.length <= 0 &&
+            res.errors.sku.length <= 0
+          ) {
+            info("NENHUM VIOLAÇÂO ENCONTRADA");
+            return;
           }
-
-          setCurrentCurator(res.curator);
-          setCurrentPlace(res.place_obj);
-          setErrorsLog([...errorsLog, ...errorLogList]);
         }
       })
       .catch((err) => {
@@ -140,6 +106,7 @@ const ModalComparaPlanilha = () => {
       .finally(() => {
         setstatusPlace(false);
         hideModal();
+        setLoadingScreen(false);
       });
   };
 
@@ -205,13 +172,37 @@ const ModalComparaPlanilha = () => {
 
   const handleControlFileChange = (event: any) => {
     const file = event.target.files[0];
-    setControlFileName(file.name);
+    const fileName = file?.name.includes(".xlsx" || ".xls");
+
+    let validExt = new Array(".XLSX", ".XLS");
+
+    if (fileName == false) {
+      error(
+        "OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" + validExt.toString() + "."
+      );
+      return false;
+    } else {
+      setControlFile(file);
+      setControlFileName(file.name);
+    }
   };
 
-  function handleCuratorFileChange(event: any) {
+  const handleCuratorFileChange = (event: any) => {
     const file = event.target.files[0];
-    setCuratorFileName(file.name);
-  }
+    const fileName = file?.name.includes(".xlsx" || ".xls");
+
+    let validExt = new Array(".XLSX", ".XLS");
+
+    if (fileName == false) {
+      error(
+        "OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" + validExt.toString() + "."
+      );
+      return false;
+    } else {
+      setCuratorFile(file);
+      setCuratorFileName(file.name);
+    }
+  };
 
   return (
     <>
@@ -222,7 +213,7 @@ const ModalComparaPlanilha = () => {
         />
       )}
       <div className="z-10 bg-branco-primario w-[25%] min-w-[35rem] h-screen flex flex-col items-center drop-shadow-md">
-        <div className="flex flex-col justify-around items-center mt-[6.5rem]">
+        <div className="flex flex-col justify-around items-center mt-[1rem]">
           <Image src={iconRobo} alt="icon robô de qualidade." />
           <p className="text-roxo-primario text-3xl text-center p-3">
             Compare se as informações foram violadas.
@@ -230,6 +221,7 @@ const ModalComparaPlanilha = () => {
         </div>
         <form
           className="flex flex-col items-center"
+          id="formCompare"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col items-center p-10 justify-around h-[21rem]">
@@ -426,7 +418,7 @@ const ModalComparaPlanilha = () => {
                   {...register("control_spreadsheet")}
                   id="dropzone-file"
                   type="file"
-                  onChange={handleControlFileChange}
+                  onChange={(event) => handleControlFileChange(event)}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
@@ -454,7 +446,7 @@ const ModalComparaPlanilha = () => {
                   {...register("curator_spreadsheet")}
                   id="dropzone-file"
                   type="file"
-                  onChange={handleCuratorFileChange}
+                  onChange={(event) => handleCuratorFileChange(event)}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
@@ -465,23 +457,27 @@ const ModalComparaPlanilha = () => {
               )}
             </label>
           </div>
-          <div className="mt-[5%] flex gap-3">
-            <button
-              className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Enviar"
-              type="submit"
-            >
-              <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
-            </button>
-            <button
-              onClick={hideModal}
-              className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Fechar"
-            >
-              <HiOutlineXMark color="#FFFFFF" size="2.7rem" />
-            </button>
-          </div>
         </form>
+        <div className="mt-[2%] flex gap-3">
+          <button
+            form="formCompare"
+            onClick={() => {
+              onSubmit;
+            }}
+            className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Enviar"
+            type="submit"
+          >
+            <HiOutlineArrowUpTray color="#FFFFFF" size="2rem" />
+          </button>
+          <button
+            onClick={hideModal}
+            className="p-[1.5rem] mt-[10%] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Fechar"
+          >
+            <HiOutlineXMark color="#FFFFFF" size="2rem" />
+          </button>
+        </div>
       </div>
     </>
   );

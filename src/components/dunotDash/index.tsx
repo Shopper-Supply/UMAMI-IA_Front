@@ -24,11 +24,11 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
         //   reverseModal();
         //   showModal();
         // }}
-        className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
+        className="bg-branco-primario w-[25rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
       >
         <h4
           className={`${
-            ranking <= 0.0 ? "text-severity-5" : "text-roxo-secundario"
+            ranking <= 0 ? "text-severity-5" : "text-[#8d3ae5]"
           } text-[2rem] text-center font-bold`}
         >
           {title ? (
@@ -68,9 +68,6 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
             } font-bold absolute top-[40%] ${
               porcent != 100 ? "left-[40%]" : "left-[36%]"
             } ${!title && "animate-pulse"}`}
-
-            // TA QUASE DANDO SUCESSO
-            //  ULTIMO TESTE
           >
             <h3>{title ? porcent : "??"}%</h3>
           </div>

@@ -6,12 +6,16 @@ import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
 import HomeDashboard from "@/components/homeDashboard";
+import LoadingScreen from "@/components/loadingScreen";
 import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
+import { useModal } from "@/providers/modaisProvider";
+import ManagerDashboard from "@/components/managerDashboard";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
+  const { loadingScreen, dashPage } = useModal();
   const router = useRouter();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
@@ -21,7 +25,10 @@ const Home: NextPage = () => {
     }
   }
 
-  const componentsPageDash: JSX.Element[] = [<HomeDashboard key={0} />];
+  const componentsPageDash: JSX.Element[] = [
+    <HomeDashboard key={0} />,
+    <ManagerDashboard key={1} />,
+  ];
 
   return (
     <>
@@ -30,12 +37,13 @@ const Home: NextPage = () => {
         description="Robo de qualidade para verificação de planilhas"
       />
       <main className="bg-branco-secundario">
-        <Menu />
         <Modal />
+        {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+        {loadingScreen && <LoadingScreen />}
+        <Menu />
         <div className="flex justify-end">
+          {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />
-          {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-          {componentsPageDash[0]}
         </div>
       </main>
     </>

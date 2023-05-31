@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IErrosTypes, IErroLogBody, IErrorLog } from "../interfaces/errors";
-import { ICurator } from "../interfaces/people";
+import { ICurator, IUserRelatory } from "../interfaces/people";
 import { IPlace } from "../interfaces/place";
 import { IBag } from "@/interfaces/bagpattern";
 import {
@@ -8,9 +8,10 @@ import {
   getErrorTypes,
   getHomeDashboardInfos,
   getPlaces,
+  getShoppings,
 } from "@/services/get";
 import { useUser } from "./userProvider";
-import { IhomeDashboard } from "@/interfaces/dashboard";
+import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
 
 interface IDataProvider {
   children: React.ReactNode;
@@ -23,8 +24,10 @@ interface IDataContext {
   ignoreError: (errorId: number) => void;
 
   curators: ICurator[];
-  currentCurator: ICurator;
-  setCurrentCurator: (curator: ICurator) => void;
+  currentCurator?: ICurator;
+  setCurrentCurator?: React.Dispatch<
+    React.SetStateAction<ICurator | undefined>
+  >;
 
   places: IPlace[];
   currentPlace: IPlace;
@@ -44,6 +47,14 @@ interface IDataContext {
   // dashboard datas
   dashboardHome: IhomeDashboard;
   setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>;
+
+  shoppings: IShoppingDash[] | undefined;
+  setShoppings: React.Dispatch<
+    React.SetStateAction<IShoppingDash[] | undefined>
+  >;
+
+  allUsers: IUserRelatory[];
+  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -62,8 +73,14 @@ const DataContext = createContext<IDataContext>({
   addError: () => {},
   ignoreError: () => {},
 
-  curators: [{}],
-  currentCurator: {},
+  curators: [],
+  currentCurator: {
+    is_active: false,
+    percentage: 0.0,
+    total_errors: 0,
+    owned_errors: 0,
+    error_points: 0,
+  },
   setCurrentCurator: () => {},
 
   places: [{}],
@@ -92,6 +109,12 @@ const DataContext = createContext<IDataContext>({
     total_skus: 0,
   },
   setDashboardHome: () => {},
+
+  shoppings: [],
+  setShoppings: () => {},
+
+  allUsers: [],
+  setAllUsers: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -106,10 +129,10 @@ export const DataProvider = ({ children }: IDataProvider) => {
     },
   ]);
   const [errorsLog, setErrorsLog] = useState<IErrorLog[]>([]);
-  const [curators, setCurators] = useState([{}]);
+  const [curators, setCurators] = useState<ICurator[]>([]);
   const [places, setPlace] = useState([{}]);
 
-  const [currentCurator, setCurrentCurator] = useState({});
+  const [currentCurator, setCurrentCurator] = useState<ICurator | undefined>();
   const [currentPlace, setCurrentPlace] = useState({});
   const [currentBagPattern, setCurrentBagPattern] = useState<IBag>({
     iva: 0,
@@ -128,8 +151,11 @@ export const DataProvider = ({ children }: IDataProvider) => {
     total_errors: 0,
     total_skus: 0,
   });
+  const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
 
-  const { token, auth } = useUser();
+  const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
+
+  const { token, auth, userData } = useUser();
 
   useEffect(() => {
     if (auth) {
@@ -148,8 +174,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
   };
 
   const loadData = () => {
-    getCurators(token || "", setCurators);
+    getCurators(token || "", setCurators, userData?.role?.id);
     getErrorTypes(token || "", setErrors);
+    getShoppings(token || "", setShoppings);
 
     getPlaces(token || "", setPlace);
 
@@ -187,6 +214,12 @@ export const DataProvider = ({ children }: IDataProvider) => {
         // dashboard datas
         dashboardHome,
         setDashboardHome,
+
+        shoppings,
+        setShoppings,
+
+        allUsers,
+        setAllUsers,
       }}
     >
       {children}
