@@ -24,7 +24,6 @@ const ModaDesableUser = (): JSX.Element => {
       </div>
       <div className="w-[100%] h-[60%] overflow-y-scroll flex flex-col it">
         {users.map((e, i) => {
-          console.log(e.is_active, e.name);
           return (
             e.is_active == true && (
               <div
