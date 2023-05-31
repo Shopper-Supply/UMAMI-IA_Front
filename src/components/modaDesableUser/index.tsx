@@ -35,8 +35,6 @@ const ModaDesableUser = (): JSX.Element => {
                 </p>
                 <div
                   onClick={() => {
-                    console.log(token);
-
                     deleteUser(token, e)
                       .then((res) => {
                         info("USUARIO DESATIVADO COM SUCESSO");
