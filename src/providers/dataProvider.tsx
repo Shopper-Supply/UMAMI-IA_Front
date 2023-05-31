@@ -24,10 +24,8 @@ interface IDataContext {
   ignoreError: (errorId: number) => void;
 
   curators: ICurator[];
-  currentCurator?: ICurator;
-  setCurrentCurator?: React.Dispatch<
-    React.SetStateAction<ICurator | undefined>
-  >;
+  currentCurator: ICurator;
+  setCurrentCurator: React.Dispatch<React.SetStateAction<ICurator>>;
 
   places: IPlace[];
   currentPlace: IPlace;
@@ -76,12 +74,20 @@ const DataContext = createContext<IDataContext>({
   curators: [],
   currentCurator: {
     is_active: false,
-    percentage: 0.0,
+    percentage: 0,
     total_errors: 0,
     owned_errors: 0,
     error_points: 0,
   },
-  setCurrentCurator: () => {},
+  setCurrentCurator: () => {
+    {
+      is_active: false;
+      percentage: 0;
+      total_errors: 0;
+      owned_errors: 0;
+      error_points: 0;
+    }
+  },
 
   places: [{}],
   currentPlace: {},
@@ -132,7 +138,13 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const [curators, setCurators] = useState<ICurator[]>([]);
   const [places, setPlace] = useState([{}]);
 
-  const [currentCurator, setCurrentCurator] = useState<ICurator | undefined>();
+  const [currentCurator, setCurrentCurator] = useState<ICurator>({
+    is_active: false,
+    percentage: 0,
+    total_errors: 0,
+    owned_errors: 0,
+    error_points: 0,
+  });
   const [currentPlace, setCurrentPlace] = useState({});
   const [currentBagPattern, setCurrentBagPattern] = useState<IBag>({
     iva: 0,

@@ -50,7 +50,13 @@ const ModalAprovacaoErros = () => {
   useEffect(() => {
     if (statusErrorsLog) {
       setErrorsLog([]), setStatusErrorsLog(false);
-      setCurrentCurator({});
+      setCurrentCurator({
+        is_active: false,
+        percentage: 0,
+        total_errors: 0,
+        owned_errors: 0,
+        error_points: 0,
+      });
       setCurrentPlace({});
     }
   }, [statusErrorsLog, setErrorsLog]);
@@ -69,7 +75,7 @@ const ModalAprovacaoErros = () => {
         sheet: element.sheet,
       };
       const body: IErroLogBody = {
-        curator_id: currentCurator.id,
+        curator_id: currentCurator?.id,
         error_type_id: element.error_type!.id,
         sku_error: JSON.stringify(skuError),
       };
