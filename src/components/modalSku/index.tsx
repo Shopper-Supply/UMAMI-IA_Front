@@ -12,11 +12,14 @@ import { useRouter } from "next/router";
 import { deleteSku } from "@/services/delete";
 
 interface IsetDuplicatedSkuIsOpen {
-  duplicatedSkuIsOpen: boolean
-  setDuplicatedSkuIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  duplicatedSkuIsOpen: boolean;
+  setDuplicatedSkuIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedSkuIsOpen) => {
+const ModalSku = ({
+  setDuplicatedSkuIsOpen,
+  duplicatedSkuIsOpen,
+}: IsetDuplicatedSkuIsOpen) => {
   const { setErrorsLog, setCurrentCurator, setCurrentPlace, repitedSku } =
     useData();
   const { isAlertOpen, openAlert, hideModal } = useModal();
@@ -28,9 +31,9 @@ const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedS
   >(allRepitedSku[0]);
   const [selectedRepited, setSelectedRepited] = useState<number>(0);
   const [visibleSkulength, setVisibleSkulength] = useState<number>(0);
+
   const { token, setAuth } = useUser();
   const router = useRouter();
-
 
   useEffect(() => {
     if (statusDuplicateSku) {
@@ -141,10 +144,12 @@ const ModalSku = ({setDuplicatedSkuIsOpen, duplicatedSkuIsOpen}: IsetDuplicatedS
                 <ListaModalSku
                   DeleteItemFromRepitedOptions={DeleteItemFromRepitedOptions}
                   data={elementData}
+                  setCurrentRepitedOptions={setCurrentRepitedOptions}
                   key={index}
                   currentIndex={index}
                   selectedRepited={selectedRepited}
-                  currentRepitedOptions={currentRepitedOptions.length}
+                  currentRepitedOptionsLength={currentRepitedOptions.length}
+                  currentRepitedOptions={currentRepitedOptions}
                 />
               );
             })}

@@ -46,6 +46,11 @@ export interface IRepitedSku {
   updated_at: string;
   weight?: number;
   width?: number;
+  curator?: string;
+  client?: string;
+  mall?: string;
+  abbr?: string;
+  place?: string;
 }
 
 export interface ISheetRequest {
@@ -71,12 +76,4 @@ export interface ICompareSheetsResponse {
     prod: IErrorCompare[];
     espt: IErrorCompare[];
   };
-}
-
-export interface IRepitedForm extends IRepitedSku {
-  curator: ICurator;
-  abbr: string;
-  place: string;
-  client: string;
-  mall: string;
 }
