@@ -18,10 +18,18 @@ jobs:
     steps:
       - name: Clear Git Config
         run: |
-          git config --global --unset http.https://github.com/.extraheader
-          git config --system --unset http.https://github.com/.extraheader
-          git config --global --unset https.https://github.com/.extraheader
-          git config --system --unset https.https://github.com/.extraheader
+          if git config --global --get http.https://github.com/.extraheader; then
+            git config --global --unset http.https://github.com/.extraheader
+          fi
+          if git config --system --get http.https://github.com/.extraheader; then
+            git config --system --unset http.https://github.com/.extraheader
+          fi
+          if git config --global --get https.https://github.com/.extraheader; then
+            git config --global --unset https.https://github.com/.extraheader
+          fi
+          if git config --system --get https.https://github.com/.extraheader; then
+            git config --system --unset https.https://github.com/.extraheader
+          fi
       - uses: actions/checkout@v3
         with:
           submodules: true
