@@ -11,25 +11,16 @@ on:
 
 jobs:
   build_and_deploy_job:
-    
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
       - name: Clear Git Config
         run: |
-          if git config --global --get http.https://github.com/.extraheader; then
-            git config --global --unset http.https://github.com/.extraheader
-          fi
-          if git config --system --get http.https://github.com/.extraheader; then
-            git config --system --unset http.https://github.com/.extraheader
-          fi
-          if git config --global --get https.https://github.com/.extraheader; then
-            git config --global --unset https.https://github.com/.extraheader
-          fi
-          if git config --system --get https.https://github.com/.extraheader; then
-            git config --system --unset https.https://github.com/.extraheader
-          fi
+          git config --global http.https://github.com/.extraheader ""
+          git config --system http.https://github.com/.extraheader ""
+          git config --global https.https://github.com/.extraheader ""
+          git config --system https.https://github.com/.extraheader ""
       - uses: actions/checkout@v3
         with:
           submodules: true
