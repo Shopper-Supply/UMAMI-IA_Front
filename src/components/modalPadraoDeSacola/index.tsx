@@ -4,7 +4,7 @@ import { IFormBag } from "@/interfaces/form";
 import { useData } from "@/providers/dataProvider";
 import { useModal } from "@/providers/modaisProvider";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { HiOutlineArrowUpTray } from "react-icons/hi2";
+import { HiOutlineArrowUpTray, HiOutlineXMark } from "react-icons/hi2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,7 +12,6 @@ import { toast } from "react-hot-toast";
 import { verifyToken } from "@/utils/finds";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
-import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
 
 const ModalPadraoDeSacola = () => {
   const { currentBagPattern, setCurrentBagPattern } = useData();
@@ -148,19 +147,19 @@ const ModalPadraoDeSacola = () => {
           cm
         </label>
         <div className="flex gap-3">
-            <button
-              className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Enviar"
-            >
-              <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
-            </button>
-            <button
-              onClick={hideModal}
-              className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
-              title="Fechar"
-            >
-              <HiOutlineXMark color="#FFFFFF" size="2.7rem" />
-            </button>
+          <button
+            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Enviar"
+          >
+            <HiOutlineArrowUpTray color="#FFFFFF" size="2.7rem" />
+          </button>
+          <button
+            onClick={hideModal}
+            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+            title="Fechar"
+          >
+            <HiOutlineXMark color="#FFFFFF" size="2.7rem" />
+          </button>
         </div>
       </form>
     </div>

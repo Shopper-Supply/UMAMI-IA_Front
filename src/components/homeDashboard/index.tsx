@@ -13,7 +13,7 @@ const HomeDashboard = () => {
       id="DashBoard"
       className="-z-0 top-0 absolute ml-[21.5rem] h-screen pl-4 pt-14 overflow-y-scroll overflow-x-hidden"
     >
-      <div className="max-xl:w-[60%] max-w-[77rem] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
+      <div className="max-xl:w-[60%] max-w-[77rem]  h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
         <Image
           src={IlustrationRobot_02}
           alt="Ilustração robo de qualidade"
@@ -40,8 +40,6 @@ const HomeDashboard = () => {
           />
         ))}
       </ul>
-
-
     </section>
   );
 };
