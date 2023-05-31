@@ -24,7 +24,6 @@ const Home: NextPage = () => {
       router.push("/");
     }
   }
-
   const componentsPageDash: JSX.Element[] = [
     <HomeDashboard key={0} />,
     <ManagerDashboard key={1} />,
