@@ -21,6 +21,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { repitedSku } = useData();
   const [isFirstVisit, setFirstVitit] = useState(true);
+  const [duplicatedSkuIsOpen, setDuplicatedSkuIsOpen] = useState(false);
 
   if (!auth) {
     if (typeof window !== "undefined") {
@@ -54,10 +55,15 @@ const Home: NextPage = () => {
       />
       <main className="bg-branco-secundario">
         <Modal />
-        {repitedListlength > 0 && <ModalSku />}
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-        {loadingScreen && <LoadingScreen />}
         <Menu />
+        {loadingScreen && <LoadingScreen />}
+        {repitedListlength > 0 && !duplicatedSkuIsOpen && (
+          <ModalSku
+            duplicatedSkuIsOpen={duplicatedSkuIsOpen}
+            setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
+          />
+        )}
         <div className="flex justify-end">
           {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />

@@ -30,6 +30,7 @@ const ModalAprovacaoErros = () => {
   const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
     useModal();
   const [statusErrorsLog, setStatusErrorsLog] = useState<boolean>(false);
+  const [modalPlace, setModalPlace] = useState<boolean>(true);
   const router = useRouter();
 
   const getColor = (severity: number | undefined) => {
@@ -79,6 +80,11 @@ const ModalAprovacaoErros = () => {
     setErrorsLog([]);
   };
 
+  const openModal = () => {
+    setModalPlace(false)
+    openAlert()
+  }
+
   return (
     <div
       className={`flex flex-row-reverse 
@@ -89,7 +95,7 @@ const ModalAprovacaoErros = () => {
           : { visibility: "hidden" }
       }
     >
-      {isAlertOpen && (
+      {!modalPlace && isAlertOpen && (
         <ConfirmAction
           message="TEM CERTEZA QUE DESEJA DESCARTAR TODOS OS ERROS?"
           setStatus={setStatusErrorsLog}
@@ -131,7 +137,7 @@ const ModalAprovacaoErros = () => {
         <div className="flex items-center content-center justify-center w-[100%] py-6 gap-3">
           <div
             onClick={() => {
-              openAlert();
+              openModal();
             }}
             title="Descartar Lista de Erros"
             className="drop-shadow-md rounded-full font-bold bg-branco-primario text-roxo-primario p-4 cursor-pointer"
