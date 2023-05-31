@@ -10,11 +10,14 @@ export interface IUser {
 export interface IUserDetail extends IUser {
   date_joined?: string;
   updated_at?: string;
+  password?: string;
   role?: {
     id: number;
     title: string;
     description: string;
   };
+  role_id?: number;
+  is_active?: boolean;
 }
 
 export interface IUserRelatory extends IUserDetail {

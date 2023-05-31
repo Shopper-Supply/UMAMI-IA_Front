@@ -68,7 +68,7 @@ const UserInFocus = ({
               ></circle>
             )}
           </svg>
-          <h3 className="text-[2.5rem] font-bold absolute top-[40%] left-[84%] text-[#8d3ae5]">
+          <h3 className="text-[2.5rem] font-bold absolute translate-x-[4rem] -translate-y-[9.2rem] text-[#8d3ae5]">
             {Math.round(percentage ? percentage : 0)}%
           </h3>
         </div>

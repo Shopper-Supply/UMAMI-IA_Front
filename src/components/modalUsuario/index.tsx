@@ -17,10 +17,10 @@ const ModalUsuario = () => {
       </div>
       <div className="gap-0">
         <p className="text-roxo-primario text-6xl font-semibold">
-          {userData.name.toUpperCase()}
+          {userData?.name.toUpperCase()}
         </p>
         <p className="text-2xl text-roxo-primario font-medium">
-          {userData.email}
+          {userData?.email}
         </p>
       </div>
 
@@ -52,11 +52,11 @@ const ModalUsuario = () => {
           <HiLogout size={"2rem"} color="#FFFFFF" />
         </button>
         <button
-            onClick={hideModal}
-            className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
-            title="Fechar"
-          >
-            <HiOutlineXMark color="#FFFFFF" size="2rem" />
+          onClick={hideModal}
+          className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
+          title="Fechar"
+        >
+          <HiOutlineXMark color="#FFFFFF" size="2rem" />
         </button>
       </div>
     </div>
