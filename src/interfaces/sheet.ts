@@ -26,26 +26,26 @@ export interface IRepitedSku {
   category_code: string;
   created_at: string;
   ean: string;
-  gender: string;
-  height: number;
-  id: string;
-  is_avaliable: string;
-  is_correct: boolean;
-  iva: number;
-  length: number;
-  price: number;
+  gender?: string;
+  height?: number;
+  id?: string;
+  is_avaliable?: string;
+  is_correct?: boolean;
+  iva?: number;
+  length?: number;
+  price?: number;
   product_code: string;
-  product_description: string;
+  product_description?: string;
   product_name: string;
-  secundary_price: number;
-  seller_name: string;
+  secundary_price?: number;
+  seller_name?: string;
   sku_code: string;
-  sku_name: string;
-  supply: number;
-  tqm: string;
+  sku_name?: string;
+  supply?: number;
+  tqm?: string;
   updated_at: string;
-  weight: number;
-  width: number;
+  weight?: number;
+  width?: number;
 }
 
 export interface ISheetRequest {
@@ -71,4 +71,12 @@ export interface ICompareSheetsResponse {
     prod: IErrorCompare[];
     espt: IErrorCompare[];
   };
+}
+
+export interface IRepitedForm extends IRepitedSku {
+  curator: ICurator;
+  abbr: string;
+  place: string;
+  client: string;
+  mall: string;
 }
