@@ -9,3 +9,9 @@ export interface IGroups {
   group_errors: number;
   percentage: number;
 }
+
+export interface ICuratorErrorsComponent {
+  percentage: number;
+  curatorName?: string;
+  errors: number;
+}
