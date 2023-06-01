@@ -88,7 +88,7 @@ const Login: NextPage = () => {
             </span>
           </h1>
           <h2 className="text-[3.5rem] font-bold text-center text-roxo-secundario drop-shadow-sm ">
-            ROBÔ QUE AUXILIA NA QUALIDADE SHOPPER SUPPLY
+            AUDITOR QUE AUXILIA NA QUALIDADE SHOPPER SUPPLY
           </h2>
         </div>
         <div className="bg-branco-primario w-[35%] drop-shadow-lg flex flex-col justify-end items-center ">
