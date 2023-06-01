@@ -50,7 +50,13 @@ const ModalAprovacaoErros = () => {
   useEffect(() => {
     if (statusErrorsLog) {
       setErrorsLog([]), setStatusErrorsLog(false);
-      setCurrentCurator({});
+      setCurrentCurator({
+        is_active: false,
+        percentage: 0,
+        total_errors: 0,
+        owned_errors: 0,
+        error_points: 0,
+      });
       setCurrentPlace({});
     }
   }, [statusErrorsLog, setErrorsLog]);
