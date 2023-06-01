@@ -6,13 +6,16 @@ import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
 import HomeDashboard from "@/components/homeDashboard";
+import LoadingScreen from "@/components/loadingScreen";
 import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
+import { useModal } from "@/providers/modaisProvider";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
   const router = useRouter();
+  const { loadingScreen } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
   if (!auth) {
@@ -35,6 +38,7 @@ const Home: NextPage = () => {
         <div className="flex justify-end">
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+          {loadingScreen && <LoadingScreen />}
           {componentsPageDash[0]}
         </div>
       </main>
