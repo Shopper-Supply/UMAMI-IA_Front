@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IErrosTypes, IErroLogBody, IErrorLog } from "../interfaces/errors";
-import { ICurator } from "../interfaces/people";
+import { ICurator, IUserRelatory } from "../interfaces/people";
 import { IPlace } from "../interfaces/place";
 import { IBag } from "@/interfaces/bagpattern";
 import {
@@ -8,9 +8,10 @@ import {
   getErrorTypes,
   getHomeDashboardInfos,
   getPlaces,
+  getShoppings,
 } from "@/services/get";
 import { useUser } from "./userProvider";
-import { IhomeDashboard } from "@/interfaces/dashboard";
+import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
 
 interface IDataProvider {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ interface IDataContext {
 
   curators: ICurator[];
   currentCurator: ICurator;
-  setCurrentCurator: (curator: ICurator) => void;
+  setCurrentCurator: React.Dispatch<React.SetStateAction<ICurator>>;
 
   places: IPlace[];
   currentPlace: IPlace;
@@ -44,6 +45,14 @@ interface IDataContext {
   // dashboard datas
   dashboardHome: IhomeDashboard;
   setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>;
+
+  allUsers: IUserRelatory[];
+  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
+
+  shoppings: IShoppingDash[] | undefined;
+  setShoppings: React.Dispatch<
+    React.SetStateAction<IShoppingDash[] | undefined>
+  >;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -62,9 +71,23 @@ const DataContext = createContext<IDataContext>({
   addError: () => {},
   ignoreError: () => {},
 
-  curators: [{}],
-  currentCurator: {},
-  setCurrentCurator: () => {},
+  curators: [],
+  currentCurator: {
+    is_active: false,
+    percentage: 0,
+    total_errors: 0,
+    owned_errors: 0,
+    error_points: 0,
+  },
+  setCurrentCurator: () => {
+    {
+      is_active: false;
+      percentage: 0;
+      total_errors: 0;
+      owned_errors: 0;
+      error_points: 0;
+    }
+  },
 
   places: [{}],
   currentPlace: {},
@@ -92,6 +115,12 @@ const DataContext = createContext<IDataContext>({
     total_skus: 0,
   },
   setDashboardHome: () => {},
+
+  allUsers: [],
+  setAllUsers: () => {},
+
+  shoppings: [],
+  setShoppings: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -106,10 +135,15 @@ export const DataProvider = ({ children }: IDataProvider) => {
     },
   ]);
   const [errorsLog, setErrorsLog] = useState<IErrorLog[]>([]);
-  const [curators, setCurators] = useState([{}]);
+  const [curators, setCurators] = useState<ICurator[]>([]);
+  const [currentCurator, setCurrentCurator] = useState<ICurator>({
+    is_active: false,
+    percentage: 0,
+    total_errors: 0,
+    owned_errors: 0,
+    error_points: 0,
+  });
   const [places, setPlace] = useState([{}]);
-
-  const [currentCurator, setCurrentCurator] = useState({});
   const [currentPlace, setCurrentPlace] = useState({});
   const [currentBagPattern, setCurrentBagPattern] = useState<IBag>({
     iva: 0,
@@ -128,8 +162,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
     total_errors: 0,
     total_skus: 0,
   });
-
-  const { token, auth } = useUser();
+  const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
+  const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
+  const { token, auth, userData } = useUser();
 
   useEffect(() => {
     if (auth) {
@@ -148,10 +183,11 @@ export const DataProvider = ({ children }: IDataProvider) => {
   };
 
   const loadData = () => {
-    getCurators(token || "", setCurators);
+    getCurators(token || "", setCurators, userData?.role?.id);
     getErrorTypes(token || "", setErrors);
 
     getPlaces(token || "", setPlace);
+    getShoppings(token || "", setShoppings);
 
     getHomeDashboardInfos(token || "", setDashboardHome);
   };
@@ -187,6 +223,12 @@ export const DataProvider = ({ children }: IDataProvider) => {
         // dashboard datas
         dashboardHome,
         setDashboardHome,
+
+        allUsers,
+        setAllUsers,
+
+        shoppings,
+        setShoppings,
       }}
     >
       {children}

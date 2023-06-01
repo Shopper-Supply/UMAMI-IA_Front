@@ -23,7 +23,7 @@ import ModalUsuario from "../modalUsuario";
 import ModalComparaPlanilha from "../modalComparaPlanilha";
 
 const Menu = () => {
-  const { setContent, showModal, reverseModal } = useModal();
+  const { setContent, showModal, reverseModal, setDashPage } = useModal();
   const { setExcelFile, errorsLog, excelFile } = useData();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,8 @@ const Menu = () => {
         <Image
           src={Logo_Shopper}
           alt="Logo Shopper Supply"
-          className="mt-[3.9rem]"
+          className="mt-[3.9rem] cursor-pointer"
+          onClick={() => setDashPage(0)}
         />
         <ul className="flex flex-col gap-[2rem] mt-[3.5rem]">
           <li
@@ -57,7 +58,8 @@ const Menu = () => {
           </li>
           <li
             title="Função Indisponivel no momento"
-            className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
+            className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
+            onClick={() => setDashPage(1)}
           >
             <HiOutlineSparkles color="#5F4B8B" size="2.5rem" />
             Qualidade

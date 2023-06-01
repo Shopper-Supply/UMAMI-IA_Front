@@ -15,3 +15,16 @@ export interface ICuratorErrorsComponent {
   curatorName?: string;
   errors: number;
 }
+
+export interface IShoppingDash {
+  mallName: string;
+  percentage: number;
+  total_errors: number;
+  owned_errors: number;
+  group: INameValue[];
+}
+
+export interface INameValue {
+  name: string;
+  value: number;
+}

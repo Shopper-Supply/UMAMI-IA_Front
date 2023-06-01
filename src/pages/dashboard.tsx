@@ -11,11 +11,12 @@ import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
+import QADashboard from "@/components/managerDashboard";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
   const router = useRouter();
-  const { loadingScreen } = useModal();
+  const { loadingScreen, dashPage } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
   if (!auth) {
@@ -24,7 +25,10 @@ const Home: NextPage = () => {
     }
   }
 
-  const componentsPageDash: JSX.Element[] = [<HomeDashboard key={0} />];
+  const componentsPageDash: JSX.Element[] = [
+    <HomeDashboard key={0} />,
+    <QADashboard key={1} />,
+  ];
 
   return (
     <>
@@ -39,7 +43,7 @@ const Home: NextPage = () => {
           <ModalAprovacaoErros />
           {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
           {loadingScreen && <LoadingScreen />}
-          {componentsPageDash[0]}
+          {componentsPageDash[dashPage]}
         </div>
       </main>
     </>
