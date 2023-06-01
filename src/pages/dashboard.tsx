@@ -37,13 +37,13 @@ const Home: NextPage = () => {
         description="Robo de qualidade para verificação de planilhas"
       />
       <main className="bg-branco-secundario">
-        <Menu />
         <Modal />
+        {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+        {loadingScreen && <LoadingScreen />}
+        <Menu />
         <div className="flex justify-end">
-          <ModalAprovacaoErros />
-          {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-          {loadingScreen && <LoadingScreen />}
           {componentsPageDash[dashPage]}
+          <ModalAprovacaoErros />
         </div>
       </main>
     </>

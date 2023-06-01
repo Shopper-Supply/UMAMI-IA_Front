@@ -1,3 +1,5 @@
+import { IErrorCompare } from "./errors";
+
 export interface IhomeDashboard {
   total_skus: number;
   total_errors: number;
@@ -6,8 +8,10 @@ export interface IhomeDashboard {
 
 export interface IGroups {
   name: string;
+  total_errors?: number;
   group_errors: number;
   percentage: number;
+  errorTypes?: IErrorCompare[];
 }
 
 export interface ICuratorErrorsComponent {
