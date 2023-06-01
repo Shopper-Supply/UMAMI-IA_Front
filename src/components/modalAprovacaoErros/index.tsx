@@ -81,7 +81,7 @@ const ModalAprovacaoErros = () => {
       };
       submitErrorLog(token || "", body);
     });
-    info("TODOS OS ERROS FORAM ADICIONADOS COM SUCESSO");
+    info("TODOS OS ERROS FORAM ADICIONADOS COM SUCESSO!");
     setErrorsLog([]);
   };
 
