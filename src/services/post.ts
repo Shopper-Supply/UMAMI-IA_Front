@@ -20,6 +20,7 @@ export function validateSheet(token: string, body: FormData) {
       },
     })
     .then((res) => {
+      console.table(res.data)
       return res;
     })
     .catch((err) => console.error(err));

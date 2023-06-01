@@ -5,7 +5,7 @@ import { deleteSku } from "@/services/delete";
 import { extractDate } from "@/utils/formatData";
 import { error, info } from "@/utils/toast";
 import { useState } from "react";
-import { HiPencil, HiCheck, HiOutlineTrash } from "react-icons/hi";
+import { HiPencil, HiCheck, HiOutlineTrash, HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -87,56 +87,9 @@ const ListaModalSku = ({
       .finally(() => {});
   };
 
-  const schema = yup.object().shape({
-    product_name: yup.string().required("Campo Obrigatório"),
-    sku_code: yup.string().required("Campo Obrigatorio"),
-    brand: yup.string().required("Campo Obrigatório"),
-    category_code: yup.number().required("Campo Obrigatorio"),
-    curator: yup.string().required("Campo Obrigatório"),
-    client: yup.string().required("Campo Obrigatório"),
-    mall: yup.string().required("Campo Obrigatório"),
-    created_at: yup.string().required("Campo Obrigatorio"),
-    abbr: yup
-      .string()
-      .required("Campo obrigatório")
-      .max(3, "A abreviação do projeto precisa ter 3 caracteres"),
-    place: yup.string().required("Campo Obrigatório"),
-    ean: yup.number().required("Campo Obrigatorio"),
-    product_code: yup.number().required("Campo Obrigatorio"),
-    updated_at: yup.string().required("Campo Obrigatorio"),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IRepitedSku>({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit: SubmitHandler<IRepitedSku> = (dataYup, el) => {
-    // verificação de token de usuario.
-    const verifyTokenResult = verifyToken(setAuth, hideModal, router);
-    if (verifyTokenResult !== true) {
-      return;
-    }
-    const editedCurrentRepitedOptions = currentRepitedOptions.filter((e) => {
-      console.log("Elemento", e.id);
-      console.log("Data", data.id);
-      if (data.id != e.id) {
-        return e;
-      }
-      return;
-    });
-    console.log(editedCurrentRepitedOptions);
-    setCurrentRepitedOptions([...editedCurrentRepitedOptions, dataYup]);
-
-    setSKUItem_isActive(!SKUItem_isActive);
-  };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <div
       className={`flex justify-around w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
         SKUItem_isActive ? "min-h-[25rem] pt-10" : "min-h-[10vh] items-center"
       }`}
@@ -152,19 +105,10 @@ const ListaModalSku = ({
       <div className="flex flex-col justify-center w-[75%] gap-3">
         {SKUItem_isActive ? (
           <input
-            {...register("product_name")}
+            disabled
             type="text"
             defaultValue={data.product_name}
-            placeholder={
-              errors.product_name
-                ? "Insira o nome do produto"
-                : data.product_name
-            }
-            className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-              errors.product_name
-                ? "border-red-600 focus:border-red-700"
-                : "border-roxo-primario"
-            } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+            className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
           />
         ) : (
           <p className="text-[1.2rem] font-medium text-roxo-secundario">
@@ -177,17 +121,10 @@ const ListaModalSku = ({
               CODIGO SKU:{" "}
               {SKUItem_isActive ? (
                 <input
-                  {...register("sku_code")}
+                  disabled
                   type="text"
-                  defaultValue={data.sku_code}
-                  placeholder={
-                    errors.sku_code ? "Insira o código do sku" : data.sku_code
-                  }
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.sku_code
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={data.sku_code}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
               ) : (
                 <p className="text-[1.2rem] font-medium">{data.sku_code}</p>
@@ -197,15 +134,10 @@ const ListaModalSku = ({
               MARCA:{" "}
               {SKUItem_isActive ? (
                 <input
-                  {...register("brand")}
-                  placeholder={errors.brand ? "Insira a marca" : data.brand}
+                  disabled
                   type="text"
-                  defaultValue={data.brand}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.brand
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={data.brand}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               ) : (
                 <p className="text-[1.2rem] font-medium">{data.brand}</p>
@@ -223,19 +155,10 @@ const ListaModalSku = ({
               <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 CÓD. CATEGORIA:{" "}
                 <input
-                  {...register("category_code")}
-                  placeholder={
-                    errors.category_code
-                      ? "Insira o código da categoria"
-                      : data.category_code
-                  }
+                  disabled
                   type="text"
-                  defaultValue={data.category_code}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.category_code
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={data.category_code}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
             )}
@@ -243,19 +166,10 @@ const ListaModalSku = ({
               <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 CURADOR:{" "}
                 <input
-                  {...register("curator")}
-                  placeholder={
-                    errors.curator
-                      ? "Insira o nome do curador"
-                      : currentCurator.name
-                  }
+                  disabled
                   type="text"
-                  defaultValue={currentCurator.name}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.curator
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={currentCurator.name}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
               </label>
             )}
@@ -272,19 +186,10 @@ const ListaModalSku = ({
                 <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                   CLIENTE:{" "}
                   <input
-                    {...register("client")}
-                    placeholder={
-                      errors.client
-                        ? "Insira o nome do cliente"
-                        : currentPlace.client
-                    }
+                    disabled
                     type="text"
-                    defaultValue={currentPlace.client}
-                    className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                      errors.client
-                        ? "border-red-600 focus:border-red-700"
-                        : "border-roxo-primario"
-                    } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                    value={currentPlace.client}
+                    className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                   />
                 </label>
               )}
@@ -292,17 +197,10 @@ const ListaModalSku = ({
                 <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                   SHOPPING:{" "}
                   <input
-                    {...register("mall")}
-                    placeholder={
-                      errors.mall ? "Insira o shopping" : currentPlace.mall
-                    }
+                    disabled
                     type="text"
-                    defaultValue={currentPlace.mall}
-                    className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                      errors.mall
-                        ? "border-red-600 focus:border-red-700"
-                        : "border-roxo-primario"
-                    } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                    value={currentPlace.mall}
+                    className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                   />
                 </label>
               )}
@@ -311,21 +209,11 @@ const ListaModalSku = ({
               <label className="flex justify-end items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 ENVIO:{" "}
                 <input
-                  {...register("created_at")}
-                  placeholder={
-                    errors.created_at
-                      ? "Insira a data de criação"
-                      : data.created_at
-                  }
+                  disabled
                   type="text"
-                  defaultValue={extractDate(data.created_at)}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.created_at
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={extractDate(data.created_at)}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
-                <span>{errors.created_at?.message}</span>
               </label>
             )}
           </div>
@@ -342,17 +230,10 @@ const ListaModalSku = ({
                 <label className="flex justify-start w-[30%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                   ABBR:{" "}
                   <input
-                    {...register("abbr")}
-                    placeholder={
-                      errors.abbr ? "Insira o abbr" : currentPlace.abbr
-                    }
+                    disabled
                     type="text"
-                    defaultValue={currentPlace.abbr}
-                    className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                      errors.abbr
-                        ? "border-red-600 focus:border-red-700"
-                        : "border-roxo-primario"
-                    } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                    value={currentPlace.abbr}
+                    className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                   />
                 </label>
               )}
@@ -360,17 +241,10 @@ const ListaModalSku = ({
                 <label className="flex justify-start w-[48%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                   LOJA:{" "}
                   <input
-                    {...register("place")}
-                    placeholder={
-                      errors.place ? "Insira a loja" : currentPlace.name
-                    }
+                    disabled
                     type="text"
                     defaultValue={currentPlace.name}
-                    className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                      errors.place
-                        ? "border-red-600 focus:border-red-700"
-                        : "border-roxo-primario"
-                    } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                    className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                   />
                 </label>
               )}
@@ -379,15 +253,10 @@ const ListaModalSku = ({
               <label className="flex justify-end items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 EAN:{" "}
                 <input
-                  {...register("ean")}
-                  placeholder={errors.ean ? "Insira o código ean" : data.ean}
+                  disabled
                   type="text"
-                  defaultValue={data.ean}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.ean
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={data.ean}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
               </label>
             )}
@@ -403,19 +272,10 @@ const ListaModalSku = ({
               <label className="flex justify-between w-[50%] items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 CÓD. PRODUTO:{" "}
                 <input
-                  {...register("product_code")}
-                  placeholder={
-                    errors.ean
-                      ? "Insira o código do produto"
-                      : data.product_code
-                  }
+                  disabled
                   type="text"
-                  defaultValue={data.product_code}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.product_code
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  value={data.product_code}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
               </label>
             )}
@@ -423,19 +283,10 @@ const ListaModalSku = ({
               <label className="flex justify-between items-center text-[1.2rem] font-semibold text-roxo-secundario">
                 ULTIMA ALTERAÇÃO:{" "}
                 <input
-                  {...register("updated_at")}
-                  placeholder={
-                    errors.updated_at
-                      ? "Insira a data de atualização"
-                      : data.updated_at
-                  }
+                  disabled
                   type="text"
                   defaultValue={data.updated_at}
-                  className={`bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none ${
-                    errors.updated_at
-                      ? "border-red-600 focus:border-red-700"
-                      : "border-roxo-primario"
-                  } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+                  className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none" 
                 />
               </label>
             )}
@@ -446,12 +297,11 @@ const ListaModalSku = ({
         {SKUItem_isActive ? (
           <div className="flex gap-3">
             <button
-              type="submit"
-              // onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
+              onClick={() => setSKUItem_isActive(!SKUItem_isActive)}
               title="Salvar alteraçoes"
               className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
             >
-              <HiCheck size="1.5rem" />
+              <HiChevronUp size="2rem" />
             </button>
             <div
               onClick={() => {
@@ -475,7 +325,7 @@ const ListaModalSku = ({
               title="Editar SKU"
               className="drop-shadow-md rounded-full bg-roxo-primario text-branco-primario p-4 cursor-pointer transition-all"
             >
-              <HiPencil size="1.5rem" />
+              <HiChevronDown size="2rem" />
             </div>{" "}
             <div
               onClick={() => {
@@ -494,7 +344,7 @@ const ListaModalSku = ({
           </div>
         )}
       </div>
-    </form>
+    </div>
   );
 };
 
