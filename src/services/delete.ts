@@ -13,8 +13,6 @@ export function deleteSku(token: string | undefined, sku_id: string) {
     .catch((err) => console.error(err));
   return sku;
 }
-import { IUserDetail } from "@/interfaces/people";
-import api from ".";
 
 export function deleteUser(token: string | undefined, body: IUserDetail) {
   body.is_active = false;

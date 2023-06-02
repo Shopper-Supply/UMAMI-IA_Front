@@ -23,10 +23,6 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
       >
         <h4
           className={`${
-            ranking <= 0 ? "text-severity-5" : "text-[#8d3ae5]"
-      <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all">
-        <h4
-          className={`${
             ranking <= 0 ? "text-severity-5" : "text-roxo-secundario"
           } text-[2rem] text-center font-bold`}
         >

@@ -14,27 +14,17 @@ import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
 import { useData } from "@/providers/dataProvider";
 import ManagerDashboard from "@/components/managerDashboard";
+import QADashboard from "@/components/managerDashboard";
+import CuratorDashboard from "@/components/curatorDashboard";
+import iconRobo from "../../public/favicon.ico";
 
 const Home: NextPage = () => {
   const { auth } = useUser();
   const { loadingScreen, dashPage } = useModal();
   const router = useRouter();
   const { repitedSku } = useData();
-
-import QADashboard from "@/components/managerDashboard";
-import CuratorDashboard from "@/components/curatorDashboard";
-import iconRobo from "../../public/favicon.ico";
-
-const Home: NextPage = () => {
-  const { loadingScreen, dashPage } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
   const [duplicatedSkuIsOpen, setDuplicatedSkuIsOpen] = useState(false);
-
-  if (!auth) {
-    if (typeof window !== "undefined") {
-      router.push("/");
-    }
-  }
 
   const getRepitedListlength = () => {
     let length = 0;
@@ -51,10 +41,6 @@ const Home: NextPage = () => {
 
   const componentsPageDash: JSX.Element[] = [
     <HomeDashboard key={0} />,
-    <ManagerDashboard key={1} />,
-
-  const componentsPageDash: JSX.Element[] = [
-    <HomeDashboard key={0} />,
     <QADashboard key={1} />,
     <CuratorDashboard key={2} />,
   ];
@@ -65,16 +51,14 @@ const Home: NextPage = () => {
       <main className="bg-branco-secundario">
         <Modal />
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-        <Menu />
         {loadingScreen && <LoadingScreen />}
+        <Menu />
         {repitedListlength > 0 && !duplicatedSkuIsOpen && (
           <ModalSku
             duplicatedSkuIsOpen={duplicatedSkuIsOpen}
             setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
           />
         )}
-        {loadingScreen && <LoadingScreen />}
-        <Menu />
         <div className="flex justify-end">
           {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />

@@ -58,9 +58,6 @@ interface IDataContext {
   setShoppings: React.Dispatch<
     React.SetStateAction<IShoppingDash[] | undefined>
   >;
-
-  allUsers: IUserRelatory[];
-  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -134,7 +131,6 @@ const DataContext = createContext<IDataContext>({
 
   allUsers: [],
   setAllUsers: () => {},
-
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -151,8 +147,6 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const [errorsLog, setErrorsLog] = useState<IErrorLog[]>([]);
   const [curators, setCurators] = useState<ICurator[]>([]);
 
-  const [places, setPlace] = useState([{}]);
-
   const [currentCurator, setCurrentCurator] = useState<ICurator>({
     is_active: false,
     percentage: 0,
@@ -161,13 +155,6 @@ export const DataProvider = ({ children }: IDataProvider) => {
     error_points: 0,
   });
 
-  const [currentCurator, setCurrentCurator] = useState<ICurator>({
-    is_active: false,
-    percentage: 0,
-    total_errors: 0,
-    owned_errors: 0,
-    error_points: 0,
-  });
   const [places, setPlace] = useState([{}]);
   const [currentPlace, setCurrentPlace] = useState({});
   const [currentBagPattern, setCurrentBagPattern] = useState<IBag>({
@@ -192,8 +179,6 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
   const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
 
-  const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
-  const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
   const { token, auth, userData } = useUser();
 
   useEffect(() => {
