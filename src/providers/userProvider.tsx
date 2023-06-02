@@ -1,8 +1,8 @@
-import { IFormLogin } from "@/interfaces/form";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProfile } from "@/services/get";
-import { IUserDetail, IUserRelatory } from "@/interfaces/people";
 import { useRouter } from "next/router";
+import { getProfile } from "@/services/get";
+import { IFormLogin } from "@/interfaces/form";
+import { IUserDetail, IUserRelatory } from "@/interfaces/people";
 
 interface IUserProvider {
   children: React.ReactNode;
