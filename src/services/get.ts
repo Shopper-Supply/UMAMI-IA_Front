@@ -5,7 +5,7 @@ import { IPlace } from "@/interfaces/place";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
 
 export function getCurators(
-  token: string,
+  token: string | undefined,
   setCurators: React.Dispatch<React.SetStateAction<ICurator[]>>,
   role_id?: number
 ) {
