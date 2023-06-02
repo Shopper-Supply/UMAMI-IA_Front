@@ -1,6 +1,3 @@
-import { useModal } from "@/providers/modaisProvider";
-import ModalRelatoriErrors from "../relatoriErrorsModal";
-
 interface IDonutDash {
   porcent?: number;
   title?: string;
@@ -8,8 +5,6 @@ interface IDonutDash {
 }
 
 const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
-  const { showModal, setContent, reverseModal } = useModal();
-
   const calcPorcent = (porcent: number) => {
     porcent = 100 - porcent;
     porcent = 100 / porcent;
@@ -18,17 +13,11 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
   };
   return (
     <li>
-      <div
-        // onClick={() => {
-        //   setContent(ModalRelatoriErrors);
-        //   reverseModal();
-        //   showModal();
-        // }}
-        className="bg-branco-primario w-[25rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all"
-      >
+
+      <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all">
         <h4
           className={`${
-            ranking <= 0.0 ? "text-severity-5" : "text-roxo-secundario"
+            ranking <= 0 ? "text-severity-5" : "text-roxo-secundario"
           } text-[2rem] text-center font-bold`}
         >
           {title ? (
@@ -68,9 +57,6 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
             } font-bold absolute top-[40%] ${
               porcent != 100 ? "left-[40%]" : "left-[36%]"
             } ${!title && "animate-pulse"}`}
-
-            // TA QUASE DANDO SUCESSO
-            //  ULTIMO TESTE
           >
             <h3>{title ? porcent : "??"}%</h3>
           </div>

@@ -21,6 +21,9 @@ interface IModalContext {
   openAlert: () => void;
   closeAlert: () => void;
 
+  loadingScreen: boolean;
+  setLoadingScreen: React.Dispatch<React.SetStateAction<boolean>>;
+
   dashPage: number;
   setDashPage: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -53,9 +56,11 @@ export const ModalProvider = ({ children }: IModalProvider) => {
   
   const [loadingScreen, setLoadingScreen] = useState<boolean>(false);
 
+  const [loadingScreen, setLoadingScreen] = useState<boolean>(false);
+
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 
-  const [dashPage, setDashPage] = useState<number>(1);
+  const [dashPage, setDashPage] = useState<number>(0);
 
   function hideModal() {
     // Esconder o Modal ja aberto, essa função deve ser chamada para fechar um modal.

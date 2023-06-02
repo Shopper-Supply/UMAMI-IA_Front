@@ -35,38 +35,10 @@ const ModalComparaPlanilha = () => {
     place: yup.string().required("Campo Obrigatório"),
     curator_spreadsheet: yup
       .mixed()
-      .test(
-        "Obrigatório",
-        "Por favor, selecione um arquivo",
-        (file: any) => file?.length > 0
-      )
-      .test(
-        "Arquivo inválido",
-        "Arquivo deve ser um Excel",
-        (file: any) =>
-          file[0] &&
-          [
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(file[0].type)
-      ),
+      .required("Por favor, selecione um arquivo"),
     control_spreadsheet: yup
       .mixed()
-      .test(
-        "Obrigatório",
-        "Por favor, selecione um arquivo",
-        (file: any) => file?.length > 0
-      )
-      .test(
-        "Arquivo Inválido",
-        "Arquivo deve ser um Excel",
-        (file: any) =>
-          file[0] &&
-          [
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(file[0].type)
-      ),
+      .required("Por favor, selecione um arquivo"),
   });
 
   const {
@@ -88,6 +60,8 @@ const ModalComparaPlanilha = () => {
   const router = useRouter();
   const [controlFileName, setControlFileName] = useState("");
   const [curatorFileName, setCuratorFileName] = useState("");
+  const [controlFile, setControlFile] = useState("");
+  const [curatorFile, setCuratorFile] = useState("");
 
   const {
     register,
@@ -107,27 +81,22 @@ const ModalComparaPlanilha = () => {
 
     const formData = new FormData();
 
-    formData.append("control_spreadsheet", data.control_spreadsheet[0]);
-    formData.append("curator_spreadsheet", data.curator_spreadsheet[0]);
+    formData.append("control_spreadsheet", controlFile);
+    formData.append("curator_spreadsheet", curatorFile);
     formData.append("curator_id", idCurator);
     formData.append("place", JSON.stringify(placeData));
 
     compareSheets(token || " ", formData)
       .then((res: ICompareSheetsResponse) => {
         if (res) {
-          const errorLogList: IErrorLog[] = [];
-          const errors: { [key: string]: IErrorCompare[] } = res.errors;
-
-          for (const sheet in errors) {
-            const errorsList = errors[sheet];
-
-            for (let item of errorsList) {
-              errorLogList.push({
-                sheet: sheet.toUpperCase(),
-                error_type: item.errorType,
-                coor: `${item.row}`,
-              });
-            }
+          console.log(res.errors.sku.length);
+          if (
+            res.errors.espt.length <= 0 &&
+            res.errors.prod.length <= 0 &&
+            res.errors.sku.length <= 0
+          ) {
+            info("NENHUM VIOLAÇÂO ENCONTRADA");
+            return;
           }
           setCurrentCurator(res.curator);
           setCurrentPlace(res.place_obj);
@@ -223,9 +192,10 @@ const ModalComparaPlanilha = () => {
     }
   };
 
-  function handleCuratorFileChange(event: any) {
+  const handleCuratorFileChange = (event: any) => {
     const file = event.target.files[0];
     const fileName = file?.name.includes(".xlsx" || ".xls")
+
 
     let validExt = new Array(".XLSX", ".XLS");
 
@@ -454,7 +424,7 @@ const ModalComparaPlanilha = () => {
                   {...register("control_spreadsheet")}
                   id="dropzone-file"
                   type="file"
-                  onChange={handleControlFileChange}
+                  onChange={(event) => handleControlFileChange(event)}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
@@ -482,7 +452,7 @@ const ModalComparaPlanilha = () => {
                   {...register("curator_spreadsheet")}
                   id="dropzone-file"
                   type="file"
-                  onChange={handleCuratorFileChange}
+                  onChange={(event) => handleCuratorFileChange(event)}
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>

@@ -34,3 +34,14 @@ export interface IErrorCompare {
   row: number;
   errorType: IErrosTypes;
 }
+
+export interface ICuratorErrosGroup {
+  total_errors: number;
+  group_errors: number;
+  percentage: number;
+  errorTypes: IRelatoryErrorsTypes[];
+}
+export interface IRelatoryErrorsTypes {
+  title: string;
+  logs: number;
+}

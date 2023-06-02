@@ -7,10 +7,14 @@ import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
 import HomeDashboard from "@/components/homeDashboard";
 import LoadingScreen from "@/components/loadingScreen";
+import QADashboard from "@/components/managerDashboard";
 import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
+import CuratorDashboard from "@/components/curatorDashboard";
+import iconRobo from "../../public/favicon.ico";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
+
 
 const Home: NextPage = () => {
   const { auth } = useUser();
@@ -18,28 +22,23 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [isFirstVisit, setFirstVitit] = useState(true);
 
-  if (!auth) {
-    if (typeof window !== "undefined") {
-      router.push("/");
-    }
-  }
-
-  const componentsPageDash: JSX.Element[] = [<HomeDashboard key={0} />];
+  const componentsPageDash: JSX.Element[] = [
+    <HomeDashboard key={0} />,
+    <QADashboard key={1} />,
+    <CuratorDashboard key={2} />,
+  ];
 
   return (
     <>
-      <Seo
-        title="UMAMI IA"
-        description="Robo de qualidade para verificação de planilhas"
-      />
+      <Seo title="SUPP" description="Auditor tech-humano" icon={iconRobo} />
       <main className="bg-branco-secundario">
-        <Menu />
         <Modal />
-        {loadingScreen && <LoadingScreen/>}
+        {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+        {loadingScreen && <LoadingScreen />}
+        <Menu />
         <div className="flex justify-end">
+          {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />
-          {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
-          {componentsPageDash[0]}
         </div>
       </main>
     </>
