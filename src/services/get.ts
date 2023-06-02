@@ -7,6 +7,10 @@ import { useData } from "@/providers/dataProvider";
 
 export function getCurators(
   token: string,
+
+export function getCurators(
+  token: string | undefined,
+   
   setCurators: React.Dispatch<React.SetStateAction<ICurator[]>>,
   role_id?: number
 ) {

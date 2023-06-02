@@ -23,6 +23,9 @@ interface IModalContext {
   openAlert: () => void;
   closeAlert: () => void;
 
+  loadingScreen: boolean;
+  setLoadingScreen: React.Dispatch<React.SetStateAction<boolean>>;
+
   dashPage: number;
   setDashPage: React.Dispatch<React.SetStateAction<number>>;
 

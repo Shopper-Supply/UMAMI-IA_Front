@@ -31,6 +31,7 @@ const HomeDashboard = () => {
         </div>
       </div>
       <ul className="pt-8 flex w-[75%] h-[75%] flex-wrap gap-4">
+      <ul className="pt-8 flex w-[92%] h-[75%] flex-wrap gap-4">
         {sortedDashboardhome.map((group, index) => (
           <DunotDash
             ranking={index}

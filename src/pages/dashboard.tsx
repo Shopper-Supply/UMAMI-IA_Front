@@ -20,6 +20,13 @@ const Home: NextPage = () => {
   const { loadingScreen, dashPage } = useModal();
   const router = useRouter();
   const { repitedSku } = useData();
+
+import QADashboard from "@/components/managerDashboard";
+import CuratorDashboard from "@/components/curatorDashboard";
+import iconRobo from "../../public/favicon.ico";
+
+const Home: NextPage = () => {
+  const { loadingScreen, dashPage } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
   const [duplicatedSkuIsOpen, setDuplicatedSkuIsOpen] = useState(false);
 
@@ -45,14 +52,16 @@ const Home: NextPage = () => {
   const componentsPageDash: JSX.Element[] = [
     <HomeDashboard key={0} />,
     <ManagerDashboard key={1} />,
+
+  const componentsPageDash: JSX.Element[] = [
+    <HomeDashboard key={0} />,
+    <QADashboard key={1} />,
+    <CuratorDashboard key={2} />,
   ];
 
   return (
     <>
-      <Seo
-        title="UMAMI IA"
-        description="Robo de qualidade para verificação de planilhas"
-      />
+      <Seo title="SUPP" description="Auditor tech-humano" icon={iconRobo} />
       <main className="bg-branco-secundario">
         <Modal />
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
@@ -64,6 +73,8 @@ const Home: NextPage = () => {
             setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
           />
         )}
+        {loadingScreen && <LoadingScreen />}
+        <Menu />
         <div className="flex justify-end">
           {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />

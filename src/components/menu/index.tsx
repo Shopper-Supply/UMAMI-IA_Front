@@ -30,6 +30,7 @@ const Menu = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     const fileName = file?.name.includes(".xlsx" || ".xls")
+    const fileName = file?.name.includes(".xlsx" || ".xls");
 
     let validExt = new Array(".XLSX", ".XLS");
 
@@ -38,6 +39,11 @@ const Menu = () => {
                validExt.toString() + ".");
       return false;
     } else  if (errorsLog.length > 0) {
+      error(
+        "OPS! VOCÊ PRECISA ENVIAR UM ARQUIVO EXCEL" + validExt.toString() + "."
+      );
+      return false;
+    } else if (errorsLog.length > 0) {
       error("REVISE OS ERROS ANTES DE ENVIAR UMA NOVA PLANILHA");
       event.target.value = "";
     } else if (file) {
@@ -60,7 +66,8 @@ const Menu = () => {
         <ul className="flex flex-col gap-[2rem] mt-[3.5rem]">
           <li
             title="Função Indisponivel no momento"
-            className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
+            className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
+            onClick={() => setDashPage(2)}
           >
             <HiOutlineUserGroup color="#5F4B8B" size="2rem" />
             <p className="text-2xl">Curadores</p>
@@ -159,7 +166,7 @@ const Menu = () => {
             </button>
           </div>
           <span className="text-[1rem] w-[100%] text-center mb-3">
-            Versão: alfa 1.2.3
+            Versão: beta 1.0.0
           </span>
         </ul>
       </div>

@@ -36,8 +36,16 @@ export interface IOldRelatory {
   owned_errors: number;
 }
 
-export interface ICurator {
+export interface ICurator extends ICuratorRegister {
   id?: number;
+  is_active: boolean;
+  percentage: number;
+  total_errors: number;
+  owned_errors: number;
+  error_points: number;
+  groups?: {};
+}
+export interface ICuratorRegister {
   name?: string;
   level?: number;
   is_active: boolean;
@@ -46,6 +54,22 @@ export interface ICurator {
   owned_errors: number;
   error_points: number;
   groups?: {};
+}
+
+export interface IUserRelatory extends IUserDetail {
+  relatory?: {
+    percentage: number;
+    total_errors: number;
+    owned_errors: number;
+    old_relatory?: IOldRelatory[];
+  };
+}
+
+export interface IOldRelatory {
+  relatory_date?: string;
+  percentage?: number;
+  total_errors: number;
+  owned_errors: number;
 }
 
 export interface IUserInFocus {
