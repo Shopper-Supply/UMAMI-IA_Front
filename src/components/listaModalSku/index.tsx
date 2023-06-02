@@ -91,7 +91,7 @@ const ListaModalSku = ({
   return (
     <div
       className={`flex justify-around w-[100%] bg-branco-secundario rounded-[5px] hover:drop-shadow-lg transition-all ${
-        SKUItem_isActive ? "min-h-[25rem] pt-10" : "min-h-[10vh] items-center"
+        SKUItem_isActive ? "min-h-[35rem] pt-6" : "min-h-[13vh] items-center"
       }`}
     >
       <div>
@@ -103,21 +103,24 @@ const ListaModalSku = ({
         ></div>
       </div>
       <div className="flex flex-col justify-center w-[75%] gap-3">
+      <label className="flex flex-col justify-between items-center text-[.9rem] font-semibold text-roxo-secundario">
+        <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">PRODUTO:{" "}</span>
         {SKUItem_isActive ? (
           <input
             disabled
             type="text"
             defaultValue={data.product_name}
-            className="bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+            className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
           />
         ) : (
           <p className="text-[1.2rem] font-medium text-roxo-secundario">
             {data.product_name}
           </p>
         )}
-        <div className=" flex justify-between  w-[100%] transition-all">
-          <div className="flex justify-between w-[100%] ">
-            <label className="flex flex-col justify-between items-center text-[.9rem] font-semibold text-roxo-secundario">
+      </label>
+        <div className=" flex justify-center w-[100%] transition-all">
+          <div className="flex justify-center w-[100%] ">
+            <label className="flex mr-4 flex-col justify-between items-center text-[.9rem] font-semibold text-roxo-secundario">
               <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">CODIGO SKU:{" "}</span>
               {SKUItem_isActive ? (
                 <input
@@ -130,7 +133,7 @@ const ListaModalSku = ({
                 <p className="text-[1.2rem] font-medium">{data.sku_code}</p>
               )}
             </label>
-            <label className="flex flex-col justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
+            <label className="flex ml-4 flex-col justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
               <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">MARCA:{" "}</span>
               {SKUItem_isActive ? (
                 <input
@@ -227,7 +230,7 @@ const ListaModalSku = ({
           <div className="flex justify-between w-[100%]">
             <div className="flex justify-between w-[60%]">
               {SKUItem_isActive && (
-                <label className="flex flex-col justify-start w-[30%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <label className="flex flex-col justify-start w-[48%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
                 <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">ABBR:{" "}</span>                 
                   <input
                     disabled

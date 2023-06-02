@@ -137,7 +137,7 @@ const ModalSku = ({
             })}
           </div>
         </div>
-        <div className="flex justify-center overflow-y-scroll h-[30rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
+        <div className="flex justify-center overflow-y-scroll h-[28rem] scrollbar-thin scrollbar-thumb-rounded-[4px] scrollbar-thumb-roxo-primario">
           <div className="flex flex-col items-start w-[50vw] mt-5 gap-3">
             {currentRepitedOptions?.map((elementData, index) => {
               return (
