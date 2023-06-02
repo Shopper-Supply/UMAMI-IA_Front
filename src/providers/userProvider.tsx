@@ -9,17 +9,17 @@ interface IUserProvider {
 }
 
 interface IUserContext {
-  user?: IFormLogin;
-  setUser: (user: IFormLogin) => void;
+  user?: IFormLogin | undefined;
+  setUser: React.Dispatch<React.SetStateAction<IFormLogin | undefined>>;
 
   userData: IUserRelatory | undefined;
   setUserData: React.Dispatch<React.SetStateAction<IUserRelatory | undefined>>;
 
   token?: string;
-  setToken: (token: string) => void;
+  setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
 
   auth: boolean;
-  setAuth: (auth: boolean) => void;
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UserContext = createContext<IUserContext>({
@@ -64,6 +64,7 @@ export const UserProvider = ({ children }: IUserProvider) => {
       value={{
         user,
         setUser,
+
         userData,
         setUserData,
 

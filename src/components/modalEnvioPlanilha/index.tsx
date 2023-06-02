@@ -12,7 +12,12 @@ import ConfirmAction from "../confirmAction";
 import { useUser } from "@/providers/userProvider";
 import { validateSheet } from "@/services/post";
 import { error, info } from "@/utils/toast";
-import { ISheet, ISheetRequest } from "@/interfaces/sheet";
+import {
+  IRepitedSku,
+  ISheerAdjustment,
+  ISheet,
+  ISheetRequest,
+} from "@/interfaces/sheet";
 import { verifyToken, findCurator, findPlace } from "@/utils/finds";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/router";
@@ -33,6 +38,7 @@ const ModalEnvioPlanilha = () => {
     setErrorsLog,
     setResponseFile,
     loadData,
+    setRepitedSku,
   } = useData();
   const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
   const { token, setAuth } = useUser();
@@ -87,12 +93,13 @@ const ModalEnvioPlanilha = () => {
       setLoadingScreen(true);
       info("ESTOU TRABALHANDO NA SUA PLANILHA");
       validateSheet(token || "", body)
-        .then((res: void | AxiosResponse<ISheet>) => {
+        .then((res: void | AxiosResponse<ISheerAdjustment>) => {
           if (res) {
             setErrorsLog(res.data.errors);
             setCurrentCurator(res.data.curator);
             setCurrentPlace(res.data.place_obj);
             setResponseFile(res.data.workbook);
+            setRepitedSku(res.data?.repeated);
             if (res.data.errors.length == 0) {
               return info(
                 "SUA PLANILHA FOI VALIDADA E NENHUM ERRO FOI ENCONTRADO"

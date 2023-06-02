@@ -30,6 +30,7 @@ const ModalAprovacaoErros = () => {
   const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
     useModal();
   const [statusErrorsLog, setStatusErrorsLog] = useState<boolean>(false);
+  const [modalPlace, setModalPlace] = useState<boolean>(true);
   const router = useRouter();
 
   const getColor = (severity: number | undefined) => {
@@ -75,7 +76,7 @@ const ModalAprovacaoErros = () => {
         sheet: element.sheet,
       };
       const body: IErroLogBody = {
-        curator_id: currentCurator.id,
+        curator_id: currentCurator?.id,
         error_type_id: element.error_type!.id,
         sku_error: JSON.stringify(skuError),
       };
@@ -84,6 +85,11 @@ const ModalAprovacaoErros = () => {
     info("TODOS OS ERROS FORAM ADICIONADOS COM SUCESSO!");
     setErrorsLog([]);
   };
+
+  const openModal = () => {
+    setModalPlace(false)
+    openAlert()
+  }
 
   return (
     <div
@@ -95,14 +101,14 @@ const ModalAprovacaoErros = () => {
           : { visibility: "hidden" }
       }
     >
-      {isAlertOpen && (
+      {!modalPlace && isAlertOpen && (
         <ConfirmAction
           message="TEM CERTEZA QUE DESEJA DESCARTAR TODOS OS ERROS?"
           setStatus={setStatusErrorsLog}
         />
       )}
       <div className=" flex flex-col justify-between items-center w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md">
-        <div className="overflow-y-auto flex flex-col w-[100%] text-roxo-primario text-[1.2rem] font-semibold">
+        <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-branco-primario flex flex-col w-[100%] text-roxo-primario text-[1.2rem] font-semibold">
           {errorsLog?.map((error, i) => {
             return (
               <div
@@ -137,7 +143,7 @@ const ModalAprovacaoErros = () => {
         <div className="flex items-center content-center justify-center w-[100%] py-6 gap-3">
           <div
             onClick={() => {
-              openAlert();
+              openModal();
             }}
             title="Descartar Lista de Erros"
             className="drop-shadow-md rounded-full font-bold bg-branco-primario text-roxo-primario p-4 cursor-pointer"

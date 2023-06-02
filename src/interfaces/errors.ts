@@ -41,6 +41,7 @@ export interface ICuratorErrosGroup {
   percentage: number;
   errorTypes: IRelatoryErrorsTypes[];
 }
+
 export interface IRelatoryErrorsTypes {
   title: string;
   logs: number;

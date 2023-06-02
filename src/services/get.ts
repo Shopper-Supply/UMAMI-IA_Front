@@ -3,9 +3,14 @@ import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
 import { IPlace } from "@/interfaces/place";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
+import { useData } from "@/providers/dataProvider";
+
+export function getCurators(
+  token: string,
 
 export function getCurators(
   token: string | undefined,
+   
   setCurators: React.Dispatch<React.SetStateAction<ICurator[]>>,
   role_id?: number
 ) {

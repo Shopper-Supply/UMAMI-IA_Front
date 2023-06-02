@@ -3,6 +3,7 @@ import { IFormLogin } from "@/interfaces/form";
 import { IErroLogResponse, IErroLogBody } from "@/interfaces/errors";
 import { IPlaceRequest } from "@/interfaces/place";
 import api from "./";
+import { IUserDetail } from "@/interfaces/people";
 import { ICuratorRegister, IUserDetail } from "@/interfaces/people";
 
 export function login(data?: IFormLogin) {
@@ -20,6 +21,7 @@ export function validateSheet(token: string, body: FormData) {
       },
     })
     .then((res) => {
+      console.table(res.data)
       return res;
     })
     .catch((err) => console.error(err));
@@ -78,6 +80,7 @@ export function createUser(token: string | undefined, body: IUserDetail) {
 
   return response;
 }
+
 
 export function createCurator(
   token: string | undefined,

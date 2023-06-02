@@ -11,6 +11,7 @@ import {
   getShoppings,
 } from "@/services/get";
 import { useUser } from "./userProvider";
+import { IRepitedSku } from "@/interfaces/sheet";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
 
 interface IDataProvider {
@@ -43,6 +44,9 @@ interface IDataContext {
 
   loadData: () => void;
 
+  repitedSku: Array<IRepitedSku[]>;
+  setRepitedSku: React.Dispatch<React.SetStateAction<Array<IRepitedSku[]>>>;
+
   // dashboard datas
   dashboardHome: IhomeDashboard;
   setDashboardHome: React.Dispatch<React.SetStateAction<IhomeDashboard>>;
@@ -54,6 +58,9 @@ interface IDataContext {
   setShoppings: React.Dispatch<
     React.SetStateAction<IShoppingDash[] | undefined>
   >;
+
+  allUsers: IUserRelatory[];
+  setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -74,6 +81,7 @@ const DataContext = createContext<IDataContext>({
 
   curators: [],
   setCurators: () => {},
+
   currentCurator: {
     is_active: false,
     percentage: 0,
@@ -109,6 +117,9 @@ const DataContext = createContext<IDataContext>({
 
   loadData: () => {},
 
+  repitedSku: [],
+  setRepitedSku: () => {},
+
   // dashboard datas
 
   dashboardHome: {
@@ -118,11 +129,12 @@ const DataContext = createContext<IDataContext>({
   },
   setDashboardHome: () => {},
 
+  shoppings: [],
+  setShoppings: () => {},
+
   allUsers: [],
   setAllUsers: () => {},
 
-  shoppings: [],
-  setShoppings: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -138,6 +150,17 @@ export const DataProvider = ({ children }: IDataProvider) => {
   ]);
   const [errorsLog, setErrorsLog] = useState<IErrorLog[]>([]);
   const [curators, setCurators] = useState<ICurator[]>([]);
+
+  const [places, setPlace] = useState([{}]);
+
+  const [currentCurator, setCurrentCurator] = useState<ICurator>({
+    is_active: false,
+    percentage: 0,
+    total_errors: 0,
+    owned_errors: 0,
+    error_points: 0,
+  });
+
   const [currentCurator, setCurrentCurator] = useState<ICurator>({
     is_active: false,
     percentage: 0,
@@ -156,6 +179,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
   });
   const [excelFile, setExcelFile] = useState<Blob | null>(null);
   const [responseFile, setResponseFile] = useState<string>("");
+  const [repitedSku, setRepitedSku] = useState<Array<IRepitedSku[]>>([]);
 
   // Dashboard datas
 
@@ -164,6 +188,10 @@ export const DataProvider = ({ children }: IDataProvider) => {
     total_errors: 0,
     total_skus: 0,
   });
+  const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
+
+  const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
+
   const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
   const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
   const { token, auth, userData } = useUser();
@@ -187,6 +215,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const loadData = () => {
     getCurators(token || "", setCurators, userData?.role?.id);
     getErrorTypes(token || "", setErrors);
+    getShoppings(token || "", setShoppings);
 
     getPlaces(token || "", setPlace);
     getShoppings(token || "", setShoppings);
@@ -222,6 +251,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
         setResponseFile,
 
         loadData,
+
+        repitedSku,
+        setRepitedSku,
 
         // dashboard datas
         dashboardHome,

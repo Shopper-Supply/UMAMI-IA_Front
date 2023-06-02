@@ -5,12 +5,22 @@ import Menu from "@/components/menu";
 import Modal from "@/components/modal";
 import ModalAprovacaoErros from "@/components/modalAprovacaoErros";
 import WellcomeModal from "@/components/wellcomeModal";
+import ModalSku from "@/components/modalSku";
 import HomeDashboard from "@/components/homeDashboard";
 import LoadingScreen from "@/components/loadingScreen";
 import RelatoriErrorsModal from "@/components/relatoriErrorsModal";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
+import { useData } from "@/providers/dataProvider";
+import ManagerDashboard from "@/components/managerDashboard";
+
+const Home: NextPage = () => {
+  const { auth } = useUser();
+  const { loadingScreen, dashPage } = useModal();
+  const router = useRouter();
+  const { repitedSku } = useData();
+
 import QADashboard from "@/components/managerDashboard";
 import CuratorDashboard from "@/components/curatorDashboard";
 import iconRobo from "../../public/favicon.ico";
@@ -18,6 +28,30 @@ import iconRobo from "../../public/favicon.ico";
 const Home: NextPage = () => {
   const { loadingScreen, dashPage } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
+  const [duplicatedSkuIsOpen, setDuplicatedSkuIsOpen] = useState(false);
+
+  if (!auth) {
+    if (typeof window !== "undefined") {
+      router.push("/");
+    }
+  }
+
+  const getRepitedListlength = () => {
+    let length = 0;
+    repitedSku.map((e) => {
+      if (e.length > 1) {
+        length++;
+        return;
+      }
+      return;
+    });
+    return length;
+  };
+  const repitedListlength = getRepitedListlength();
+
+  const componentsPageDash: JSX.Element[] = [
+    <HomeDashboard key={0} />,
+    <ManagerDashboard key={1} />,
 
   const componentsPageDash: JSX.Element[] = [
     <HomeDashboard key={0} />,
@@ -31,6 +65,14 @@ const Home: NextPage = () => {
       <main className="bg-branco-secundario">
         <Modal />
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
+        <Menu />
+        {loadingScreen && <LoadingScreen />}
+        {repitedListlength > 0 && !duplicatedSkuIsOpen && (
+          <ModalSku
+            duplicatedSkuIsOpen={duplicatedSkuIsOpen}
+            setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
+          />
+        )}
         {loadingScreen && <LoadingScreen />}
         <Menu />
         <div className="flex justify-end">
