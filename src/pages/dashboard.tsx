@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useModal } from "@/providers/modaisProvider";
 import QADashboard from "@/components/managerDashboard";
 import CuratorDashboard from "@/components/curatorDashboard";
+import iconRobo from "../../public/favicon.ico";
 
 const Home: NextPage = () => {
   const { loadingScreen, dashPage } = useModal();
@@ -26,10 +27,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Seo
-        title="UMAMI IA"
-        description="Robo de qualidade para verificação de planilhas"
-      />
+      <Seo title="SUPP" description="Auditor tech-humano" icon={iconRobo} />
       <main className="bg-branco-secundario">
         <Modal />
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}

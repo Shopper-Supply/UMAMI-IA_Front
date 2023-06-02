@@ -161,7 +161,7 @@ const Menu = () => {
             </button>
           </div>
           <span className="text-[1rem] w-[100%] text-center mb-3">
-            Versão: alfa 1.2.3
+            Versão: beta 1.0.0
           </span>
         </ul>
       </div>
