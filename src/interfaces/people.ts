@@ -20,16 +20,18 @@ export interface IUserDetail extends IUser {
   is_active?: boolean;
 }
 
-export interface ICurator {
+export interface ICurator extends ICuratorRegister {
   id?: number;
-  name?: string;
-  level?: number;
   is_active: boolean;
   percentage: number;
   total_errors: number;
   owned_errors: number;
   error_points: number;
   groups?: {};
+}
+export interface ICuratorRegister {
+  name?: string;
+  level?: number;
 }
 
 export interface IUserRelatory extends IUserDetail {

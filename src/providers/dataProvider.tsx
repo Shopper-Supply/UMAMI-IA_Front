@@ -24,6 +24,7 @@ interface IDataContext {
   ignoreError: (errorId: number) => void;
 
   curators: ICurator[];
+  setCurators: React.Dispatch<React.SetStateAction<ICurator[]>>;
   currentCurator: ICurator;
   setCurrentCurator: React.Dispatch<React.SetStateAction<ICurator>>;
 
@@ -72,6 +73,7 @@ const DataContext = createContext<IDataContext>({
   ignoreError: () => {},
 
   curators: [],
+  setCurators: () => {},
   currentCurator: {
     is_active: false,
     percentage: 0,
@@ -202,6 +204,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
         ignoreError,
 
         curators,
+        setCurators,
         currentCurator,
         setCurrentCurator,
 

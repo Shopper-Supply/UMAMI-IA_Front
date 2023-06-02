@@ -55,7 +55,7 @@ export const ModalProvider = ({ children }: IModalProvider) => {
 
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 
-  const [dashPage, setDashPage] = useState<number>(1);
+  const [dashPage, setDashPage] = useState<number>(0);
 
   function hideModal() {
     // Esconder o Modal ja aberto, essa função deve ser chamada para fechar um modal.
