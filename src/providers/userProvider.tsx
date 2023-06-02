@@ -15,8 +15,8 @@ interface IUserContext {
   userData: IUserRelatory | undefined;
   setUserData: React.Dispatch<React.SetStateAction<IUserRelatory | undefined>>;
 
-  token?: string;
-  setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+  token: string;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 
   auth: boolean;
   setAuth: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,15 +43,15 @@ const UserContext = createContext<IUserContext>({
 export const UserProvider = ({ children }: IUserProvider) => {
   const [user, setUser] = useState<IFormLogin | undefined>({ password: "" });
   const [userData, setUserData] = useState<IUserRelatory | undefined>();
-  const [token, setToken] = useState<string>();
+  const [token, setToken] = useState<string>("");
   const [auth, setAuth] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    setToken(sessionStorage.getItem("UMAMI@TOKEN") || undefined);
+    setToken(sessionStorage.getItem("UMAMI@TOKEN") || "");
     token ? setAuth(true) : setAuth(false);
 
-    if (token !== undefined) {
+    if (token !== "") {
       getProfile(token).then((res) => setUserData(res));
     } else {
       router.push("/");

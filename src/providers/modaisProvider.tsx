@@ -16,9 +16,6 @@ interface IModalContext {
   reverseModal: () => void;
   setContent: React.Dispatch<React.SetStateAction<JSX.Element | undefined>>;
 
-  loadingScreen: boolean;
-  setLoadingScreen: React.Dispatch<React.SetStateAction<boolean>>;
-
   isAlertOpen: boolean;
   openAlert: () => void;
   closeAlert: () => void;
