@@ -12,9 +12,12 @@ import { login } from "@/services/post";
 import { useRouter } from "next/router";
 import { error, info } from "@/utils/toast";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
+import LoadingLogin from "@/components/loadingLogin";
+import { useModal } from "@/providers/modaisProvider";
 
 const Login: NextPage = () => {
   const { user, setUser, setToken, token, auth, setAuth } = useUser();
+  const { loadingScreen, setLoadingScreen } = useModal();
   const router = useRouter();
   const [show, setShow] = useState(true);
   const schema = yup.object().shape({
@@ -52,6 +55,7 @@ const Login: NextPage = () => {
     }
 
     info("LOGANDO...");
+    setLoadingScreen(true);
 
     await login(newData)
       .then((res) => {
@@ -61,6 +65,9 @@ const Login: NextPage = () => {
       })
       .catch((err) => {
         error("CREDENCIAIS INVÁLIDAS");
+      })
+      .finally(() => {
+        setLoadingScreen(false);
       });
   };
 
@@ -121,9 +128,15 @@ const Login: NextPage = () => {
                 />
               )}
             </div>
-            <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
-              Entrar
-            </button>
+            {loadingScreen ? (
+              <button className="bg-roxo-primario text-branco-primario text-[1.5rem] py-3 rounded-full ">
+                <LoadingLogin />
+              </button>
+            ) : (
+              <button className="bg-roxo-primario text-branco-primario text-[1.5rem] px-8 py-3 rounded-full ">
+                Entrar
+              </button>
+            )}
           </form>
           <span className="mb-5">
             © 2023 Shopper Supply™ - Todos os direitos reservados.

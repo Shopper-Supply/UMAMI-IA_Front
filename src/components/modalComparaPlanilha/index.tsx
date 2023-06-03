@@ -419,6 +419,7 @@ const ModalComparaPlanilha = () => {
                   id="dropzone-file"
                   type="file"
                   onChange={(event) => handleControlFileChange(event)}
+                  formEncType="multipart/form-data"
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
@@ -447,6 +448,7 @@ const ModalComparaPlanilha = () => {
                   id="dropzone-file"
                   type="file"
                   onChange={(event) => handleCuratorFileChange(event)}
+                  formEncType="multipart/form-data"
                   className="absolute left-0 text-[5rem] w-[100%] opacity-0 cursor-pointer"
                 />
               </div>
