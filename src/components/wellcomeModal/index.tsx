@@ -23,11 +23,11 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               BEM-VINDO
             </h1>
             <h2 className="text-[2rem] text-roxo-secundario font-semibold">
-              Versão: Alfa 1.2.3
+              Versão: Beta 1.1.0
             </h2>
           </div>
         </div>
-        <h4 className=" mt-10 text-[2rem] font-medium">NOTAS DE ATUALIZAÇÂO</h4>
+        <h4 className=" mt-10 text-[2rem] font-medium">DESCUBRA MAIS</h4>
 
         <div className="overflow-y-scroll mb-7">
           <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
@@ -35,28 +35,9 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               - Comparação de planilhas
             </p>
             <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
-              Agora é possivel fazer comparação das planilhas de controle e
-              planilhas do curador, todas as violações de dados serão inseridas
-              na lista de aprovação.
-            </span>
-          </div>
-          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
-            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
-              - Visualizar senha
-            </p>
-            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
-              Agora na tela de login é possivel visualizar a sua senha, deixando
-              assim mais facil de saber qual foi o erro cometido na hora do
-              credenciamento.
-            </span>
-          </div>
-          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
-            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
-              - Botão de sair corrigido
-            </p>
-            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
-              Agora é possivel deslogar facilmente atraves de um botão de sing
-              out no modal de usuario.
+              É possivel fazer comparação das planilhas de controle e planilhas
+              do curador, todas as violações de dados serão inseridas na lista
+              de aprovação.
             </span>
           </div>
           <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
@@ -64,18 +45,9 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
               - Verificação de token de acesso (segurança)
             </p>
             <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
-              Nessa atualização, estamos verificsdo o token de autorização antes
-              de executar qualquer função, caso seu token não seja valido ou
-              expirou a plataforma te leva de volta para a tela de login.
-            </span>
-          </div>
-          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
-            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
-              - Comunicação
-            </p>
-            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
-              Agora ao fim de cada tarefa irá aparecer um popup informando a sua
-              conclusão.
+              verificamos o token de autorização antes de executar qualquer
+              função, caso seu token não seja valido ou expirou a plataforma te
+              leva de volta para a tela de login.
             </span>
           </div>
           <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
@@ -93,6 +65,33 @@ const WellcomeModal = ({ setFirstVitit }: any) => {
             </p>
             <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
               Alguns bugs que atrapalhavam no fluxo foram corrigidos.
+            </span>
+          </div>
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
+            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
+              - Validação de planilha
+            </p>
+            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
+              Ao Arrastar ou clicar no input no menu principal é possivel fazer
+              a validação de uma planilha.
+            </span>
+          </div>
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
+            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
+              - Correção de planilha
+            </p>
+            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
+              Sé uma planilha já foi validada e a verificação precisa ser
+              refeita, troque o tipo da auditoria com um click para correção.
+            </span>
+          </div>
+          <div className="mx-40 p-4 hover:bg-severity-2 hover:bg-opacity-25 rounded-md">
+            <p className="mt-2 text-[1.8rem] font-semibold text-left w-[78%]">
+              - Pesquisa por titulo de um erro
+            </p>
+            <span className="mt-2 text-[1.5rem] font-semibold text-left w-[78%]">
+              Na Lista de erros a serem aprovado é possivel fazer uma pesquisa
+              pelo titulo de um erro.
             </span>
           </div>
         </div>
