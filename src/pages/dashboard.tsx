@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Seo title="SUPP" description="Auditor tech-humano" icon={iconRobo} />
+      <Seo title="SUPP - Shopper supply" description="Auditor tech-humano" />
       <main className="bg-branco-secundario">
         <Modal />
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}

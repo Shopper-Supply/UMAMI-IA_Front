@@ -71,8 +71,8 @@ const Login: NextPage = () => {
   return (
     <>
       <Seo
-        title="BEM VINDO - UMAMI IA"
-        description="Robo de qualidade para verificação de planilhas"
+        title="BEM VINDO - SUPP"
+        description="Auditor tech-humano da Shopper supply"
       />
       <main className="bg-branco-secundario h-screen flex justify-between">
         <div className="flex flex-col justify-center items-center w-[65%] px-[10%]">
