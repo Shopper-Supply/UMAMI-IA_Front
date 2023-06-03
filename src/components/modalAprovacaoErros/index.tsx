@@ -138,7 +138,10 @@ const ModalAprovacaoErros = () => {
                     <p>{error.sheet}</p>
                     <p>{error.coor}</p>
                   </div>
-                  <p className="w-[60%] text-center">
+                  <p
+                    title={error.error_type?.description}
+                    className="w-[60%] text-center"
+                  >
                     {error.error_type?.title}
                   </p>
                   <HiOutlineTrash
