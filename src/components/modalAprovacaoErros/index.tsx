@@ -30,6 +30,7 @@ const ModalAprovacaoErros = () => {
   const { showModal, setContent, isAlertOpen, openAlert, hideModal } =
     useModal();
   const [statusErrorsLog, setStatusErrorsLog] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
   const router = useRouter();
 
   const getColor = (severity: number | undefined) => {
@@ -60,6 +61,13 @@ const ModalAprovacaoErros = () => {
       setCurrentPlace({});
     }
   }, [statusErrorsLog, setErrorsLog]);
+
+  const searchedElement = errorsLog.filter((e) => {
+    if (e.error_type?.title?.includes(search.toUpperCase())) {
+      return e;
+    }
+    return;
+  });
 
   const submitErrorsList = () => {
     // verificação de token de usuario.
@@ -102,37 +110,58 @@ const ModalAprovacaoErros = () => {
         />
       )}
       <div className=" flex flex-col justify-between items-center w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md">
-        <div className="overflow-y-auto flex flex-col w-[100%] text-roxo-primario text-[1.2rem] font-semibold">
-          {errorsLog?.map((error, i) => {
-            return (
-              <div
-                className="flex justify-between items-center bg-branco-secundario p-5 my-2 mx-4 rounded-md"
-                key={i}
-              >
+        <input
+          onChange={(e) => setSearch(e.target.value)}
+          autoComplete="off"
+          type="text"
+          defaultValue={""}
+          placeholder="Pesquise pelo titulo de um erro."
+          title="Nome do Usuario"
+          className={`w-[90%] absolute mt-3 rounded-full border-roxo-primario px-[1.5rem] border-[.2rem] min-h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
+        />
+        <div className="overflow-y-auto flex flex-col items-center w-[100%] text-roxo-primario text-[1.2rem] font-semibold mt-[5rem]">
+          {searchedElement.length > 0 ? (
+            searchedElement?.map((error, i) => {
+              return (
                 <div
-                  className={`rounded-full shadow-inner w-[2.3rem] h-[2.3rem]`}
-                  title={`Erro de relevancia ${error.error_type?.severity}`}
-                  style={{
-                    backgroundColor: getColor(error.error_type?.severity),
-                  }}
-                ></div>
-                <div className="text-center">
-                  <p>{error.sheet}</p>
-                  <p>{error.coor}</p>
+                  className="flex justify-between items-center bg-branco-secundario p-5 my-2 mx-4 rounded-md min-w-[94%] min-h-[5.5rem]"
+                  key={i}
+                >
+                  <div
+                    className={`rounded-full shadow-inner w-[2.3rem] h-[2.3rem]`}
+                    title={`Erro de relevancia ${error.error_type?.severity}`}
+                    style={{
+                      backgroundColor: getColor(error.error_type?.severity),
+                    }}
+                  ></div>
+                  <div className="text-center">
+                    <p>{error.sheet}</p>
+                    <p>{error.coor}</p>
+                  </div>
+                  <p className="w-[60%] text-center">
+                    {error.error_type?.title}
+                  </p>
+                  <HiOutlineTrash
+                    title="Ignorar esse erro"
+                    onClick={() => {
+                      info("SEU ERRO FOI  IGNORADO");
+                      ignoreError(i);
+                    }}
+                    size="2rem"
+                    className="cursor-pointer"
+                  />
                 </div>
-                <p className="w-[60%] text-center">{error.error_type?.title}</p>
-                <HiOutlineTrash
-                  title="Ignorar esse erro"
-                  onClick={() => {
-                    info("SEU ERRO FOI  IGNORADO");
-                    ignoreError(i);
-                  }}
-                  size="2rem"
-                  className="cursor-pointer"
-                />
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="flex justify-center items-center bg-branco-secundario p-5 my-2 mx-4 rounded-md min-w-[94%] min-h-[5.5rem]">
+              <p className="w-[60%] text-center">
+                NADA COM{" "}
+                <span className="text-severity-5">{search.toUpperCase()}</span>{" "}
+                ENCONTRADO.{" "}
+              </p>
+            </div>
+          )}
         </div>
         <div className="flex items-center content-center justify-center w-[100%] py-6 gap-3">
           <div
