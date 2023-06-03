@@ -7,7 +7,7 @@ interface seo {
   icon?: StaticImageData;
 }
 
-const Seo = ({ title, description, icon }: seo) => {
+const Seo = ({ title, description }: seo) => {
   return (
     <Head>
       <title>{title}</title>
