@@ -108,6 +108,7 @@ const Login: NextPage = () => {
               type="text"
               placeholder="exemplo@mail.com or Lancao"
               className="w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none"
+              autoComplete="off"
             />
             <div className=" flex justify-between items-center w-[60%] rounded-full border-roxo-primario px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none">
               <input
@@ -115,6 +116,7 @@ const Login: NextPage = () => {
                 type={show ? "password" : "text"}
                 placeholder="senha"
                 className="h-[98%] border-none outline-none focus:outline-none bg-none"
+                autoComplete="off"
               />
               {show ? (
                 <HiEye

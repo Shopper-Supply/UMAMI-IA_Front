@@ -84,6 +84,7 @@ const ModalCrateUser = (): JSX.Element => {
           </p>
           <input
             {...register("name")}
+            autoComplete="off"
             type="text"
             placeholder={
               errors.name ? "Insira o curador responsavel" : "Ester Frazão"
@@ -103,6 +104,7 @@ const ModalCrateUser = (): JSX.Element => {
           </p>
           <input
             {...register("username")}
+            autoComplete="off"
             type="text"
             placeholder={
               errors.username ? "Insira o curador responsavel" : "Ester-Shopper"
@@ -123,6 +125,7 @@ const ModalCrateUser = (): JSX.Element => {
           </p>
           <input
             {...register("email")}
+            autoComplete="off"
             type="email"
             placeholder={
               errors.email
@@ -145,6 +148,7 @@ const ModalCrateUser = (): JSX.Element => {
           </p>
           <input
             {...register("password")}
+            autoComplete="off"
             type={show ? "password" : "text"}
             placeholder="senha"
             defaultValue={""}
