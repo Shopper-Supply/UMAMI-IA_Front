@@ -50,3 +50,39 @@ export interface ICompareSheetsResponse {
     espt: IErrorCompare[];
   };
 }
+
+export interface ISheerAdjustment extends ISheet {
+  repeated: Array<IRepitedSku[]>;
+}
+
+export interface IRepitedSku {
+  brand: string;
+  category_code: string;
+  created_at: string;
+  ean: string;
+  gender?: string;
+  height?: number;
+  id?: string;
+  is_avaliable?: string;
+  is_correct?: boolean;
+  iva?: number;
+  length?: number;
+  price?: number;
+  product_code: string;
+  product_description?: string;
+  product_name: string;
+  secundary_price?: number;
+  seller_name?: string;
+  sku_code: string;
+  sku_name?: string;
+  supply?: number;
+  tqm?: string;
+  updated_at: string;
+  weight?: number;
+  width?: number;
+  curator?: string;
+  client?: string;
+  mall?: string;
+  abbr?: string;
+  place?: string;
+}

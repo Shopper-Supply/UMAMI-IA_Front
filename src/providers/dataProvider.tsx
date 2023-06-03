@@ -12,6 +12,7 @@ import {
 } from "@/services/get";
 import { useUser } from "./userProvider";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
+import { IRepitedSku } from "@/interfaces/sheet";
 
 interface IDataProvider {
   children: React.ReactNode;
@@ -54,6 +55,9 @@ interface IDataContext {
   setShoppings: React.Dispatch<
     React.SetStateAction<IShoppingDash[] | undefined>
   >;
+
+  repitedSku: Array<IRepitedSku[]>;
+  setRepitedSku: React.Dispatch<React.SetStateAction<Array<IRepitedSku[]>>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -123,6 +127,9 @@ const DataContext = createContext<IDataContext>({
 
   shoppings: [],
   setShoppings: () => {},
+
+  repitedSku: [],
+  setRepitedSku: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -166,6 +173,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
   });
   const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
   const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
+  const [repitedSku, setRepitedSku] = useState<Array<IRepitedSku[]>>([]);
   const { token, auth, userData } = useUser();
 
   useEffect(() => {
@@ -232,6 +240,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
         shoppings,
         setShoppings,
+
+        repitedSku,
+        setRepitedSku,
       }}
     >
       {children}

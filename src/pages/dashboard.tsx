@@ -14,16 +14,33 @@ import { useModal } from "@/providers/modaisProvider";
 import QADashboard from "@/components/managerDashboard";
 import CuratorDashboard from "@/components/curatorDashboard";
 import iconRobo from "../../public/favicon.ico";
+import ModalSku from "@/components/modalSku";
+import { useData } from "@/providers/dataProvider";
 
 const Home: NextPage = () => {
   const { loadingScreen, dashPage } = useModal();
   const [isFirstVisit, setFirstVitit] = useState(true);
+  const { repitedSku } = useData();
+  const [duplicatedSkuIsOpen, setDuplicatedSkuIsOpen] = useState(false);
 
   const componentsPageDash: JSX.Element[] = [
     <HomeDashboard key={0} />,
     <QADashboard key={1} />,
     <CuratorDashboard key={2} />,
   ];
+
+  const getRepitedListlength = () => {
+    let length = 0;
+    repitedSku.map((e) => {
+      if (e.length > 1) {
+        length++;
+        return;
+      }
+      return;
+    });
+    return length;
+  };
+  const repitedListlength = getRepitedListlength();
 
   return (
     <>
@@ -33,6 +50,12 @@ const Home: NextPage = () => {
         {isFirstVisit && <WellcomeModal setFirstVitit={setFirstVitit} />}
         {loadingScreen && <LoadingScreen />}
         <Menu />
+        {repitedListlength > 0 && !duplicatedSkuIsOpen && (
+          <ModalSku
+            duplicatedSkuIsOpen={duplicatedSkuIsOpen}
+            setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
+          />
+        )}
         <div className="flex justify-end">
           {componentsPageDash[dashPage]}
           <ModalAprovacaoErros />
