@@ -16,6 +16,7 @@ import CuratorDashboard from "@/components/curatorDashboard";
 import iconRobo from "../../public/favicon.ico";
 import ModalSku from "@/components/modalSku";
 import { useData } from "@/providers/dataProvider";
+import ClientDashboard from "@/components/clientDashboard";
 
 const Home: NextPage = () => {
   const { loadingScreen, dashPage } = useModal();
@@ -27,6 +28,7 @@ const Home: NextPage = () => {
     <HomeDashboard key={0} />,
     <QADashboard key={1} />,
     <CuratorDashboard key={2} />,
+    <ClientDashboard key={3} />,
   ];
 
   const getRepitedListlength = () => {
