@@ -28,6 +28,7 @@ const ModalEnvioErros = () => {
     addError,
     setCurrentCurator,
     setCurrentPlace,
+    setErrorsLog,
   } = useData();
   const { token, setAuth } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
@@ -92,7 +93,6 @@ const ModalEnvioErros = () => {
 
   const onSubmit: SubmitHandler<IFormEnvioError> = (data) => {
     setData(data);
-
     // verificação de token de usuario.
     const verifyTokenResult = verifyToken(setAuth, hideModal, router);
     if (verifyTokenResult !== true) {
@@ -120,7 +120,7 @@ const ModalEnvioErros = () => {
           sheet: data.sheet,
         };
 
-        setErroData(body);
+        setErrorsLog([...errorsLog, body]);
       } else {
         error("EU NÃO CONHEÇO ESSE CURADOR");
       }
@@ -142,6 +142,7 @@ const ModalEnvioErros = () => {
           as informações estão corretas.
         </p>
         <form
+          id="ErrorForm"
           onSubmit={handleSubmit(onSubmit)}
           className={`flex flex-col justify-center items-center w-[90%] ${
             errors ? "gap-2" : "gap-4"
@@ -394,6 +395,8 @@ const ModalEnvioErros = () => {
 
           <div className="mt-[5%] flex gap-3">
             <button
+              type="submit"
+              form="ErrorForm"
               className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
               title="Enviar"
             >
