@@ -395,10 +395,7 @@ const ModalEnvioErros = () => {
 
           <div className="mt-[5%] flex gap-3">
             <button
-<<<<<<< HEAD
               type="submit"
-=======
->>>>>>> 6b3aaf5a9d551723374892798ffef565121948ad
               form="ErrorForm"
               className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
               title="Enviar"
