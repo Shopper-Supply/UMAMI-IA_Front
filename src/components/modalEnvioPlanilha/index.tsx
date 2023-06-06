@@ -178,9 +178,8 @@ const ModalEnvioPlanilha = () => {
           }`}
         >
           <label className="w-[80%]">
-            <input
+            <select
               {...register("curator")}
-              list="curatores"
               placeholder={
                 errors.curator ? "Insira o curador responsavel" : "Alex Lanção"
               }
@@ -190,17 +189,20 @@ const ModalEnvioPlanilha = () => {
                   ? "border-red-600 focus:border-red-700"
                   : "border-roxo-primario"
               } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-            />
+            >
+              {curators.map((curator) => {
+                return (
+                  <option key={curator.id} value={curator.name}>
+                    {curator.name}
+                  </option>
+                );
+              })}
+            </select>
             {errors.curator && (
               <span className="text-red-600 pl-5">
                 {errors.curator.message}
               </span>
             )}
-            <datalist id="curatores">
-              {curators.map((curator) => {
-                return <option key={curator.id} value={curator.name} />;
-              })}
-            </datalist>
           </label>
           <div className="flex felx-col w-[80%] gap-2">
             <label className="flex flex-col w-[70%]">
