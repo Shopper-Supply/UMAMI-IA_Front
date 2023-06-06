@@ -71,6 +71,17 @@ const ModalComparaPlanilha = () => {
     resolver: yupResolver(schema),
   });
 
+  const saveErros = (errorList: IErrorCompare[]) => {
+    errorList.forEach((error) => {
+      const data: IErrorLog = {
+        error_type: error.errorType,
+        coor: `${error.row}`,
+        sheet: "LINHA",
+      };
+      addError(data);
+    });
+  };
+
   const processCompareSheets = (
     idCurator: any,
     placeData: IPlace,
@@ -89,15 +100,21 @@ const ModalComparaPlanilha = () => {
     compareSheets(token || " ", formData)
       .then((res: ICompareSheetsResponse) => {
         if (res) {
-          console.log(res.errors.sku.length);
-          if (
-            res.errors.espt.length <= 0 &&
-            res.errors.prod.length <= 0 &&
-            res.errors.sku.length <= 0
-          ) {
+          if (res.errors.espt.length > 0) {
+            console.log(res.errors.espt);
+            saveErros(res.errors.espt);
+          } else if (res.errors.prod.length > 0) {
+            console.log(res.errors.prod);
+            saveErros(res.errors.prod);
+          } else if (res.errors.sku.length > 0) {
+            console.log(res.errors.sku);
+            saveErros(res.errors.sku);
+          } else {
             info("NENHUM VIOLAÇÂO ENCONTRADA");
             return;
           }
+        } else {
+          error("OPS! ALGO DEU ERRADO NA COMPARAÇÃO DE PLANILHAS");
         }
       })
       .catch((err) => {
