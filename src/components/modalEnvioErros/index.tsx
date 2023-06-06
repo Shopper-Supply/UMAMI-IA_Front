@@ -16,6 +16,7 @@ import { useUser } from "@/providers/userProvider";
 import { IPlaceRequest } from "@/interfaces/place";
 import ConfirmAction from "../confirmAction";
 import { useRouter } from "next/router";
+import { getCurators } from "@/services/get";
 
 const ModalEnvioErros = () => {
   const {
@@ -29,8 +30,9 @@ const ModalEnvioErros = () => {
     setCurrentCurator,
     setCurrentPlace,
     setErrorsLog,
+    setCurators,
   } = useData();
-  const { token, setAuth } = useUser();
+  const { token, setAuth, userData } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
   const [erroData, setErroData] = useState({});
@@ -89,6 +91,7 @@ const ModalEnvioErros = () => {
           setStatusPlace(false);
         });
     }
+    getCurators(token || "", setCurators, userData?.role?.id);
   }, [statusPlace, token]);
 
   const onSubmit: SubmitHandler<IFormEnvioError> = (data) => {

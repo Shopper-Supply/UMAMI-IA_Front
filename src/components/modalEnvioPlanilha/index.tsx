@@ -16,6 +16,7 @@ import { ISheerAdjustment, ISheet, ISheetRequest } from "@/interfaces/sheet";
 import { verifyToken, findCurator, findPlace } from "@/utils/finds";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/router";
+import { getCurators } from "@/services/get";
 
 const ModalEnvioPlanilha = () => {
   const {
@@ -34,9 +35,10 @@ const ModalEnvioPlanilha = () => {
     setResponseFile,
     loadData,
     setRepitedSku,
+    setCurators,
   } = useData();
   const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
-  const { token, setAuth } = useUser();
+  const { token, setAuth, userData } = useUser();
   const [modality, setModality] = useState<boolean>(false); //false = Manual e true = Sistêmico
   const [submitType, setSubmitType] = useState<boolean>(false); //false = Validação e true = Correção
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
@@ -115,6 +117,7 @@ const ModalEnvioPlanilha = () => {
           setLoadingScreen(false);
         });
     }
+    getCurators(token || "", setCurators, userData?.role?.id);
   }, [statusPlace, token]);
 
   const onSubmit = (data: any) => {
