@@ -22,6 +22,7 @@ import { IFormCompareSheets } from "@/interfaces/form";
 import { IErrorCompare, IErrorLog } from "@/interfaces/errors";
 import { useRouter } from "next/router";
 import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
+import { getCurators } from "@/services/get";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -52,9 +53,10 @@ const ModalComparaPlanilha = () => {
     setErrorsLog,
     setCurrentCurator,
     setCurrentPlace,
+    setCurators,
   } = useData();
   const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
-  const { token, setAuth } = useUser();
+  const { token, setAuth, userData } = useUser();
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const router = useRouter();
@@ -155,6 +157,7 @@ const ModalComparaPlanilha = () => {
           error("OPS! ALGO DEU ERRADO NA CRIAÇÂO DO CANAL DE VENDAS");
         });
     }
+    getCurators(token || "", setCurators, userData?.role?.id);
   }, [data, token, statusPlace]);
 
   const onSubmit = (data: IFormCompareSheets) => {

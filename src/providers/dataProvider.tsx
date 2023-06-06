@@ -180,7 +180,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
     if (auth) {
       loadData();
     }
-  }, [auth, token]);
+  }, [auth]);
 
   const addError = (newError: IErrorLog) => {
     setErrorsLog([...errorsLog, newError]);

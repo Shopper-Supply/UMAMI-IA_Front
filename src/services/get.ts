@@ -17,7 +17,10 @@ export function getCurators(
           Authorization: "Token " + token,
         },
       })
-      .then((res) => setCurators(res.data))
+      .then((res) => {
+        console.log(res.data);
+        setCurators(res.data);
+      })
       .catch((err) => console.error(err));
   } else {
     const curatores = api
