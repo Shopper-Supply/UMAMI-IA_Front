@@ -29,6 +29,7 @@ export interface ICurator extends ICuratorRegister {
   error_points: number;
   groups?: {};
 }
+
 export interface ICuratorRegister {
   name?: string;
   level?: number;

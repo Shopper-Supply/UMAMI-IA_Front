@@ -17,6 +17,7 @@ const ModalUsuario = () => {
   );
 
   const user_profile = sortedDashboardhome[0];
+  console.log(curators)
 
   return (
     <div className="flex flex-col text-center items-center gap-[3rem] w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md absolute z-50 py-20">

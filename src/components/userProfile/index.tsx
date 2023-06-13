@@ -1,4 +1,4 @@
-import { IUserProfile } from "@/interfaces/people";
+import { IOldRelatory, IUserProfile } from "@/interfaces/people";
 
 const UserProfile = ({
   percentage,
@@ -16,16 +16,13 @@ const UserProfile = ({
     return 0;
   };
 
+  // const dateFilter = (date: IOldRelatory) => {
+  //   date.relatory_date
+  // }
+
   return (
-    <div className="max-xl:w-[60%] w-[60%] h-[17rem] bg-branco-primario git flex justify-center items-center">
-      <div className="w-[85%] flex items-center text-roxo-secundario">
-        <div className="text-[1.6rem]">
-          <p className="text-[2rem] ml-10 font-bold relative">
-            <span className="text-severity-2 text-[2.3rem]">
-              {name?.toUpperCase()}
-            </span>
-          </p>
-        </div>
+    <div className="max-xl:w-[60%] w-[60%] h-[17rem] bg-branco-primario flex justify-center items-center">
+      <div className="w-[85%] flex justify-center items-center text-roxo-secundario">
         <div
           title={`${owned_errors ? owned_errors : "Carregando"} Erros`}
           className="w-[20rem]"
@@ -57,6 +54,13 @@ const UserProfile = ({
           <h3 className="text-[2.5rem] font-bold absolute translate-x-[4rem] -translate-y-[9.2rem] text-[#8d3ae5]">
             {Math.round(percentage ? percentage : 0)}%
           </h3>
+        </div>
+        <div className="text-[1.6rem]">
+          <p className="text-[2rem] ml-10 font-bold relative">
+            <span className="text-severity-2 text-[2.3rem]">
+              {name?.toUpperCase()}
+            </span>
+          </p>
         </div>
       </div>
     </div>
