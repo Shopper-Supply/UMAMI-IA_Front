@@ -190,9 +190,9 @@ const ModalEnvioPlanilha = () => {
                   : "border-roxo-primario"
               } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
             >
-              {curators.map((curator) => {
+              {curators?.map((curator, index) => {
                 return (
-                  <option key={curator.id} value={curator.name}>
+                  <option key={index} value={curator.name}>
                     {curator.name}
                   </option>
                 );
