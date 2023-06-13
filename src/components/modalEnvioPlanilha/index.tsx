@@ -117,7 +117,6 @@ const ModalEnvioPlanilha = () => {
           setLoadingScreen(false);
         });
     }
-    getCurators(token || "", setCurators, userData?.role?.id);
   }, [statusPlace, token]);
 
   const onSubmit = (data: any) => {
