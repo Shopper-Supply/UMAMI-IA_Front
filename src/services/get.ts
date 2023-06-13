@@ -26,12 +26,16 @@ export function getCurators(
       .catch((err) => console.error(err));
   } else {
     const curatores = api
-      .get("/dashboard/qualidade", {
+      .get("/curadores", {
         headers: {
           Authorization: "Token " + token,
         },
       })
-      .then((res) => setCurators(res.data.curators))
+      .then((res) => {
+        if (res) {
+          setCurators(res.data);
+        }
+      })
       .catch((err) => console.error(err));
   }
 }
