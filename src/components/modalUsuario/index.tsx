@@ -1,20 +1,31 @@
+import { useData } from "@/providers/dataProvider";
 import { useModal } from "@/providers/modaisProvider";
 import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { HiPencilAlt, HiLogout } from "react-icons/hi";
 import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
+import UserProfile from "../userProfile";
 
 const ModalUsuario = () => {
   const { userData, setToken, setAuth } = useUser();
   const router = useRouter();
   const { hideModal } = useModal();
+  const { setAllUsers, allUsers, curators, shoppings } = useData();
+
+  const sortedDashboardhome = allUsers.sort(
+    (a, b) => b.relatory!.percentage - a.relatory!.percentage
+  );
+
+  const user_profile = sortedDashboardhome[0];
 
   return (
     <div className="flex flex-col text-center items-center gap-[3rem] w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md absolute z-50 py-20">
-      {/* <Image src={iconRobo} alt="Incone robô de qualidade Shopper" /> */}
-      <div>
-        <div className="rounded-full w-[13rem] h-[13rem] animate-pulse bg-cinza-primario"></div>
-      </div>
+      <UserProfile
+        percentage={user_profile?.relatory?.percentage}
+        name={user_profile?.name}
+        owned_errors={user_profile?.relatory?.owned_errors}
+        is_manager={false}
+      />
       <div className="gap-0">
         <p className="text-roxo-primario text-6xl font-semibold">
           {userData?.name.toUpperCase()}
