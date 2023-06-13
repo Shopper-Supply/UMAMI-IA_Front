@@ -65,6 +65,7 @@ const ModalEnvioPlanilha = () => {
   });
 
   useEffect(() => {
+    getCurators(token || "", setCurators, userData?.role?.id);
     if (statusPlace) {
       const makeBody = () => {
         const formData = new FormData();
