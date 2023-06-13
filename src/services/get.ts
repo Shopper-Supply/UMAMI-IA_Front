@@ -3,6 +3,7 @@ import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
 import { IPlace } from "@/interfaces/place";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
+import { error } from "@/utils/toast";
 
 export function getCurators(
   token: string | undefined,
@@ -18,8 +19,9 @@ export function getCurators(
         },
       })
       .then((res) => {
-        console.log(res.data);
-        setCurators(res.data);
+        if (res) {
+          setCurators(res.data);
+        }
       })
       .catch((err) => console.error(err));
   } else {
