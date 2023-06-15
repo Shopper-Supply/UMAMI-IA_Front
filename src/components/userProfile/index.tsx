@@ -22,10 +22,10 @@ const UserProfile = ({
 
   return (
     <div className="max-xl:w-[60%] w-[60%] h-[17rem] bg-branco-primario flex justify-center items-center">
-      <div className="w-[85%] flex justify-center items-center text-roxo-secundario">
+      <div className="text-roxo-secundario">
         <div
           title={`${owned_errors ? owned_errors : "Carregando"} Erros`}
-          className="w-[20rem]"
+          className="w-[12rem]"
         >
           <svg width={120}>
             <circle
@@ -56,7 +56,7 @@ const UserProfile = ({
           </h3>
         </div>
         <div className="text-[1.6rem]">
-          <p className="text-[2rem] ml-10 font-bold relative">
+          <p className="text-[2rem] font-bold relative">
             <span className="text-severity-2 text-[2.3rem]">
               {name?.toUpperCase()}
             </span>
