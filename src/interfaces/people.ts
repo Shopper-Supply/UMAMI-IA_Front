@@ -29,6 +29,7 @@ export interface ICurator extends ICuratorRegister {
   error_points: number;
   groups?: {};
 }
+
 export interface ICuratorRegister {
   name?: string;
   level?: number;
@@ -54,6 +55,13 @@ export interface IUserInFocus {
   percentage: number | undefined;
   name: string;
   total_errors: number | undefined;
+  owned_errors: number | undefined;
+  is_manager: boolean | undefined;
+}
+
+export interface IUserProfile {
+  percentage: number | undefined;
+  name: string;
   owned_errors: number | undefined;
   is_manager: boolean | undefined;
 }

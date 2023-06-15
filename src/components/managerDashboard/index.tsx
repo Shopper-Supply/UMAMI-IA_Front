@@ -115,7 +115,7 @@ const QADashboard = (): JSX.Element => {
       </section>
     );
   }
-  // Pagina de usuario Padrão (Proficionais de Qualidade )
+  // Pagina de usuario Padrão (Profissionais de Qualidade )
   return (
     <section
       id="DashBoard"
