@@ -52,8 +52,8 @@ const ModalUsuario = () => {
                   } drop-shadow-sm flex justify-end items-center pr-3`}
                 >
                   {" "}
-                  <span className="text-[1.2rem] text-roxo-primario font-semibold">
-                    {`${relatore.owned_errors} Erros`}
+                  <span className="text-[1.2rem] text-roxo-primario font-bold">
+                    {`${relatore.percentage}%`}
                   </span>
                 </div>
               </div>
