@@ -40,13 +40,13 @@ export interface IUserRelatory extends IUserDetail {
     percentage: number;
     total_errors: number;
     owned_errors: number;
-    old_relatory?: IOldRelatory[];
+    old_relatory: IOldRelatory[];
   };
 }
 
 export interface IOldRelatory {
-  relatory_date?: string;
-  percentage?: number;
+  relatory_date: string;
+  percentage: number;
   total_errors: number;
   owned_errors: number;
 }
@@ -61,7 +61,5 @@ export interface IUserInFocus {
 
 export interface IUserProfile {
   percentage: number | undefined;
-  name: string;
   owned_errors: number | undefined;
-  is_manager: boolean | undefined;
 }

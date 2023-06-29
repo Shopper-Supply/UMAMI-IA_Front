@@ -4,7 +4,7 @@ import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { HiPencilAlt, HiLogout } from "react-icons/hi";
 import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
-import UserProfile from "../userProfile";
+import UserDonut from "../userDonut";
 
 const ModalUsuario = () => {
   const { userData, setToken, setAuth } = useUser();
@@ -12,20 +12,13 @@ const ModalUsuario = () => {
   const { hideModal } = useModal();
   const { setAllUsers, allUsers, curators, shoppings } = useData();
 
-  const sortedDashboardhome = allUsers.sort(
-    (a, b) => b.relatory!.percentage - a.relatory!.percentage
-  );
-
-  const user_profile = sortedDashboardhome[0];
-  console.log(curators)
+  console.log(userData?.relatory?.old_relatory);
 
   return (
     <div className="flex flex-col text-center items-center gap-[3rem] w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md absolute z-50 py-20">
-      <UserProfile
-        percentage={user_profile?.relatory?.percentage}
-        name={user_profile?.name}
-        owned_errors={user_profile?.relatory?.owned_errors}
-        is_manager={false}
+      <UserDonut
+        percentage={userData?.relatory?.percentage}
+        owned_errors={userData?.relatory?.owned_errors}
       />
       <div className="gap-0">
         <p className="text-roxo-primario text-6xl font-semibold">
@@ -36,12 +29,44 @@ const ModalUsuario = () => {
         </p>
       </div>
 
-      <div className="bg-cinza-primario drop-shadow-md w-[90%] h-[9.1rem] animate-pulse flex p-5 flex-col gap-4">
-        <div className="bg-branco-secundario w-[70%] h-[25%] rounded-md opacity-80"></div>
-        <div className="bg-branco-secundario w-[95%] h-[15%] rounded-md opacity-80"></div>
-        <div className="bg-branco-secundario w-[95%] h-[15%] rounded-md opacity-80"></div>
-        <div className="bg-branco-secundario w-[95%] h-[15%] rounded-md opacity-80"></div>
-        <div className="bg-branco-secundario w-[95%] h-[15%] rounded-md opacity-80"></div>
+      <div
+        title="Esse relatorio informa a quantidade de erros coletados mensalmente"
+        className="bg-branco-secundario drop-shadow-md w-[90%] h-fit flex p-5 flex-col gap-4 rounded-sm"
+      >
+        {userData?.relatory?.old_relatory?.map((relatore, index) => {
+          // format date
+          const [mes, ano] = relatore.relatory_date?.split("/");
+          const dataCompleta = new Date(parseInt(ano), parseInt(mes) - 1);
+          const nomeMes = dataCompleta.toLocaleString("default", {
+            month: "long",
+          });
+
+          if (index <= 5) {
+            return (
+              <div key={index} className="flex pl-3">
+                <h1 className="text-[1.2rem] text-roxo-primario font-bold">
+                  {nomeMes.toUpperCase()}
+                </h1>
+                <div className="ml-3 w-[100%] bg-cinza-primario rounded-full drop-shadow-sm">
+                  <div
+                    className={`h-[100%] bg-severity-2 w-[${
+                      relatore.percentage
+                    }%] ${
+                      relatore.percentage < 100
+                        ? "rounded-l-full"
+                        : "rounded-full"
+                    } drop-shadow-sm flex justify-end items-center pr-3`}
+                  >
+                    {" "}
+                    <span className="text-[1.2rem] text-roxo-primario font-bold">
+                      {`${relatore.percentage}%`}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
       <div className="flex gap-5">
         {/* <button
