@@ -2,9 +2,10 @@ interface IDonutDash {
   porcent?: number;
   title?: string;
   ranking: number;
+  action?: any;
 }
 
-const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
+const DunotDash = ({ porcent, title, ranking, action }: IDonutDash) => {
   const calcPorcent = (porcent: number) => {
     porcent = 100 - porcent;
     porcent = 100 / porcent;
@@ -12,7 +13,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
     return porcent;
   };
   return (
-    <li>
+    <li onClick={action}>
       <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all">
         <h4
           className={`${
