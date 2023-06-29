@@ -29,36 +29,43 @@ const ModalUsuario = () => {
         </p>
       </div>
 
-      <div className="bg-branco-secundario drop-shadow-md w-[90%] h-fit flex p-5 flex-col gap-4 rounded-sm">
+      <div
+        title="Esse relatorio informa a quantidade de erros coletados mensalmente"
+        className="bg-branco-secundario drop-shadow-md w-[90%] h-fit flex p-5 flex-col gap-4 rounded-sm"
+      >
         {userData?.relatory?.old_relatory?.map((relatore, index) => {
+          // format date
           const [mes, ano] = relatore.relatory_date?.split("/");
           const dataCompleta = new Date(parseInt(ano), parseInt(mes) - 1);
           const nomeMes = dataCompleta.toLocaleString("default", {
             month: "long",
           });
-          return (
-            <div key={index} className="flex pl-3">
-              <h1 className="text-[1.2rem] text-roxo-primario font-bold">
-                {nomeMes.toUpperCase()}
-              </h1>
-              <div className="ml-3 w-[100%] bg-cinza-primario rounded-full drop-shadow-sm">
-                <div
-                  className={`h-[100%] bg-severity-2 w-[${
-                    relatore.percentage
-                  }%] ${
-                    relatore.percentage < 100
-                      ? "rounded-l-full"
-                      : "rounded-full"
-                  } drop-shadow-sm flex justify-end items-center pr-3`}
-                >
-                  {" "}
-                  <span className="text-[1.2rem] text-roxo-primario font-bold">
-                    {`${relatore.percentage}%`}
-                  </span>
+
+          if (index <= 5) {
+            return (
+              <div key={index} className="flex pl-3">
+                <h1 className="text-[1.2rem] text-roxo-primario font-bold">
+                  {nomeMes.toUpperCase()}
+                </h1>
+                <div className="ml-3 w-[100%] bg-cinza-primario rounded-full drop-shadow-sm">
+                  <div
+                    className={`h-[100%] bg-severity-2 w-[${
+                      relatore.percentage
+                    }%] ${
+                      relatore.percentage < 100
+                        ? "rounded-l-full"
+                        : "rounded-full"
+                    } drop-shadow-sm flex justify-end items-center pr-3`}
+                  >
+                    {" "}
+                    <span className="text-[1.2rem] text-roxo-primario font-bold">
+                      {`${relatore.percentage}%`}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          }
         })}
       </div>
       <div className="flex gap-5">

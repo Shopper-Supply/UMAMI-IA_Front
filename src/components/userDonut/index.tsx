@@ -20,7 +20,7 @@ const UserDonut = ({ percentage, owned_errors }: IUserProfile): JSX.Element => {
       title={`Você coletou ${percentage}% dos erros existentes na plataforma no mês atual.`}
       className="max-xl:w-[60%] w-[60%] h-[10rem] bg-branco-primario flex justify-center items-center"
     >
-      <div className="text-roxo-secundario">
+      <div className="text-roxo-secundario drop-shadow-md">
         <div className="w-[12rem]">
           <svg width={120}>
             <circle
