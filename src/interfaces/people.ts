@@ -61,7 +61,5 @@ export interface IUserInFocus {
 
 export interface IUserProfile {
   percentage: number | undefined;
-  name: string;
   owned_errors: number | undefined;
-  is_manager: boolean | undefined;
 }

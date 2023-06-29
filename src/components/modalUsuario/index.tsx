@@ -4,7 +4,7 @@ import { useUser } from "@/providers/userProvider";
 import { useRouter } from "next/router";
 import { HiPencilAlt, HiLogout } from "react-icons/hi";
 import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
-import UserProfile from "../userProfile";
+import UserDonut from "../userDonut";
 
 const ModalUsuario = () => {
   const { userData, setToken, setAuth } = useUser();
@@ -12,20 +12,11 @@ const ModalUsuario = () => {
   const { hideModal } = useModal();
   const { setAllUsers, allUsers, curators, shoppings } = useData();
 
-  const sortedDashboardhome = allUsers.sort(
-    (a, b) => b.relatory!.percentage - a.relatory!.percentage
-  );
-
-  const user_profile = sortedDashboardhome[0];
-  console.log(curators)
-
   return (
     <div className="flex flex-col text-center items-center gap-[3rem] w-[25%] min-w-[35rem] h-screen bg-branco-primario drop-shadow-md absolute z-50 py-20">
-      <UserProfile
-        percentage={user_profile?.relatory?.percentage}
-        name={user_profile?.name}
-        owned_errors={user_profile?.relatory?.owned_errors}
-        is_manager={false}
+      <UserDonut
+        percentage={userData?.relatory?.percentage}
+        owned_errors={userData?.relatory?.owned_errors}
       />
       <div className="gap-0">
         <p className="text-roxo-primario text-6xl font-semibold">
