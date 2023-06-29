@@ -11,6 +11,7 @@ import { useModal } from "@/providers/modaisProvider";
 import ModalCrateUser from "../ModalCrateUser";
 import ModaDesableUser from "../modaDesableUser";
 import ModaActivateUser from "../modaActivateUser";
+import ModalUsuarioSelecionado from "../modalSelectedUser";
 
 const QADashboard = (): JSX.Element => {
   const { userData, token } = useUser();
@@ -107,6 +108,11 @@ const QADashboard = (): JSX.Element => {
                   )}
                   key={user.id}
                   ranking={index + 1}
+                  action={() => {
+                    setContent(<ModalUsuarioSelecionado user={user} />);
+                    reverseModal();
+                    showModal();
+                  }}
                 />
               )
           )}
