@@ -80,8 +80,8 @@ const Menu = () => {
             className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
             onClick={() => setDashPage(3)}
           >
-            <HiIdentification color="#5F4B8B" size="2rem" />
-            <p className="text-2xl">Clientes</p>
+            <HiOutlineBuildingStorefront color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Canais de vendas</p>
           </li>
           <li
             onClick={() => {
