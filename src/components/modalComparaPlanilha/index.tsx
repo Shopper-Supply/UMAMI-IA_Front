@@ -22,6 +22,7 @@ import { IFormCompareSheets } from "@/interfaces/form";
 import { IErrorCompare, IErrorLog } from "@/interfaces/errors";
 import { useRouter } from "next/router";
 import { HiPlus, HiOutlineXMark } from "react-icons/hi2";
+import { getCurators } from "@/services/get";
 
 const ModalComparaPlanilha = () => {
   const schema = yup.object().shape({
@@ -52,9 +53,10 @@ const ModalComparaPlanilha = () => {
     setErrorsLog,
     setCurrentCurator,
     setCurrentPlace,
+    setCurators,
   } = useData();
   const { hideModal, openAlert, isAlertOpen, setLoadingScreen } = useModal();
-  const { token, setAuth } = useUser();
+  const { token, setAuth, userData } = useUser();
   const [statusPlace, setstatusPlace] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const router = useRouter();
@@ -70,6 +72,17 @@ const ModalComparaPlanilha = () => {
   } = useForm<IFormCompareSheets>({
     resolver: yupResolver(schema),
   });
+
+  const saveErros = (errorList: IErrorCompare[]) => {
+    errorList.forEach((error) => {
+      const data: IErrorLog = {
+        error_type: error.errorType,
+        coor: `${error.row}`,
+        sheet: "LINHA",
+      };
+      addError(data);
+    });
+  };
 
   const processCompareSheets = (
     idCurator: any,
@@ -89,15 +102,21 @@ const ModalComparaPlanilha = () => {
     compareSheets(token || " ", formData)
       .then((res: ICompareSheetsResponse) => {
         if (res) {
-          console.log(res.errors.sku.length);
-          if (
-            res.errors.espt.length <= 0 &&
-            res.errors.prod.length <= 0 &&
-            res.errors.sku.length <= 0
-          ) {
+          if (res.errors.espt.length > 0) {
+            console.log(res.errors.espt);
+            saveErros(res.errors.espt);
+          } else if (res.errors.prod.length > 0) {
+            console.log(res.errors.prod);
+            saveErros(res.errors.prod);
+          } else if (res.errors.sku.length > 0) {
+            console.log(res.errors.sku);
+            saveErros(res.errors.sku);
+          } else {
             info("NENHUM VIOLAÇÂO ENCONTRADA");
             return;
           }
+        } else {
+          error("OPS! ALGO DEU ERRADO NA COMPARAÇÃO DE PLANILHAS");
         }
       })
       .catch((err) => {
@@ -138,6 +157,7 @@ const ModalComparaPlanilha = () => {
           error("OPS! ALGO DEU ERRADO NA CRIAÇÂO DO CANAL DE VENDAS");
         });
     }
+    getCurators(token || "", setCurators, userData?.role?.id);
   }, [data, token, statusPlace]);
 
   const onSubmit = (data: IFormCompareSheets) => {
@@ -226,9 +246,8 @@ const ModalComparaPlanilha = () => {
         >
           <div className="flex flex-col items-center p-10 justify-around h-[21rem]">
             <label className="w-[100%]">
-              <input
+              <select
                 {...register("curator")}
-                list="curatores"
                 value={errorsLog.length > 0 ? currentCurator.name : undefined}
                 style={{
                   pointerEvents: errorsLog.length > 0 ? "none" : "auto",
@@ -246,23 +265,26 @@ const ModalComparaPlanilha = () => {
                     ? "border-red-600 focus:border-red-700"
                     : "border-roxo-primario"
                 } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-              />
+              >
+                {curators.map((curator) => {
+                  console.log(curator.name);
+                  return (
+                    <option key={curator.id} value={curator.name}>
+                      {curator.name}
+                    </option>
+                  );
+                })}
+              </select>
               {errors.curator && (
                 <span className="text-red-600 pl-5">
                   {errors.curator.message}
                 </span>
               )}
-              <datalist id="curatores">
-                {curators.map((curator) => {
-                  return <option key={curator.id} value={curator.name} />;
-                })}
-              </datalist>
             </label>
             <div className="flex w-[100%] gap-2">
               <label className="flex flex-col w-[70%]">
-                <input
+                <select
                   {...register("client")}
-                  list="client"
                   placeholder="ALSO"
                   title="Cliente"
                   value={errorsLog.length > 0 ? currentPlace.client : undefined}
@@ -274,13 +296,7 @@ const ModalComparaPlanilha = () => {
                       ? "border-red-600 focus:border-red-700"
                       : "border-roxo-primario"
                   } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-                />
-                {errors?.client && (
-                  <span className="text-red-600 pl-5">
-                    {errors.client.message}
-                  </span>
-                )}
-                <datalist id="client">
+                >
                   {places
                     .reduce((clientesUnicos: any, item) => {
                       if (!clientesUnicos.includes(item.client)) {
@@ -289,14 +305,22 @@ const ModalComparaPlanilha = () => {
                       return clientesUnicos;
                     }, [])
                     .map((place: string, index: number) => {
-                      return <option key={index} value={place} />;
+                      return (
+                        <option key={index} value={place}>
+                          {place}
+                        </option>
+                      );
                     })}
-                </datalist>
+                </select>
+                {errors?.client && (
+                  <span className="text-red-600 pl-5">
+                    {errors.client.message}
+                  </span>
+                )}
               </label>
               <label className="flex flex-col w-[30%]">
-                <input
+                <select
                   {...register("abbr")}
-                  list="abbr"
                   placeholder="SDB"
                   title="Abreviação do projeto"
                   value={errorsLog.length > 0 ? currentPlace.abbr : undefined}
@@ -308,13 +332,7 @@ const ModalComparaPlanilha = () => {
                       ? "border-red-600 focus:border-red-700"
                       : "border-roxo-primario"
                   } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-                />
-                {errors?.abbr && (
-                  <span className="text-red-600 pl-5">
-                    {errors.abbr.message}
-                  </span>
-                )}
-                <datalist id="abbr">
+                >
                   {places
                     .reduce((clientesUnicos: any, item) => {
                       if (!clientesUnicos.includes(item.abbr)) {
@@ -323,16 +341,24 @@ const ModalComparaPlanilha = () => {
                       return clientesUnicos;
                     }, [])
                     .map((place: string, index: number) => {
-                      return <option key={index} value={place} />;
+                      return (
+                        <option key={index} value={place}>
+                          {place}
+                        </option>
+                      );
                     })}
-                </datalist>
+                </select>
+                {errors?.abbr && (
+                  <span className="text-red-600 pl-5">
+                    {errors.abbr.message}
+                  </span>
+                )}
               </label>
             </div>
             <div className="flex felx-col w-[100%] gap-2">
-              <label className="flex flex-col w-[50%]">
-                <input
+              <label className="flex flex-col w-[100%]">
+                <select
                   {...register("mall")}
-                  list="mall"
                   placeholder="Shopping da Bahia"
                   title="Shopping"
                   value={errorsLog.length > 0 ? currentPlace.mall : undefined}
@@ -344,13 +370,7 @@ const ModalComparaPlanilha = () => {
                       ? "border-red-600 focus:border-red-700"
                       : "border-roxo-primario"
                   } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-                />
-                {errors?.mall && (
-                  <span className="text-red-600 pl-5">
-                    {errors.mall.message}
-                  </span>
-                )}
-                <datalist id="mall">
+                >
                   {places
                     .reduce((clientesUnicos: any, item) => {
                       if (!clientesUnicos.includes(item.mall)) {
@@ -359,14 +379,22 @@ const ModalComparaPlanilha = () => {
                       return clientesUnicos;
                     }, [])
                     .map((place: string, index: number) => {
-                      return <option key={index} value={place} />;
+                      return (
+                        <option key={index} value={place}>
+                          {place}
+                        </option>
+                      );
                     })}
-                </datalist>
+                </select>
+                {errors?.mall && (
+                  <span className="text-red-600 pl-5">
+                    {errors.mall.message}
+                  </span>
+                )}
               </label>
               <label className="flex flex-col w-[50%]">
-                <input
+                <select
                   {...register("place")}
-                  list="place"
                   placeholder="Ri Happy"
                   title="Loja"
                   value={errorsLog.length > 0 ? currentPlace.name : undefined}
@@ -378,13 +406,7 @@ const ModalComparaPlanilha = () => {
                       ? "border-red-600 focus:border-red-700"
                       : "border-roxo-primario"
                   } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-                />
-                {errors?.place && (
-                  <span className="text-red-600 pl-5">
-                    {errors.place.message}
-                  </span>
-                )}
-                <datalist id="place">
+                >
                   {places
                     .reduce((clientesUnicos: any, item) => {
                       if (!clientesUnicos.includes(item.name)) {
@@ -393,9 +415,18 @@ const ModalComparaPlanilha = () => {
                       return clientesUnicos;
                     }, [])
                     .map((place: string, index: number) => {
-                      return <option key={index} value={place} />;
+                      return (
+                        <option key={index} value={place}>
+                          {place}
+                        </option>
+                      );
                     })}
-                </datalist>
+                </select>
+                {errors?.place && (
+                  <span className="text-red-600 pl-5">
+                    {errors.place.message}
+                  </span>
+                )}
               </label>
             </div>
           </div>

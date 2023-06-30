@@ -29,6 +29,7 @@ export interface ICurator extends ICuratorRegister {
   error_points: number;
   groups?: {};
 }
+
 export interface ICuratorRegister {
   name?: string;
   level?: number;
@@ -39,13 +40,13 @@ export interface IUserRelatory extends IUserDetail {
     percentage: number;
     total_errors: number;
     owned_errors: number;
-    old_relatory?: IOldRelatory[];
+    old_relatory: IOldRelatory[];
   };
 }
 
 export interface IOldRelatory {
-  relatory_date?: string;
-  percentage?: number;
+  relatory_date: string;
+  percentage: number;
   total_errors: number;
   owned_errors: number;
 }
@@ -56,4 +57,9 @@ export interface IUserInFocus {
   total_errors: number | undefined;
   owned_errors: number | undefined;
   is_manager: boolean | undefined;
+}
+
+export interface IUserProfile {
+  percentage: number | undefined;
+  owned_errors: number | undefined;
 }

@@ -56,7 +56,7 @@ export const UserProvider = ({ children }: IUserProvider) => {
     } else {
       router.push("/");
     }
-  }, [token, userData, router]);
+  }, [token]);
 
   return (
     // setContent é utilizado para definir qual componente deverar ser exibido quando o modal for aberto.

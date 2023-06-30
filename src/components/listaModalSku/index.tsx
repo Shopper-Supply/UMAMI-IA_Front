@@ -116,7 +116,7 @@ const ListaModalSku = ({
               disabled
               type="text"
               defaultValue={data.product_name}
-              className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+              className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
             />
           ) : (
             <p className="text-[1.2rem] font-medium text-roxo-secundario">
@@ -125,8 +125,8 @@ const ListaModalSku = ({
           )}
         </label>
         <div className=" flex justify-center w-[100%] transition-all">
-          <div className="flex justify-center w-[100%] ">
-            <label className="flex mr-4 flex-col justify-between items-center text-[.9rem] font-semibold text-roxo-secundario">
+          <div className="flex justify-around w-[100%] ">
+            <label className="flex flex-col w-[45%] justify-between items-center text-[.9rem] font-semibold text-roxo-secundario">
               <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                 CODIGO SKU:{" "}
               </span>
@@ -135,13 +135,13 @@ const ListaModalSku = ({
                   disabled
                   type="text"
                   value={data.sku_code}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               ) : (
                 <p className="text-[1.2rem] font-medium">{data.sku_code}</p>
               )}
             </label>
-            <label className="flex ml-4 flex-col justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
+            <label className="flex flex-col w-[45%] justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
               <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                 MARCA:{" "}
               </span>
@@ -150,7 +150,7 @@ const ListaModalSku = ({
                   disabled
                   type="text"
                   value={data.brand}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               ) : (
                 <p className="text-[1.2rem] font-medium">{data.brand}</p>
@@ -159,13 +159,13 @@ const ListaModalSku = ({
           </div>
         </div>
         <div
-          className={`flex justify-between  w-[100%] transition-all ${
+          className={`flex justify-between w-[100%] transition-all ${
             !SKUItem_isActive && "hidden"
           }`}
         >
-          <div className="flex justify-between w-[100%]">
+          <div className="flex justify-around w-[100%]">
             {SKUItem_isActive && (
-              <label className="flex flex-col justify-between w-[50%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+              <label className="flex flex-col justify-between w-[45%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
                 <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                   CÓD. CATEGORIA:{" "}
                 </span>
@@ -173,12 +173,12 @@ const ListaModalSku = ({
                   disabled
                   type="text"
                   value={data.category_code}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
             )}
             {SKUItem_isActive && (
-              <label className="flex flex-col justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
+              <label className="flex flex-col w-[45%] justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
                 <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                   CURADOR:{" "}
                 </span>
@@ -186,21 +186,21 @@ const ListaModalSku = ({
                   disabled
                   type="text"
                   value={currentCurator.name}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
             )}
           </div>
         </div>
         <div
-          className={`flex justify-between  w-[100%] transition-all ${
+          className={`flex flex-col justify-between w-[100%] transition-all ${
             !SKUItem_isActive && "hidden"
           }`}
         >
           <div className="flex justify-between w-[100%]">
-            <div className="flex justify-between w-[60%]">
+            <div className="flex justify-around w-[100%]">
               {SKUItem_isActive && (
-                <label className="flex flex-col justify-start w-[48%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <label className="flex flex-col justify-start w-[45%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
                   <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                     CLIENTE:{" "}
                   </span>
@@ -208,37 +208,24 @@ const ListaModalSku = ({
                     disabled
                     type="text"
                     value={currentPlace.client}
-                    className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                    className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                   />
                 </label>
               )}
               {SKUItem_isActive && (
-                <label className="flex flex-col justify-start w-[48%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
-                  <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
+                <label className="flex flex-col justify-start w-[45%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                  <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">
                     SHOPPING:{" "}
                   </span>
                   <input
                     disabled
                     type="text"
                     value={currentPlace.mall}
-                    className=" py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                    className=" py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                   />
                 </label>
               )}
             </div>
-            {SKUItem_isActive && (
-              <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
-                <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
-                  ENVIO:{" "}
-                </span>
-                <input
-                  disabled
-                  type="text"
-                  value={extractDate(data.created_at)}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
-                />
-              </label>
-            )}
           </div>
         </div>
 
@@ -250,7 +237,7 @@ const ListaModalSku = ({
           <div className="flex justify-between w-[100%]">
             <div className="flex justify-between w-[60%]">
               {SKUItem_isActive && (
-                <label className="flex flex-col justify-start w-[48%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
                   <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                     ABBR:{" "}
                   </span>
@@ -263,7 +250,7 @@ const ListaModalSku = ({
                 </label>
               )}
               {SKUItem_isActive && (
-                <label className="flex flex-col justify-start w-[48%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
                   <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
                     LOJA:{" "}
                   </span>
@@ -276,19 +263,34 @@ const ListaModalSku = ({
                 </label>
               )}
             </div>
-            {SKUItem_isActive && (
-              <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
-                <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">
-                  EAN:{" "}
-                </span>
-                <input
-                  disabled
-                  type="text"
-                  value={data.ean}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
-                />
-              </label>
-            )}
+            <div className="flex justify-between w-[60%]">  
+              {SKUItem_isActive && (
+                <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                  <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
+                    ENVIO:{" "}
+                  </span>
+                  <input
+                    disabled
+                    type="text"
+                    value={extractDate(data.created_at)}
+                    className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+              {SKUItem_isActive && (
+                <label className="flex flex-col justify-end items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                  <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">
+                    EAN:{" "}
+                  </span>
+                  <input
+                    disabled
+                    type="text"
+                    value={data.ean}
+                    className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  />
+                </label>
+              )}
+            </div>
           </div>
         </div>
         <div
@@ -296,30 +298,30 @@ const ListaModalSku = ({
             !SKUItem_isActive && "hidden"
           }`}
         >
-          <div className="flex justify-between w-[100%]">
+          <div className="flex justify-around w-[100%]">
             {SKUItem_isActive && (
-              <label className="flex flex-col justify-between w-[50%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
-                <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
+              <label className="flex flex-col justify-between w-[45%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">
                   CÓD. PRODUTO:{" "}
                 </span>
                 <input
                   disabled
                   type="text"
                   value={data.product_code}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
             )}
             {SKUItem_isActive && (
-              <label className="flex flex-col justify-between items-center text-[0.9rem] font-semibold text-roxo-secundario">
-                <span className="px-2 z-10 w-30  translate-y-2 bg-branco-secundario">
+              <label className="flex flex-col justify-between w-[45%] items-center text-[0.9rem] font-semibold text-roxo-secundario">
+                <span className="px-2 z-10 w-30 translate-y-2 bg-branco-secundario">
                   ULTIMA ALTERAÇÃO:{" "}
                 </span>
                 <input
                   disabled
                   type="text"
                   defaultValue={data.updated_at}
-                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[90%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
+                  className="py-6 bg-branco-secundario rounded-full px-[1rem] border-[.2rem] h-[2.5rem] w-[100%] text-[1.2rem] font-medium text-roxo-primario border-roxo-primario focus:border-roxo-primario focus:outline-none"
                 />
               </label>
             )}

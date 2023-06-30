@@ -8,7 +8,7 @@ import {
   getErrorTypes,
   getHomeDashboardInfos,
   getPlaces,
-  getShoppings,
+  // getShoppings,
 } from "@/services/get";
 import { useUser } from "./userProvider";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
@@ -180,7 +180,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
     if (auth) {
       loadData();
     }
-  }, [auth, token]);
+  }, [auth]);
 
   const addError = (newError: IErrorLog) => {
     setErrorsLog([...errorsLog, newError]);
@@ -197,7 +197,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
     getErrorTypes(token || "", setErrors);
 
     getPlaces(token || "", setPlace);
-    getShoppings(token || "", setShoppings);
+    // getShoppings(token || "", setShoppings);
 
     getHomeDashboardInfos(token || "", setDashboardHome);
   };

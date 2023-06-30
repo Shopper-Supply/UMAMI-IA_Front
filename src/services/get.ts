@@ -3,6 +3,7 @@ import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
 import { IPlace } from "@/interfaces/place";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
+import { error } from "@/utils/toast";
 
 export function getCurators(
   token: string | undefined,
@@ -17,16 +18,24 @@ export function getCurators(
           Authorization: "Token " + token,
         },
       })
-      .then((res) => setCurators(res.data))
+      .then((res) => {
+        if (res) {
+          setCurators(res.data);
+        }
+      })
       .catch((err) => console.error(err));
   } else {
     const curatores = api
-      .get("/dashboard/qualidade", {
+      .get("/curadores", {
         headers: {
           Authorization: "Token " + token,
         },
       })
-      .then((res) => setCurators(res.data.curators))
+      .then((res) => {
+        if (res) {
+          setCurators(res.data);
+        }
+      })
       .catch((err) => console.error(err));
   }
 }

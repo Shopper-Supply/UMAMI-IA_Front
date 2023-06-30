@@ -16,6 +16,7 @@ import { useUser } from "@/providers/userProvider";
 import { IPlaceRequest } from "@/interfaces/place";
 import ConfirmAction from "../confirmAction";
 import { useRouter } from "next/router";
+import { getCurators } from "@/services/get";
 
 const ModalEnvioErros = () => {
   const {
@@ -28,8 +29,10 @@ const ModalEnvioErros = () => {
     addError,
     setCurrentCurator,
     setCurrentPlace,
+    setErrorsLog,
+    setCurators,
   } = useData();
-  const { token, setAuth } = useUser();
+  const { token, setAuth, userData } = useUser();
   const { hideModal, openAlert, isAlertOpen } = useModal();
   const [statusPlace, setStatusPlace] = useState<boolean>(false);
   const [erroData, setErroData] = useState({});
@@ -88,11 +91,11 @@ const ModalEnvioErros = () => {
           setStatusPlace(false);
         });
     }
+    getCurators(token || "", setCurators, userData?.role?.id);
   }, [statusPlace, token]);
 
   const onSubmit: SubmitHandler<IFormEnvioError> = (data) => {
     setData(data);
-
     // verificação de token de usuario.
     const verifyTokenResult = verifyToken(setAuth, hideModal, router);
     if (verifyTokenResult !== true) {
@@ -120,7 +123,7 @@ const ModalEnvioErros = () => {
           sheet: data.sheet,
         };
 
-        setErroData(body);
+        setErrorsLog([...errorsLog, body]);
       } else {
         error("EU NÃO CONHEÇO ESSE CURADOR");
       }
@@ -142,15 +145,15 @@ const ModalEnvioErros = () => {
           as informações estão corretas.
         </p>
         <form
+          id="ErrorForm"
           onSubmit={handleSubmit(onSubmit)}
           className={`flex flex-col justify-center items-center w-[90%] ${
             errors ? "gap-2" : "gap-4"
           }`}
         >
           <label className="w-[100%]">
-            <input
+            <select
               {...register("curator")}
-              list="curatores"
               value={errorsLog ? currentCurator.name : undefined}
               style={{
                 pointerEvents: errorsLog.length > 0 ? "none" : "auto",
@@ -166,24 +169,27 @@ const ModalEnvioErros = () => {
                   ? "border-red-600 focus:border-red-700"
                   : "border-roxo-primario"
               } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-            />
+            >
+              {curators.map((curator) => {
+                return (
+                  <option key={curator.id} value={curator.name}>
+                    {curator.name}
+                  </option>
+                );
+              })}
+            </select>
             {errors.curator && (
               <span className="text-red-600 pl-5">
                 {errors.curator.message}
               </span>
             )}
-            <datalist id="curatores">
-              {curators.map((curator) => {
-                return <option key={curator.id} value={curator.name} />;
-              })}
-            </datalist>
           </label>
 
           <label className="w-[100%]">
             <input
               {...register("error_type")}
               list="errorTypes"
-              placeholder="CODIGO | Codigo Fora do padrão"
+              placeholder="CODIGO | Titulo do erro"
               title="Erro cometido"
               className={`w-[100%] rounded-full ${
                 errors.error_type
@@ -224,9 +230,8 @@ const ModalEnvioErros = () => {
               )}
             </div>
             <label className="w-[100%]">
-              <input
+              <select
                 {...register("sheet")}
-                list="sheet"
                 placeholder="SKU"
                 title="Pagina onde o erro foi encontrado"
                 className={`text-center w-[100%] rounded-full ${
@@ -234,17 +239,16 @@ const ModalEnvioErros = () => {
                     ? "border-red-600 focus:border-red-700"
                     : "border-roxo-primario"
                 } px-[1rem] border-[.2rem] h-[4rem] text-[1.8rem] text-roxo-primario focus:border-roxo-primario focus:outline-none`}
-              />
+              >
+                <option value="SKU">Skus</option>
+                <option value="PROD">Produto</option>
+                <option value="ESPT">Especificações</option>
+              </select>
               {errors?.sheet && (
                 <span className="text-red-600 pl-5">
                   {errors.sheet.message}
                 </span>
               )}
-              <datalist id="sheet">
-                <option value="SKU">Skus</option>
-                <option value="PROD">Produto</option>
-                <option value="ESPT">Especificações</option>
-              </datalist>
             </label>
           </div>
           <fieldset
@@ -394,6 +398,8 @@ const ModalEnvioErros = () => {
 
           <div className="mt-[5%] flex gap-3">
             <button
+              type="submit"
+              form="ErrorForm"
               className="p-[1.5rem] bg-roxo-primario rounded-full drop-shadow-md"
               title="Enviar"
             >
