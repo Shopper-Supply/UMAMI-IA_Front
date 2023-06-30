@@ -68,7 +68,7 @@ const ClientDashboard = (): JSX.Element => {
         {sortedDashboardhomeCurators.length > 0 ? (
           sortedDashboardhomeCurators.map((element, index) => (
             <DunotDash
-              title={element.mall} 
+              title={`${element.mall} - ${element.name}`} 
               porcent={Math.round(100)}
               key={element.id}
               ranking={index + 1}
