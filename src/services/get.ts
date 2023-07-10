@@ -1,7 +1,7 @@
 import { ICurator, IUserDetail, IUserRelatory } from "@/interfaces/people";
 import api from "./";
 import { IErrosTypes } from "@/interfaces/errors";
-import { IPlace } from "@/interfaces/place";
+import { IMallDash, IPlace } from "@/interfaces/place";
 import { IShoppingDash, IhomeDashboard } from "@/interfaces/dashboard";
 import { error } from "@/utils/toast";
 
@@ -104,15 +104,16 @@ export function getAllUsers(
 
 export function getShoppings(
   token: string | undefined,
-  setShoppings: React.Dispatch<
-    React.SetStateAction<IShoppingDash[] | undefined>
-  >
-): Promise<IUserRelatory | void> {
+  setShoppings: React.Dispatch<React.SetStateAction<IMallDash[]>>
+): Promise<IMallDash | void> {
   return api
     .get("/dashboard/shopping", {
       headers: {
         Authorization: "Token " + token,
       },
     })
-    .then((res) => setShoppings(res.data));
+    .then((res) => {
+      setShoppings(res.data);
+    })
+    .catch((err) => console.error(err));
 }

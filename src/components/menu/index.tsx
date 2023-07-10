@@ -77,7 +77,8 @@ const Menu = () => {
           </li>
           <li
             title="Função Indisponivel no momento"
-            className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
+            className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
+            onClick={() => setDashPage(3)}
           >
             <HiOutlineBuildingStorefront color="#5F4B8B" size="2rem" />
             <p className="text-2xl">Canais de vendas</p>
