@@ -58,9 +58,11 @@ const Home: NextPage = () => {
             setDuplicatedSkuIsOpen={setDuplicatedSkuIsOpen}
           />
         )}
-        <div className="flex justify-start">
+        <div className="flex justify-end">
           {componentsPageDash[dashPage]}
-          <ModalAprovacaoErros />
+          <div className="absolute">
+            <ModalAprovacaoErros />
+          </div>
         </div>
       </main>
     </>
