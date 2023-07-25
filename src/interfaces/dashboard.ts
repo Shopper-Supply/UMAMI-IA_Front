@@ -34,6 +34,6 @@ export interface INameValue {
 }
 export interface IModalRelatoryErrorProps{
   logs: number;
-  month: string;
+  month: number;
   title: string;
 }

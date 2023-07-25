@@ -24,7 +24,7 @@ const ModalRelatoriErrors = ({types}: IGroups) => {
   ];
   const [select, setSelect] = useState(monthNumber);
 
-  const newTypes = types.filter(type => type.month == mes[select])
+  const newTypes = types.filter(type => type.month-1 == select)
   return (
     <div className="flex flex-col justify-start items-center gap-[3rem] w-[25%] pt-6 min-w-[35rem] h-screen bg-branco-primario drop-shadow-md px-5 transition-all absolute z-10">
       <div className="text-[3rem] text-roxo-secundario text-center font-bold flex gap-10 items-center">
