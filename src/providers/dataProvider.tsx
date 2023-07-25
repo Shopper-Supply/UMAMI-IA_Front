@@ -1,13 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IErrosTypes, IErroLogBody, IErrorLog } from "../interfaces/errors";
 import { ICurator, IUserRelatory } from "../interfaces/people";
-import { IPlace } from "../interfaces/place";
+import { IMallDash, IPlace } from "../interfaces/place";
 import { IBag } from "@/interfaces/bagpattern";
 import {
   getCurators,
   getErrorTypes,
   getHomeDashboardInfos,
   getPlaces,
+  getShoppings,
   // getShoppings,
 } from "@/services/get";
 import { useUser } from "./userProvider";
@@ -52,12 +53,13 @@ interface IDataContext {
   setAllUsers: React.Dispatch<React.SetStateAction<IUserRelatory[]>>;
 
   shoppings: IShoppingDash[] | undefined;
-  setShoppings: React.Dispatch<
-    React.SetStateAction<IShoppingDash[] | undefined>
-  >;
+  setShoppings: React.Dispatch<React.SetStateAction<IMallDash[]>>;
 
   repitedSku: Array<IRepitedSku[]>;
   setRepitedSku: React.Dispatch<React.SetStateAction<Array<IRepitedSku[]>>>;
+
+  malls: IMallDash[];
+  setMalls: React.Dispatch<React.SetStateAction<IMallDash[]>>;
 }
 
 const DataContext = createContext<IDataContext>({
@@ -95,9 +97,28 @@ const DataContext = createContext<IDataContext>({
     }
   },
 
-  places: [{}],
-  currentPlace: {},
-  setCurrentPlace: () => {},
+  places: [
+    {
+      id: "",
+      client: "",
+      mall: "",
+      abbr: "",
+      name: "",
+      is_active: false,
+    },
+  ],
+  currentPlace: {
+    id: "",
+    client: "",
+    mall: "",
+    abbr: "",
+    name: "",
+    is_active: false,
+  },
+  setCurrentPlace: () => {
+    {
+    }
+  },
 
   currentBagPattern: {},
   setCurrentBagPattern: () => {
@@ -130,6 +151,9 @@ const DataContext = createContext<IDataContext>({
 
   repitedSku: [],
   setRepitedSku: () => {},
+
+  malls: [],
+  setMalls: () => {},
 });
 
 export const DataProvider = ({ children }: IDataProvider) => {
@@ -143,6 +167,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
       collector: "",
     },
   ]);
+
   const [errorsLog, setErrorsLog] = useState<IErrorLog[]>([]);
   const [curators, setCurators] = useState<ICurator[]>([]);
   const [currentCurator, setCurrentCurator] = useState<ICurator>({
@@ -152,8 +177,27 @@ export const DataProvider = ({ children }: IDataProvider) => {
     owned_errors: 0,
     error_points: 0,
   });
-  const [places, setPlace] = useState([{}]);
-  const [currentPlace, setCurrentPlace] = useState({});
+
+  const [places, setPlace] = useState([
+    {
+      id: "",
+      client: "",
+      mall: "",
+      abbr: "",
+      name: "",
+      is_active: false,
+    },
+  ]);
+
+  const [currentPlace, setCurrentPlace] = useState({
+    id: "",
+    client: "",
+    mall: "",
+    abbr: "",
+    name: "",
+    is_active: false,
+  });
+
   const [currentBagPattern, setCurrentBagPattern] = useState<IBag>({
     iva: 0,
     width: 5,
@@ -172,8 +216,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
     total_skus: 0,
   });
   const [allUsers, setAllUsers] = useState<IUserRelatory[]>([]);
-  const [shoppings, setShoppings] = useState<IShoppingDash[] | undefined>(); // fazer tipagem.
+  const [shoppings, setShoppings] = useState<IMallDash[]>([]); // fazer tipagem.
   const [repitedSku, setRepitedSku] = useState<Array<IRepitedSku[]>>([]);
+  const [malls, setMalls] = useState<IMallDash[]>([]);
   const { token, auth, userData } = useUser();
 
   useEffect(() => {
@@ -197,7 +242,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
     getErrorTypes(token || "", setErrors);
 
     getPlaces(token || "", setPlace);
-    // getShoppings(token || "", setShoppings);
+    getShoppings(token || "", setShoppings);
 
     getHomeDashboardInfos(token || "", setDashboardHome);
   };
@@ -243,6 +288,9 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
         repitedSku,
         setRepitedSku,
+
+        malls,
+        setMalls,
       }}
     >
       {children}

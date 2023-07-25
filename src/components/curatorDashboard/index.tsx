@@ -1,6 +1,6 @@
 import { useUser } from "@/providers/userProvider";
 import Image from "next/image";
-import { getAllUsers } from "@/services/get";
+import { getAllUsers, getShoppings } from "@/services/get";
 import { useData } from "@/providers/dataProvider";
 import { useEffect, useState } from "react";
 import UserInFocus from "../userInFocus";
@@ -13,9 +13,11 @@ import ModalCrateCurator from "../ModalCrateCurator";
 
 const CuratorDashboard = (): JSX.Element => {
   const { userData, token } = useUser();
-  const { setAllUsers, allUsers, curators, shoppings } = useData();
+  const { setAllUsers, allUsers, curators, shoppings, setShoppings } =
+    useData();
   const { showModal, setContent, reverseModal } = useModal();
   const [search, setSearch] = useState<string>("");
+  [];
 
   const sortedDashboardhomeCurators = curators
     .sort((a, b) => b.percentage - a.percentage)

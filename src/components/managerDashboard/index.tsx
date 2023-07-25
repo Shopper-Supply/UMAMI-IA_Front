@@ -99,12 +99,14 @@ const QADashboard = (): JSX.Element => {
         ))}
         <div className="flex flex-wrap gap-5 mt-[3rem] list-none w-[80%]">
           {allUsers.map(
-            (user, index) =>
-              user.is_active === true && (
+            (user, index) => {
+              console.log(user)
+              const userPercent = user.relatory?.percentage ? user.relatory?.percentage : 0
+              return user.is_active === true && (
                 <DunotDash
                   title={user.name}
                   porcent={Math.round(
-                    user.relatory?.percentage ? user.relatory?.percentage : 0
+                    userPercent
                   )}
                   key={user.id}
                   ranking={index + 1}
@@ -115,6 +117,7 @@ const QADashboard = (): JSX.Element => {
                   }}
                 />
               )
+            }
           )}
         </div>
         <ul className="pt-8 flex w-[75%] flex-wrap gap-4"></ul>
