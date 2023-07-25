@@ -8,10 +8,10 @@ export interface IhomeDashboard {
 
 export interface IGroups {
   name: string;
-  total_errors?: number;
+  total_errors: number;
   group_errors: number;
   percentage: number;
-  errorTypes?: IErrorCompare[];
+  types: IModalRelatoryErrorProps[];
 }
 
 export interface ICuratorErrorsComponent {
@@ -31,4 +31,9 @@ export interface IShoppingDash {
 export interface INameValue {
   name: string;
   value: number;
+}
+export interface IModalRelatoryErrorProps{
+  logs: number;
+  month: string;
+  title: string;
 }

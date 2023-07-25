@@ -2,16 +2,19 @@ import Image from "next/image";
 import DunotDash from "@/components/dunotDash";
 import IlustrationRobot_02 from "../../../public/robot_02.png";
 import { useData } from "@/providers/dataProvider";
+import { useModal } from "@/providers/modaisProvider";
+import ModalRelatoriErrors from "../relatoriErrorsModal";
 
 const HomeDashboard = () => {
   const { dashboardHome } = useData();
+  const { setContent, reverseModal, showModal } = useModal()
   const sortedDashboardhome = dashboardHome.groups.sort(
     (a, b) => b.percentage - a.percentage
   );
   return (
     <section
       id="DashBoard"
-      className="-z-0 top-0 absolute ml-[21.5rem] w-[86%] h-screen pl-14 pt-14 pr-40 overflow-y-scroll overflow-x-hidden"
+      className="-z-0 top-0 absolute ml-[21.5rem] w-[84%] h-screen pl-14 pt-14 pr-40 overflow-y-scroll overflow-x-hidden"
     >
       <div className="w-[75.7%] h-[17rem] bg-roxo-primario bg-opacity-30 rounded-md flex justify-center items-center">
         <Image
@@ -31,14 +34,24 @@ const HomeDashboard = () => {
         </div>
       </div>
       <ul className="pt-8 flex w-[92%] h-[75%] flex-wrap gap-4">
-        {sortedDashboardhome.map((group, index) => (
-          <DunotDash
-            ranking={index}
-            key={index}
-            porcent={Math.round(group.percentage)}
-            title={group.name}
-          />
-        ))}
+        {sortedDashboardhome.map((group, index) => {
+          console.log(group)
+          return(
+            <DunotDash
+              ranking={index}
+              key={index}
+              porcent={Math.round(group.percentage)}
+              title={group.name}
+              action={() => {
+                setContent(<ModalRelatoriErrors types={group.types}/>);
+                reverseModal();
+                showModal();
+              }
+              }
+            />
+          )
+        }
+        )}
       </ul>
     </section>
   );

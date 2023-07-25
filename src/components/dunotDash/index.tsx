@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface IDonutDash {
   porcent?: number;
   title?: string;
@@ -12,6 +14,7 @@ const DunotDash = ({ porcent, title, ranking, action }: IDonutDash) => {
     porcent = 345 / porcent;
     return porcent;
   };
+  const [titleName, setTitleName] = useState(title)
   return (
     <li onClick={action}>
       <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all">
@@ -20,8 +23,8 @@ const DunotDash = ({ porcent, title, ranking, action }: IDonutDash) => {
             ranking <= 0 ? "text-severity-5" : "text-roxo-secundario"
           } text-[1.5rem] text-center font-bold`}
         >
-          {title ? (
-            title?.toUpperCase()
+          {titleName ? (
+            titleName?.toUpperCase()
           ) : (
             <div className="bg-cinza-primario h-[3rem] animate-pulse"></div>
           )}
@@ -56,9 +59,9 @@ const DunotDash = ({ porcent, title, ranking, action }: IDonutDash) => {
               ranking <= 0.0 ? "text-[#F83636]" : "text-[#8d3ae5]"
             } font-bold absolute top-[40%] ${
               porcent != 100 ? "left-[40%]" : "left-[36%]"
-            } ${!title && "animate-pulse"}`}
+            } ${!titleName && "animate-pulse"}`}
           >
-            <h3>{title ? porcent : "??"}%</h3>
+            <h3>{titleName ? porcent : "??"}%</h3>
           </div>
         </div>
         <div className="flex justify-center w-[100%] gap-3 mt-5">
