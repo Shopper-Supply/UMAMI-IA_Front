@@ -117,3 +117,22 @@ export function getShoppings(
     })
     .catch((err) => console.error(err));
 }
+
+export function getRelatoryInCSV(token: string | undefined, initDate?: string | undefined, finshDate?: string | undefined){
+  return api.get(initDate && finshDate ? `/dashboard/export/?start_date=${initDate}&end_date=${finshDate}`: "/dashboard/export", {
+    responseType: 'blob',
+    headers: {
+      Authorization: "Token " + token,
+    },
+  })
+  .then( res => {
+    const blob = new Blob([res.data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Relatorio_De_Erros.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  })
+  .catch(err => console.error(err));
+}
