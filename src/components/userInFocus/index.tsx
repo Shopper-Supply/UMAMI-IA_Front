@@ -1,6 +1,7 @@
 import IlustrationRobot_03 from "../../../public/robot_3.svg";
 import { IUserInFocus } from "@/interfaces/people";
 import Image from "next/image";
+
 const UserInFocus = ({
   percentage,
   name,

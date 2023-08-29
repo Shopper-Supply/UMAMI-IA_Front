@@ -2,9 +2,10 @@ interface IDonutDash {
   porcent?: number;
   title?: string;
   ranking: number;
+  action?: any;
 }
 
-const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
+const DunotDash = ({ porcent, title, ranking, action }: IDonutDash) => {
   const calcPorcent = (porcent: number) => {
     porcent = 100 - porcent;
     porcent = 100 / porcent;
@@ -12,12 +13,12 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
     return porcent;
   };
   return (
-    <li>
+    <li onClick={action}>
       <div className="bg-branco-primario w-[26rem] h-[23rem] rounded-md drop-shadow-md p-4 cursor-pointer hover:drop-shadow-xl transition-all">
         <h4
           className={`${
             ranking <= 0 ? "text-severity-5" : "text-roxo-secundario"
-          } text-[2rem] text-center font-bold`}
+          } text-[1.5rem] text-center font-bold`}
         >
           {title ? (
             title?.toUpperCase()
@@ -46,7 +47,7 @@ const DunotDash = ({ porcent, title, ranking }: IDonutDash) => {
                 fill="none"
                 strokeDasharray={345}
                 strokeDashoffset={calcPorcent(porcent)}
-                className="transition-all ease-in-out duration-1000"
+                className="transition-all ease-in-out duration-10000"
               ></circle>
             )}
           </svg>

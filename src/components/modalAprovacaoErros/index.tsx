@@ -148,7 +148,7 @@ const ModalAprovacaoErros = () => {
                     title="Ignorar esse erro"
                     onClick={() => {
                       info("SEU ERRO FOI  IGNORADO");
-                      ignoreError(i);
+                      ignoreError(errorsLog.indexOf(error));
                     }}
                     size="2rem"
                     className="cursor-pointer"

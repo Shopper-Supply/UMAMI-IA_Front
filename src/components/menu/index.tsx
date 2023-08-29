@@ -22,10 +22,13 @@ import { error } from "@/utils/toast";
 import iconRobo from "../../../public/Icon_Robo.svg";
 import ModalUsuario from "../modalUsuario";
 import ModalComparaPlanilha from "../modalComparaPlanilha";
+import { getRelatoryInCSV } from "@/services/get";
+import { useUser } from "@/providers/userProvider";
 
 const Menu = () => {
   const { setContent, showModal, reverseModal, setDashPage } = useModal();
   const { setExcelFile, errorsLog, excelFile } = useData();
+  const { token } = useUser();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -77,7 +80,8 @@ const Menu = () => {
           </li>
           <li
             title="Função Indisponivel no momento"
-            className="flex items-center gap-[1rem] mx-[2.2rem] opacity-50"
+            className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
+            onClick={() => setDashPage(3)}
           >
             <HiOutlineBuildingStorefront color="#5F4B8B" size="2rem" />
             <p className="text-2xl">Canais de vendas</p>
@@ -91,6 +95,15 @@ const Menu = () => {
           >
             <HiOutlineExclamationCircle color="#5F4B8B" size="2rem" />
             <p className="text-2xl">Erros</p>
+          </li>
+          <li
+            onClick={() => {
+              getRelatoryInCSV(token)
+            }}
+            className="flex items-center gap-[1rem] mx-[2.2rem] cursor-pointer"
+          >
+            <HiOutlineExclamationCircle color="#5F4B8B" size="2rem" />
+            <p className="text-2xl">Log de Erros</p>
           </li>
         </ul>
       </div>
