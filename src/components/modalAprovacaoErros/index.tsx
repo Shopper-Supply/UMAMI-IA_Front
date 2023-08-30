@@ -58,7 +58,6 @@ const ModalAprovacaoErros = () => {
         owned_errors: 0,
         error_points: 0,
       });
-      setCurrentPlace({});
     }
   }, [statusErrorsLog, setErrorsLog]);
 
