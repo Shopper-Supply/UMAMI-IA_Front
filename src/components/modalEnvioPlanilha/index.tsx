@@ -118,7 +118,26 @@ const ModalEnvioPlanilha = () => {
           setLoadingScreen(false);
         });
     }
-  }, [statusPlace, token]);
+  }, [
+      statusPlace, 
+      token, 
+      curators,
+      currentBagPattern,
+      data,
+      excelFile,
+      hideModal,
+      loadData,
+      modality,
+      setCurators,
+      setCurrentCurator,
+      setCurrentPlace,
+      setErrorsLog,
+      setLoadingScreen,
+      setRepitedSku,
+      setResponseFile,
+      submitType,
+      userData?.role?.id
+    ]);
 
   const onSubmit = (data: any) => {
     // verificação de token de usuario.

@@ -30,7 +30,7 @@ const ModalUsuarioSelecionado = ({ user }: any) => {
         title="Esse relatorio informa a quantidade de erros coletados mensalmente"
         className="bg-branco-secundario drop-shadow-md w-[90%] h-fit flex p-5 flex-col gap-4 rounded-sm"
       >
-        {user?.relatory?.old_relatory?.map((relatore, index) => {
+        {user?.relatory?.old_relatory?.map((relatore: any, index: number) => {
           // format date
           const [mes, ano] = relatore.relatory_date?.split("/");
           const dataCompleta = new Date(parseInt(ano), parseInt(mes) - 1);
