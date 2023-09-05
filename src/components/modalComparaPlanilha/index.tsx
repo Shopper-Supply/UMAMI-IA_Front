@@ -158,7 +158,7 @@ const ModalComparaPlanilha = () => {
         });
     }
     getCurators(token || "", setCurators, userData?.role?.id);
-  }, [data, token, statusPlace]);
+  }, [data, token, statusPlace, curators, processCompareSheets, setCurators, userData?.role?.id]);
 
   const onSubmit = (data: IFormCompareSheets) => {
     // verificação de token de usuario.

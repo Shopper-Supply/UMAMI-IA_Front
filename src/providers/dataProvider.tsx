@@ -221,12 +221,6 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const [malls, setMalls] = useState<IMallDash[]>([]);
   const { token, auth, userData } = useUser();
 
-  useEffect(() => {
-    if (auth) {
-      loadData();
-    }
-  }, [auth]);
-
   const addError = (newError: IErrorLog) => {
     setErrorsLog([...errorsLog, newError]);
   };
@@ -246,6 +240,12 @@ export const DataProvider = ({ children }: IDataProvider) => {
 
     getHomeDashboardInfos(token || "", setDashboardHome);
   };
+
+  useEffect(() => {
+    if (auth) {
+      loadData();
+    }
+  }, [auth, loadData]);
 
   return (
     <DataContext.Provider
