@@ -48,4 +48,7 @@ export interface IFormCompareSheets {
   abbr: string;
   mall: string;
   place: string;
+  name: string;
+  id: string;
+  is_active: boolean;
 }

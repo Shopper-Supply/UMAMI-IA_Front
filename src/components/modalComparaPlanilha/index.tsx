@@ -87,7 +87,7 @@ const ModalComparaPlanilha = () => {
   const processCompareSheets = (
     idCurator: any,
     placeData: IPlace,
-    data: any
+    data: IPlace
   ) => {
     setLoadingScreen(true);
     info("COMPARANDO PLANILHAS...");
@@ -132,20 +132,24 @@ const ModalComparaPlanilha = () => {
   useEffect(() => {
     if (statusPlace) {
       let placeData = {
+        id: data.id,
         abbr: data.abbr,
         client: data.client,
         mall: data.mall,
         name: data.place,
+        is_active: data.is_active
       };
 
       createPlace(token || "", placeData)
         .then((res: IPlace) => {
           if (res) {
             placeData = {
+              id: res.id,
               abbr: res.abbr,
               client: res.client,
               mall: res.mall,
               name: res.name,
+              is_active: res.is_active,
             };
 
             const curatorId = findCurator(curators, data);
@@ -177,10 +181,12 @@ const ModalComparaPlanilha = () => {
         openAlert();
       } else {
         const placeData = {
+          id: "",
+          abbr: data.abbr,
           client: data.client,
           mall: data.mall,
-          abbr: data.abbr,
           name: data.place,
+          is_active: true
         };
 
         processCompareSheets(idCurator, placeData, data);
