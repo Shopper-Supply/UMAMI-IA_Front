@@ -49,12 +49,12 @@ const UserDonut = ({ percentage, owned_errors }: IUserProfile): JSX.Element => {
           <h3
             title={`${owned_errors ? owned_errors : "Carregando"} Erros`}
             className={`text-[2.5rem] font-bold absolute ${
-              percentage < 10
+              (percentage ?? 0) < 10
                 ? "translate-x-[110%]"
-                : percentage > 80
+                : (percentage ?? 0) > 80
                 ? "translate-x-[70%]"
-                : "translate-x-[70%]"
-            }  -translate-y-[9.2rem] text-[#8d3ae5]`}
+                : ""
+            }`}
           >
             {Math.round(percentage ? percentage : 0)}%
           </h3>
