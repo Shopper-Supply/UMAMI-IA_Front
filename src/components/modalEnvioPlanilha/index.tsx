@@ -120,23 +120,7 @@ const ModalEnvioPlanilha = () => {
     }
   }, [
       statusPlace, 
-      token, 
-      curators,
-      currentBagPattern,
-      data,
-      excelFile,
-      hideModal,
-      loadData,
-      modality,
-      setCurators,
-      setCurrentCurator,
-      setCurrentPlace,
-      setErrorsLog,
-      setLoadingScreen,
-      setRepitedSku,
-      setResponseFile,
-      submitType,
-      userData?.role?.id
+      token,     
     ]);
 
   const onSubmit = (data: any) => {

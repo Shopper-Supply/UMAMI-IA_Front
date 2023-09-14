@@ -32,7 +32,7 @@ const CuratorDashboard = (): JSX.Element => {
     if (userData?.role?.id !== 1) {
       getAllUsers(token, setAllUsers);
     }
-  }, [userData, token, allUsers]);
+  }, [userData, token]);
 
   if (userData?.role?.id == 2 || userData?.role?.id == 3) {
     // pagina de Usuarios de Gestão (TI e Gestores)

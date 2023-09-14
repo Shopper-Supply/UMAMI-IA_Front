@@ -92,7 +92,7 @@ const ModalEnvioErros = () => {
         });
     }
     getCurators(token || "", setCurators, userData?.role?.id);
-  }, [statusPlace, token, addError, data.abbr, data, erroData, setCurators, setCurrentPlace, userData?.role?.id]);
+  }, [statusPlace, token]);
 
   const onSubmit: SubmitHandler<IFormEnvioError> = (data) => {
     setData(data);

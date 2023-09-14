@@ -59,7 +59,7 @@ const ModalAprovacaoErros = () => {
         error_points: 0,
       });
     }
-  }, [statusErrorsLog, setErrorsLog, currentCurator]);
+  }, [statusErrorsLog, setErrorsLog]);
 
   const searchedElement = errorsLog.filter((e) => {
     if (e.error_type?.title?.includes(search.toUpperCase())) {
