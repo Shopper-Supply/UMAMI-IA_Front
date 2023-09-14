@@ -245,7 +245,7 @@ export const DataProvider = ({ children }: IDataProvider) => {
     if (auth) {
       loadData();
     }
-  }, [auth, loadData]);
+  }, [auth]);
 
   return (
     <DataContext.Provider
