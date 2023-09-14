@@ -31,7 +31,7 @@ const QADashboard = (): JSX.Element => {
     if (userData?.role?.id !== 1) {
       getAllUsers(token, setAllUsers);
     }
-  }, [userData, allUsers]);
+  }, [userData]);
 
   const userIn_focus = sortedDashboardhome[0];
   const limitedArray = sortedDashboardhomeCurators.slice(0, 3);
