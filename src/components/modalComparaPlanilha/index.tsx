@@ -74,7 +74,7 @@ const ModalComparaPlanilha = () => {
   });
 
   const saveErros = (errorList: IErrorCompare[]) => {
-    const errorsArrayData = errorList.map((error) => {
+    const errorsArrayData: IErrorLog[] = errorList.map((error) => {
       const data: IErrorLog = {
         error_type: error.errorType,
         coor: `${error.row}`,

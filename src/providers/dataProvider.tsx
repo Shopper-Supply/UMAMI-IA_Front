@@ -22,7 +22,7 @@ interface IDataContext {
   errorsTypes: IErrosTypes[];
   errorsLog: IErrorLog[];
   setErrorsLog: React.Dispatch<React.SetStateAction<IErrorLog[]>>;
-  addError: (newError: IErrorLog) => void;
+  addError: (newError: IErrorLog | IErrorLog[]) => void;
   ignoreError: (errorId: number) => void;
 
   curators: ICurator[];
