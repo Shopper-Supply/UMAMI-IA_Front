@@ -74,14 +74,16 @@ const ModalComparaPlanilha = () => {
   });
 
   const saveErros = (errorList: IErrorCompare[]) => {
-    errorList.forEach((error) => {
+    const errorsArrayData = errorList.map((error) => {
       const data: IErrorLog = {
         error_type: error.errorType,
         coor: `${error.row}`,
         sheet: "LINHA",
       };
-      addError(data);
+      return data;
     });
+
+    addError(errorsArrayData);
   };
 
   const processCompareSheets = (
@@ -103,13 +105,10 @@ const ModalComparaPlanilha = () => {
       .then((res: ICompareSheetsResponse) => {
         if (res) {
           if (res.errors.espt.length > 0) {
-            console.log(res.errors.espt);
             saveErros(res.errors.espt);
           } else if (res.errors.prod.length > 0) {
-            console.log(res.errors.prod);
             saveErros(res.errors.prod);
           } else if (res.errors.sku.length > 0) {
-            console.log(res.errors.sku);
             saveErros(res.errors.sku);
           } else {
             info("NENHUM VIOLAÇÂO ENCONTRADA");
@@ -137,7 +136,7 @@ const ModalComparaPlanilha = () => {
         client: data.client,
         mall: data.mall,
         name: data.place,
-        is_active: data.is_active
+        is_active: data.is_active,
       };
 
       createPlace(token || "", placeData)
@@ -186,7 +185,7 @@ const ModalComparaPlanilha = () => {
           client: data.client,
           mall: data.mall,
           name: data.place,
-          is_active: true
+          is_active: true,
         };
 
         processCompareSheets(idCurator, placeData, data);

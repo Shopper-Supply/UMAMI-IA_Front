@@ -9,45 +9,52 @@ const MarketingPlace = (): JSX.Element => {
   const { places, malls, setMalls } = useData();
   const { userData, token } = useUser();
   const [search, setSearch] = useState<string>("");
-  const newMallsList: IMallDash[] = [];
+  const [newMallsList, setNewMallsList] = useState<IMallDash[]>([]);
 
-  places.forEach((place) => {
-    let matchingMall = malls.find(
-      (mall) => mall.mallName === place.mall && mall.sellerName === place.name
-    );
+  useEffect(() => {
+    async function fetcheData() {
+      await getShoppings(token, setMalls);
+      places.forEach((place) => {
+        const matchingMall = malls.find((mall) => {
+          if (place.mall == mall.mallName && place.name == mall.sellerName) {
+            return true;
+          }
+        });
 
-    if (matchingMall) {
-      const mallData = {
-        mallName: matchingMall.mallName,
-        sellerName: matchingMall.sellerName,
-        percentage: matchingMall.percentage,
-        total_errors: matchingMall.total_errors,
-        owned_errors: matchingMall.owned_errors,
-        group: matchingMall.group,
-      };
-      newMallsList.push(mallData);
-    } else {
-      const mallData = {
-        mallName: place.mall,
-        sellerName: place.name,
-        percentage: 0,
-        total_errors: 0,
-        owned_errors: 0,
-        group: [],
-      };
-      newMallsList.push(mallData);
+        if (matchingMall) {
+          const mallData = {
+            mallName: matchingMall.mallName,
+            sellerName: matchingMall.sellerName,
+            percentage: matchingMall.percentage,
+            total_errors: matchingMall.total_errors,
+            owned_errors: matchingMall.owned_errors,
+            group: matchingMall.group,
+          };
+          const mallListSpread: IMallDash[] = [...newMallsList, mallData];
+          setNewMallsList(mallListSpread);
+        } else {
+          const mallData = {
+            mallName: place.mall,
+            sellerName: place.name,
+            percentage: 0,
+            total_errors: 0,
+            owned_errors: 0,
+            group: [],
+          };
+          const mallListSpread: IMallDash[] = [...newMallsList, mallData];
+          setNewMallsList(mallListSpread);
+        }
+      });
     }
-  });
+    fetcheData();
+  }, [userData, token, setMalls, setNewMallsList]);
 
   const sortedMallList = newMallsList.sort(
     (a, b) => b.percentage - a.percentage
   );
 
-  useEffect(() => {
-    getShoppings(token, setMalls);
-  }, [userData, token, setMalls]);
-
-  console.log(places);
+  // console.log(places);
+  // console.log(malls);
   return (
     <section
       id="DashBoard"

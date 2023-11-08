@@ -221,8 +221,12 @@ export const DataProvider = ({ children }: IDataProvider) => {
   const [malls, setMalls] = useState<IMallDash[]>([]);
   const { token, auth, userData } = useUser();
 
-  const addError = (newError: IErrorLog) => {
-    setErrorsLog([...errorsLog, newError]);
+  const addError = (newError: IErrorLog | IErrorLog[]) => {
+    if (Array.isArray(newError)) {
+      setErrorsLog([...errorsLog, ...newError]);
+    } else {
+      setErrorsLog([...errorsLog, newError]);
+    }
   };
 
   const ignoreError = (errorId: number) => {
